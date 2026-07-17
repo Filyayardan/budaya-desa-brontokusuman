@@ -32,6 +32,15 @@
                 </div>
                 @endif
 
+                @if($budaya->video)
+                <div class="rounded-2xl overflow-hidden border border-gold-500/10 mb-8">
+                    <video controls class="w-full h-auto" preload="metadata">
+                        <source src="{{ asset('storage/' . $budaya->video) }}" type="video/mp4">
+                        Browser Anda tidak mendukung pemutar video.
+                    </video>
+                </div>
+                @endif
+
                 <div class="bg-dark-800/80 backdrop-blur rounded-2xl border border-gold-500/10 p-8">
                     <h2 class="font-display text-2xl font-bold text-white mb-6">Tentang {{ $budaya->judul }}</h2>
                     <div class="prose prose-invert max-w-none text-gray-300 leading-relaxed">

@@ -41,12 +41,17 @@ class BudayaController extends Controller
             'deskripsi' => 'required|string',
             'deskripsi_lengkap' => 'nullable|string',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'video' => 'nullable|file|mimes:mp4,webm,mov,avi|max:512000',
             'lokasi' => 'nullable|string|max:255',
             'unggulan' => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('gambar')) {
             $validated['gambar'] = $request->file('gambar')->store('budaya', 'public');
+        }
+
+        if ($request->hasFile('video')) {
+            $validated['video'] = $request->file('video')->store('budaya/video', 'public');
         }
 
         $validated['unggulan'] = $request->boolean('unggulan');
@@ -69,6 +74,7 @@ class BudayaController extends Controller
             'deskripsi' => 'required|string',
             'deskripsi_lengkap' => 'nullable|string',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'video' => 'nullable|file|mimes:mp4,webm,mov,avi|max:512000',
             'lokasi' => 'nullable|string|max:255',
             'unggulan' => 'nullable|boolean',
         ]);
@@ -78,6 +84,13 @@ class BudayaController extends Controller
                 Storage::disk('public')->delete($budaya->gambar);
             }
             $validated['gambar'] = $request->file('gambar')->store('budaya', 'public');
+        }
+
+        if ($request->hasFile('video')) {
+            if ($budaya->video) {
+                Storage::disk('public')->delete($budaya->video);
+            }
+            $validated['video'] = $request->file('video')->store('budaya/video', 'public');
         }
 
         $validated['unggulan'] = $request->boolean('unggulan');
@@ -90,6 +103,9 @@ class BudayaController extends Controller
     {
         if ($budaya->gambar) {
             Storage::disk('public')->delete($budaya->gambar);
+        }
+        if ($budaya->video) {
+            Storage::disk('public')->delete($budaya->video);
         }
         $budaya->delete();
         return redirect()->route('admin.budaya.index')->with('success', 'Budaya berhasil dihapus.');

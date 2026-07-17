@@ -25,8 +25,15 @@
         <div class="aspect-square bg-gray-100 relative">
             @if($g->gambar)
             <img src="{{ asset('storage/' . $g->gambar) }}" class="w-full h-full object-cover">
+            @elseif($g->video)
+            <video class="w-full h-full object-cover" muted preload="metadata"><source src="{{ asset('storage/' . $g->video) }}"></video>
             @else
             <div class="w-full h-full flex items-center justify-center text-gray-400"><i class="fas fa-image text-3xl"></i></div>
+            @endif
+            @if($g->video)
+            <div class="absolute top-2 right-2 w-6 h-6 rounded-full bg-dark-900/80 flex items-center justify-center">
+                <i class="fas fa-play text-gold-400 text-[10px]"></i>
+            </div>
             @endif
             <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
                 <a href="{{ route('admin.galeri.edit', $g) }}" class="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center text-blue-600 hover:bg-white"><i class="fas fa-edit text-sm"></i></a>

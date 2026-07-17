@@ -99,8 +99,9 @@ class PageController extends Controller
     public function profil()
     {
         $pengurus = Pengurus::all();
+        $profil = \App\Models\ProfilDesa::all()->pluck('value', 'key');
 
-        return view('pages.profil', compact('pengurus'));
+        return view('pages.profil', compact('pengurus', 'profil'));
     }
 
     public function kontak()

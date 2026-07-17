@@ -6,9 +6,9 @@
     <div class="absolute inset-0 hero-pattern opacity-20"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Dokumentasi</span>
-        <h1 class="font-display text-5xl sm:text-6xl font-bold text-white mt-3 mb-4">Galeri Foto</h1>
+        <h1 class="font-display text-5xl sm:text-6xl font-bold text-white mt-3 mb-4">Galeri</h1>
         <div class="line-gold w-24 mx-auto mb-6"></div>
-        <p class="text-gray-400 max-w-xl mx-auto">Koleksi foto kegiatan dan kebudayaan Desa Brontokusuman</p>
+        <p class="text-gray-400 max-w-xl mx-auto">Koleksi foto dan video kegiatan kebudayaan Desa Brontokusuman</p>
     </div>
 </section>
 
@@ -26,14 +26,21 @@
         @if($galeri->count())
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="gallery">
             @foreach($galeri as $g)
-            <div class="group relative rounded-xl overflow-hidden aspect-square card-hover cursor-pointer gallery-item" data-kategori="{{ $g->kategori }}">
+            <div class="group relative rounded-xl overflow-hidden aspect-square card-hover cursor-pointer gallery-item" data-kategori="{{ $g->kategori }}" data-video="{{ $g->video ? asset('storage/' . $g->video) : '' }}" data-judul="{{ $g->judul }}">
                 <div class="absolute inset-0 bg-gradient-to-br from-gold-600/20 to-dark-800">
                     @if($g->gambar)
                         <img src="{{ asset('storage/' . $g->gambar) }}" alt="{{ $g->judul }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    @elseif($g->video)
+                        <video class="w-full h-full object-cover" muted preload="metadata"><source src="{{ asset('storage/' . $g->video) }}"></video>
                     @else
                         <div class="absolute inset-0 flex items-center justify-center"><i class="fas fa-image text-4xl text-gold-500/20"></i></div>
                     @endif
                 </div>
+                @if($g->video)
+                <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-dark-900/80 flex items-center justify-center">
+                    <i class="fas fa-play text-gold-400 text-xs"></i>
+                </div>
+                @endif
                 <div class="absolute inset-0 bg-gradient-to-t from-dark-950/90 via-dark-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div class="absolute bottom-0 left-0 right-0 p-5 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                     <h3 class="text-white font-bold">{{ $g->judul }}</h3>

@@ -38,7 +38,14 @@
                 <td class="px-5 py-4 text-gray-500">{{ $budaya->firstItem() + $i }}</td>
                 <td class="px-5 py-4">
                     @if($b->gambar)
-                    <img src="{{ asset('storage/' . $b->gambar) }}" class="w-12 h-12 rounded-lg object-cover">
+                    <div class="relative inline-block">
+                        <img src="{{ asset('storage/' . $b->gambar) }}" class="w-12 h-12 rounded-lg object-cover">
+                        @if($b->video)
+                        <div class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center"><i class="fas fa-play text-white text-[6px]"></i></div>
+                        @endif
+                    </div>
+                    @elseif($b->video)
+                    <div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center text-blue-500"><i class="fas fa-video"></i></div>
                     @else
                     <div class="w-12 h-12 rounded-lg bg-gray-100 flex items-center justify-center text-gray-400"><i class="fas fa-image"></i></div>
                     @endif

@@ -35,13 +35,18 @@ class GaleriController extends Controller
     {
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
-            'gambar' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'video' => 'nullable|file|mimes:mp4,webm,mov,avi|max:512000',
             'deskripsi' => 'nullable|string',
             'kategori' => 'nullable|string|max:255',
         ]);
 
         if ($request->hasFile('gambar')) {
             $validated['gambar'] = $request->file('gambar')->store('galeri', 'public');
+        }
+
+        if ($request->hasFile('video')) {
+            $validated['video'] = $request->file('video')->store('galeri/video', 'public');
         }
 
         Galeri::create($validated);
@@ -59,6 +64,7 @@ class GaleriController extends Controller
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'video' => 'nullable|file|mimes:mp4,webm,mov,avi|max:512000',
             'deskripsi' => 'nullable|string',
             'kategori' => 'nullable|string|max:255',
         ]);
@@ -70,6 +76,13 @@ class GaleriController extends Controller
             $validated['gambar'] = $request->file('gambar')->store('galeri', 'public');
         }
 
+        if ($request->hasFile('video')) {
+            if ($galeri->video) {
+                Storage::disk('public')->delete($galeri->video);
+            }
+            $validated['video'] = $request->file('video')->store('galeri/video', 'public');
+        }
+
         $galeri->update($validated);
 
         return redirect()->route('admin.galeri.index')->with('success', 'Galeri berhasil diperbarui.');
@@ -79,6 +92,9 @@ class GaleriController extends Controller
     {
         if ($galeri->gambar) {
             Storage::disk('public')->delete($galeri->gambar);
+        }
+        if ($galeri->video) {
+            Storage::disk('public')->delete($galeri->video);
         }
         $galeri->delete();
         return redirect()->route('admin.galeri.index')->with('success', 'Galeri berhasil dihapus.');

@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AcaraController;
 use App\Http\Controllers\Admin\GaleriController;
 use App\Http\Controllers\Admin\SejarahController;
 use App\Http\Controllers\Admin\PengurusController;
+use App\Http\Controllers\Admin\ProfilDesaController;
 
 Route::prefix('admin')->middleware('web')->name('admin.')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -26,5 +27,8 @@ Route::prefix('admin')->middleware('web')->name('admin.')->group(function () {
         Route::resource('galeri', GaleriController::class)->except(['show']);
         Route::resource('sejarah', SejarahController::class)->except(['show']);
         Route::resource('pengurus', PengurusController::class)->except(['show']);
+
+        Route::get('/profil', [ProfilDesaController::class, 'index'])->name('profil.index');
+        Route::put('/profil', [ProfilDesaController::class, 'update'])->name('profil.update');
     });
 });

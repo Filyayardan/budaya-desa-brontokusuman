@@ -17,17 +17,27 @@
         <div class="grid lg:grid-cols-2 gap-16 items-center mb-24">
             <div>
                 <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Tentang Desa</span>
-                <h2 class="font-display text-4xl font-bold text-white mt-3 mb-6">Brontokusuman</h2>
+                <h2 class="font-display text-4xl font-bold text-white mt-3 mb-6">{{ $profil['tentang_judul'] ?? 'Brontokusuman' }}</h2>
                 <div class="line-gold w-16 mb-8"></div>
                 <div class="space-y-4 text-gray-400 leading-relaxed">
-                    <p>Desa Brontokusuman merupakan salah satu desa yang terletak di Kecamatan Mergangsan, Kota Yogyakarta, Daerah Istimewa Yogyakarta. Desa ini dikenal dengan kekayaan budaya dan tradisi yang masih terjaga hingga saat ini.</p>
-                    <p>Berbagai kesenian tradisional, upacara adat, dan warisan budaya lainnya masih dilestarikan oleh masyarakat setempat menjadi bagian penting dari identitas desa.</p>
+                    @foreach(explode("\n\n", $profil['tentang_isi'] ?? '') as $paragraf)
+                        @if(trim($paragraf))
+                        <p>{{ $paragraf }}</p>
+                        @endif
+                    @endforeach
                 </div>
             </div>
             <div class="relative">
                 <div class="bg-dark-800/80 backdrop-blur rounded-2xl border border-gold-500/10 p-8">
                     <div class="grid grid-cols-2 gap-6">
-                        @php $info = [['icon'=>'fa-map-marker-alt','label'=>'Lokasi','value'=>'Kec. Mergangsan, Yogyakarta'],['icon'=>'fa-users','label'=>'Penduduk','value'=>'± 3.000 Jiwa'],['icon'=>'fa-landmark','label'=>'Kecamatan','value'=>'Mergangsan'],['icon'=>'fa-city','label'=>'Kota','value'=>'Yogyakarta']]; @endphp
+                        @php
+                            $info = [
+                                ['icon'=>'fa-map-marker-alt','label'=>'Lokasi','value'=>$profil['lokasi'] ?? 'Kec. Mergangsan, Yogyakarta'],
+                                ['icon'=>'fa-users','label'=>'Penduduk','value'=>$profil['penduduk'] ?? '± 3.000 Jiwa'],
+                                ['icon'=>'fa-landmark','label'=>'Kecamatan','value'=>$profil['kecamatan'] ?? 'Mergangsan'],
+                                ['icon'=>'fa-city','label'=>'Kota','value'=>$profil['kota'] ?? 'Yogyakarta'],
+                            ];
+                        @endphp
                         @foreach($info as $i)
                         <div class="flex items-center space-x-3">
                             <div class="w-12 h-12 rounded-xl bg-gold-500/10 flex items-center justify-center flex-shrink-0"><i class="fas {{ $i['icon'] }} text-gold-400"></i></div>
@@ -38,6 +48,29 @@
                 </div>
             </div>
         </div>
+
+        @if(($profil['visi'] ?? '') || ($profil['misi'] ?? ''))
+        <div class="grid lg:grid-cols-2 gap-8 mb-24">
+            @if($profil['visi'] ?? null)
+            <div class="bg-dark-800/80 backdrop-blur rounded-2xl border border-gold-500/10 p-8">
+                <div class="w-14 h-14 gradient-gold rounded-xl flex items-center justify-center mb-6">
+                    <i class="fas fa-eye text-dark-950 text-xl"></i>
+                </div>
+                <h3 class="font-display text-2xl font-bold text-white mb-4">Visi</h3>
+                <p class="text-gray-400 leading-relaxed">{{ $profil['visi'] }}</p>
+            </div>
+            @endif
+            @if($profil['misi'] ?? null)
+            <div class="bg-dark-800/80 backdrop-blur rounded-2xl border border-gold-500/10 p-8">
+                <div class="w-14 h-14 gradient-gold rounded-xl flex items-center justify-center mb-6">
+                    <i class="fas fa-bullseye text-dark-950 text-xl"></i>
+                </div>
+                <h3 class="font-display text-2xl font-bold text-white mb-4">Misi</h3>
+                <div class="text-gray-400 leading-relaxed whitespace-pre-line">{{ $profil['misi'] }}</div>
+            </div>
+            @endif
+        </div>
+        @endif
 
         @if($pengurus->count())
         <div class="text-center mb-16">

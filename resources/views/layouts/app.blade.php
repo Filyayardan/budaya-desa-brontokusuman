@@ -129,17 +129,18 @@
                 <div>
                     <h4 class="font-display text-lg font-semibold text-gold-300 mb-6">Kontak</h4>
                     <ul class="space-y-4">
+                        @php $fp = App\Models\ProfilDesa::all()->pluck('value','key'); @endphp
                         <li class="flex items-start space-x-3">
                             <i class="fas fa-map-marker-alt text-gold-400 mt-1"></i>
-                            <span class="text-gray-400 text-sm">Desa Brontokusuman, Kecamatan Mergangsan, Kota Yogyakarta, DI Yogyakarta</span>
+                            <span class="text-gray-400 text-sm">{{ $fp['alamat'] ?? 'Desa Brontokusuman, Kecamatan Mergangsan, Kota Yogyakarta, DI Yogyakarta' }}</span>
                         </li>
                         <li class="flex items-center space-x-3">
                             <i class="fas fa-phone text-gold-400"></i>
-                            <span class="text-gray-400 text-sm">+62 274 XXX XXX</span>
+                            <span class="text-gray-400 text-sm">{{ $fp['telepon'] ?? '+62 274 XXX XXX' }}</span>
                         </li>
                         <li class="flex items-center space-x-3">
                             <i class="fas fa-envelope text-gold-400"></i>
-                            <span class="text-gray-400 text-sm">info@brontokusuman.id</span>
+                            <span class="text-gray-400 text-sm">{{ $fp['email'] ?? 'info@brontokusuman.id' }}</span>
                         </li>
                     </ul>
                 </div>
