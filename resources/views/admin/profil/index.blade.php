@@ -24,6 +24,14 @@
                 @endif
                 <input type="file" name="gambar" accept="image/*" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-gold-50 file:text-gold-700 file:px-3 file:py-1 file:text-sm file:font-medium">
             </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Foto Halaman Login</label>
+                <p class="text-xs text-gray-400 mb-2">Foto ini ditampilkan sebagai latar belakang pada halaman login admin.</p>
+                @if($profil['foto_login'] ?? null)
+                <div class="mb-2"><img src="{{ asset('storage/' . $profil['foto_login']) }}" class="w-full h-32 rounded-lg object-cover"></div>
+                @endif
+                <input type="file" name="foto_login" accept="image/*" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-gold-50 file:text-gold-700 file:px-3 file:py-1 file:text-sm file:font-medium">
+            </div>
         </div>
 
         <div class="bg-white rounded-xl border border-gray-200 p-6">

@@ -43,7 +43,6 @@ class BudayaController extends Controller
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'video' => 'nullable|file|mimes:mp4,webm,mov,avi|max:512000',
             'lokasi' => 'nullable|string|max:255',
-            'unggulan' => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('gambar')) {
@@ -54,7 +53,6 @@ class BudayaController extends Controller
             $validated['video'] = $request->file('video')->store('budaya/video', 'public');
         }
 
-        $validated['unggulan'] = $request->boolean('unggulan');
         Budaya::create($validated);
 
         return redirect()->route('admin.budaya.index')->with('success', 'Budaya berhasil ditambahkan.');
@@ -76,7 +74,6 @@ class BudayaController extends Controller
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'video' => 'nullable|file|mimes:mp4,webm,mov,avi|max:512000',
             'lokasi' => 'nullable|string|max:255',
-            'unggulan' => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('gambar')) {
@@ -93,7 +90,6 @@ class BudayaController extends Controller
             $validated['video'] = $request->file('video')->store('budaya/video', 'public');
         }
 
-        $validated['unggulan'] = $request->boolean('unggulan');
         $budaya->update($validated);
 
         return redirect()->route('admin.budaya.index')->with('success', 'Budaya berhasil diperbarui.');

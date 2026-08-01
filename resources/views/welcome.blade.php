@@ -5,6 +5,9 @@
 @section('content')
 <section class="relative min-h-screen flex items-center overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950"></div>
+    @if($banner && $banner->gambar)
+        <img src="{{ asset('storage/' . $banner->gambar) }}" alt="" class="absolute inset-0 w-full h-full object-cover opacity-30">
+    @endif
     <div class="absolute inset-0 hero-pattern opacity-30"></div>
     <div class="absolute top-0 right-0 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl"></div>
     <div class="absolute bottom-0 left-0 w-96 h-96 bg-gold-600/5 rounded-full blur-3xl"></div>
@@ -12,28 +15,34 @@
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
         <div class="grid lg:grid-cols-2 gap-16 items-center">
             <div>
+                @if($banner && $banner->badge)
                 <div class="inline-flex items-center space-x-2 bg-gold-500/10 border border-gold-500/20 rounded-full px-5 py-2 mb-8">
                     <span class="w-2 h-2 bg-gold-400 rounded-full animate-pulse"></span>
-                    <span class="text-gold-300 text-sm font-medium tracking-wide">Warisan Budaya Yogyakarta</span>
+                    <span class="text-gold-300 text-sm font-medium tracking-wide">{{ $banner->badge }}</span>
                 </div>
+                @endif
 
                 <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-8">
-                    <span class="text-white">Jelajahi</span><br>
-                    <span class="text-gradient-gold">Kebudayaan</span><br>
-                    <span class="text-white">Brontokusuman</span>
+                    <span class="text-white">{{ $banner->judul_atas ?? 'Jelajahi' }}</span><br>
+                    <span class="text-gradient-gold">{{ $banner->judul_tengah ?? 'Kebudayaan' }}</span><br>
+                    <span class="text-white">{{ $banner->judul_bawah ?? 'Brontokusuman' }}</span>
                 </h1>
 
                 <p class="text-gray-400 text-lg leading-relaxed mb-10 max-w-xl">
-                    Mengenal lebih dekat keindahan tradisi, seni, dan warisan budaya Desa Brontokusuman yang telah mengakar sejak berabad-abad lamanya.
+                    {{ $banner->deskripsi ?? 'Mengenal lebih dekat keindahan tradisi, seni, dan warisan budaya Desa Brontokusuman yang telah mengakar sejak berabad-abad lamanya.' }}
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="{{ route('budaya') }}" class="gradient-gold text-dark-950 font-semibold px-8 py-4 rounded-xl hover:opacity-90 transition-opacity text-center shadow-lg shadow-gold-500/20">
-                        <i class="fas fa-compass mr-2"></i>Jelajahi Budaya
+                    @if($banner && $banner->btn1_teks)
+                    <a href="{{ route($banner->btn1_link ?? 'home') }}" class="gradient-gold text-dark-950 font-semibold px-8 py-4 rounded-xl hover:opacity-90 transition-opacity text-center shadow-lg shadow-gold-500/20">
+                        <i class="fas fa-compass mr-2"></i>{{ $banner->btn1_teks }}
                     </a>
-                    <a href="{{ route('sejarah') }}" class="border border-gold-500/30 text-gold-300 font-semibold px-8 py-4 rounded-xl hover:bg-gold-500/10 transition-colors text-center">
-                        <i class="fas fa-book-open mr-2"></i>Sejarah Desa
+                    @endif
+                    @if($banner && $banner->btn2_teks)
+                    <a href="{{ route($banner->btn2_link ?? 'home') }}" class="border border-gold-500/30 text-gold-300 font-semibold px-8 py-4 rounded-xl hover:bg-gold-500/10 transition-colors text-center">
+                        <i class="fas fa-book-open mr-2"></i>{{ $banner->btn2_teks }}
                     </a>
+                    @endif
                 </div>
             </div>
 

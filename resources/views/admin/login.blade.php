@@ -11,9 +11,16 @@
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen flex items-center justify-center">
-    <div class="w-full max-w-md">
-        <div class="bg-white rounded-2xl shadow-xl p-8">
+<body class="min-h-screen flex items-center justify-center relative">
+    <div class="absolute inset-0 z-0" style="background: linear-gradient(135deg, #1a1820, #2d2b33);">
+        @if($fotoLogin)
+            <img src="{{ asset('storage/' . $fotoLogin) }}" alt="Desa Brontokusuman" class="w-full h-full object-cover">
+        @endif
+        <div class="absolute inset-0 bg-black/50"></div>
+    </div>
+
+    <div class="relative z-10 w-full max-w-md mx-4">
+        <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8">
             <div class="text-center mb-8">
                 <div class="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4" style="background: linear-gradient(135deg, #d4a017, #f5de8c);">
                     <i class="fas fa-landmark text-dark-950 text-2xl"></i>
@@ -51,7 +58,7 @@
                 </button>
             </form>
         </div>
-        <p class="text-center text-gray-400 text-sm mt-6">&copy; {{ date('Y') }} Desa Brontokusuman</p>
+        <p class="text-center text-white/70 text-sm mt-6">&copy; {{ date('Y') }} Desa Brontokusuman</p>
     </div>
 </body>
 </html>

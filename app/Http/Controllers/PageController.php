@@ -9,6 +9,7 @@ use App\Models\Galeri;
 use App\Models\Berita;
 use App\Models\Sejarah;
 use App\Models\Pengurus;
+use App\Models\Banner;
 
 class PageController extends Controller
 {
@@ -19,8 +20,9 @@ class PageController extends Controller
         $beritaTerbaru = Berita::orderBy('created_at', 'desc')->limit(3)->get();
         $galeriTerbaru = Galeri::orderBy('created_at', 'desc')->limit(8)->get();
         $kategori = KategoriBudaya::withCount('budaya')->get();
+        $banner = Banner::aktif()->first();
 
-        return view('welcome', compact('budayaUnggulan', 'acaraTerbaru', 'beritaTerbaru', 'galeriTerbaru', 'kategori'));
+        return view('welcome', compact('budayaUnggulan', 'acaraTerbaru', 'beritaTerbaru', 'galeriTerbaru', 'kategori', 'banner'));
     }
 
     public function budaya()

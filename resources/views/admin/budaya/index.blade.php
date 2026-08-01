@@ -28,7 +28,6 @@
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Judul</th>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Kategori</th>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Lokasi</th>
-                <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Unggulan</th>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Aksi</th>
             </tr>
         </thead>
@@ -54,13 +53,6 @@
                 <td class="px-5 py-4 text-gray-600">{{ $b->kategori->nama_kategori ?? '-' }}</td>
                 <td class="px-5 py-4 text-gray-600">{{ $b->lokasi ?? '-' }}</td>
                 <td class="px-5 py-4">
-                    @if($b->unggulan)
-                    <span class="px-2 py-1 bg-gold-50 text-gold-700 rounded-full text-xs font-medium">Ya</span>
-                    @else
-                    <span class="px-2 py-1 bg-gray-100 text-gray-500 rounded-full text-xs font-medium">Tidak</span>
-                    @endif
-                </td>
-                <td class="px-5 py-4">
                     <div class="flex items-center space-x-2">
                         <a href="{{ route('admin.budaya.edit', $b) }}" class="px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-medium hover:bg-blue-100"><i class="fas fa-edit mr-1"></i>Edit</a>
                         <form action="{{ route('admin.budaya.destroy', $b) }}" method="POST" onsubmit="return confirm('Yakin hapus budaya ini?')">
@@ -71,7 +63,7 @@
                 </td>
             </tr>
             @empty
-            <tr><td colspan="7" class="px-5 py-8 text-center text-gray-400">Belum ada data</td></tr>
+            <tr><td colspan="6" class="px-5 py-8 text-center text-gray-400">Belum ada data</td></tr>
             @endforelse
         </tbody>
     </table>

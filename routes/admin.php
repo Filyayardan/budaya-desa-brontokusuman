@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\GaleriController;
 use App\Http\Controllers\Admin\SejarahController;
 use App\Http\Controllers\Admin\PengurusController;
 use App\Http\Controllers\Admin\ProfilDesaController;
+use App\Http\Controllers\Admin\BannerController;
 
 Route::prefix('admin')->middleware('web')->name('admin.')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -22,11 +23,12 @@ Route::prefix('admin')->middleware('web')->name('admin.')->group(function () {
 
         Route::resource('kategori-budaya', KategoriBudayaController::class)->except(['show']);
         Route::resource('budaya', BudayaController::class)->except(['show']);
-        Route::resource('berita', BeritaController::class)->except(['show']);
+        Route::resource('berita', BeritaController::class)->except(['show'])->parameters(['berita' => 'berita']);
         Route::resource('acara', AcaraController::class)->except(['show']);
         Route::resource('galeri', GaleriController::class)->except(['show']);
         Route::resource('sejarah', SejarahController::class)->except(['show']);
         Route::resource('pengurus', PengurusController::class)->except(['show']);
+        Route::resource('banner', BannerController::class)->except(['show']);
 
         Route::get('/profil', [ProfilDesaController::class, 'index'])->name('profil.index');
         Route::put('/profil', [ProfilDesaController::class, 'update'])->name('profil.update');

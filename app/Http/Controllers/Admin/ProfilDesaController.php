@@ -24,6 +24,7 @@ class ProfilDesaController extends Controller
             'kecamatan' => 'nullable|string|max:255',
             'kota' => 'nullable|string|max:255',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'foto_login' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'telepon' => 'nullable|string|max:255',
             'email' => 'nullable|string|max:255',
             'alamat' => 'nullable|string|max:255',
@@ -38,6 +39,13 @@ class ProfilDesaController extends Controller
                 \Illuminate\Support\Facades\Storage::disk('public')->delete(ProfilDesa::get('gambar'));
             }
             $validated['gambar'] = $request->file('gambar')->store('profil', 'public');
+        }
+
+        if ($request->hasFile('foto_login')) {
+            if (ProfilDesa::get('foto_login')) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete(ProfilDesa::get('foto_login'));
+            }
+            $validated['foto_login'] = $request->file('foto_login')->store('profil', 'public');
         }
 
         foreach ($validated as $key => $value) {
