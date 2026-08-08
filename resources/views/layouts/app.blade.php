@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Kebudayaan Desa Brontokusuman')</title>
+    <title>@yield('title', 'Kebudayaan Kampung Brontokusuman')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -51,7 +51,7 @@
                     </div>
                     <div>
                         <span class="font-display text-xl font-bold text-gold-300">Brontokusuman</span>
-                        <span class="block text-xs text-gold-500/70 tracking-widest uppercase">Kebudayaan Desa</span>
+                        <span class="block text-xs text-gold-500/70 tracking-widest uppercase">Kebudayaan Kampung</span>
                     </div>
                 </a>
 
@@ -94,11 +94,11 @@
                         </div>
                         <div>
                             <span class="font-display text-lg font-bold text-gold-300">Brontokusuman</span>
-                            <span class="block text-xs text-gold-500/70 tracking-widest uppercase">Kebudayaan Desa</span>
+                            <span class="block text-xs text-gold-500/70 tracking-widest uppercase">Kebudayaan Kampung</span>
                         </div>
                     </div>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Melestarikan dan mempromosikan kebudayaan warisan leluhur Desa Brontokusuman agar tetap hidup dan dikenal luas.
+                        Melestarikan dan mempromosikan kebudayaan warisan leluhur Kampung Brontokusuman agar tetap hidup dan dikenal luas.
                     </p>
                     <div class="flex space-x-4 mt-6">
                         <a href="#" class="w-10 h-10 rounded-full bg-gold-500/10 flex items-center justify-center text-gold-400 hover:bg-gold-500/20 transition-colors"><i class="fab fa-facebook-f"></i></a>
@@ -120,7 +120,7 @@
                 <div>
                     <h4 class="font-display text-lg font-semibold text-gold-300 mb-6">Informasi</h4>
                     <ul class="space-y-3">
-                        @foreach(['Sejarah'=>'sejarah','Profil Desa'=>'profil','Kontak'=>'kontak'] as $label => $route)
+                        @foreach(['Sejarah'=>'sejarah','Profil Kampung'=>'profil','Kontak'=>'kontak'] as $label => $route)
                             <li><a href="{{ route($route) }}" class="text-gray-400 hover:text-gold-300 transition-colors text-sm"><i class="fas fa-chevron-right text-gold-500/50 text-xs mr-2"></i>{{ $label }}</a></li>
                         @endforeach
                     </ul>
@@ -129,10 +129,10 @@
                 <div>
                     <h4 class="font-display text-lg font-semibold text-gold-300 mb-6">Kontak</h4>
                     <ul class="space-y-4">
-                        @php $fp = App\Models\ProfilDesa::all()->pluck('value','key'); @endphp
+                        @php $fp = App\Models\ProfilKampung::all()->pluck('value','key'); @endphp
                         <li class="flex items-start space-x-3">
                             <i class="fas fa-map-marker-alt text-gold-400 mt-1"></i>
-                            <span class="text-gray-400 text-sm">{{ $fp['alamat'] ?? 'Desa Brontokusuman, Kecamatan Mergangsan, Kota Yogyakarta, DI Yogyakarta' }}</span>
+                            <span class="text-gray-400 text-sm">{{ $fp['alamat'] ?? 'Kampung Brontokusuman, Kecamatan Mergangsan, Kota Yogyakarta, DI Yogyakarta' }}</span>
                         </li>
                         <li class="flex items-center space-x-3">
                             <i class="fas fa-phone text-gold-400"></i>
@@ -149,7 +149,7 @@
 
         <div class="border-t border-gold-500/10 py-6">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-500 text-sm">&copy; {{ date('Y') }} Desa Brontokusuman. Hak Cipta Dilindungi.</p>
+                <p class="text-gray-500 text-sm">&copy; {{ date('Y') }} Kampung Brontokusuman. Hak Cipta Dilindungi.</p>
                 <p class="text-gray-600 text-xs mt-2 md:mt-0">Dibuat dengan <i class="fas fa-heart text-gold-500"></i> untuk kebudayaan</p>
             </div>
         </div>

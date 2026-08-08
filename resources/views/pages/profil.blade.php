@@ -1,14 +1,14 @@
 @extends('layouts.app')
-@section('title', 'Profil Desa - Brontokusuman')
+@section('title', 'Profil Kampung - Brontokusuman')
 
 @section('content')
 <section class="pt-32 pb-16 bg-dark-950 relative overflow-hidden">
     <div class="absolute inset-0 hero-pattern opacity-20"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Profil</span>
-        <h1 class="font-display text-5xl sm:text-6xl font-bold text-white mt-3 mb-4">Desa Brontokusuman</h1>
+        <h1 class="font-display text-5xl sm:text-6xl font-bold text-white mt-3 mb-4">Kampung Brontokusuman</h1>
         <div class="line-gold w-24 mx-auto mb-6"></div>
-        <p class="text-gray-400 max-w-xl mx-auto">Mengenal lebih dekat desa yang kaya akan tradisi dan budaya</p>
+        <p class="text-gray-400 max-w-xl mx-auto">Mengenal lebih dekat kampung yang kaya akan tradisi dan budaya</p>
     </div>
 </section>
 
@@ -16,7 +16,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-16 items-center mb-24">
             <div>
-                <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Tentang Desa</span>
+                <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Tentang Kampung</span>
                 <h2 class="font-display text-4xl font-bold text-white mt-3 mb-6">{{ $profil['tentang_judul'] ?? 'Brontokusuman' }}</h2>
                 <div class="line-gold w-16 mb-8"></div>
                 <div class="space-y-4 text-gray-400 leading-relaxed">
@@ -75,7 +75,7 @@
         @if($pengurus->count())
         <div class="text-center mb-16">
             <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Struktur</span>
-            <h2 class="font-display text-4xl font-bold text-white mt-3">Pengurus Budaya Desa</h2>
+            <h2 class="font-display text-4xl font-bold text-white mt-3">Pengurus Kampung Brontokusuman</h2>
             <div class="line-gold w-24 mx-auto mt-4"></div>
         </div>
 

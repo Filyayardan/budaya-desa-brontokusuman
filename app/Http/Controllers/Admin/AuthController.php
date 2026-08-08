@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ProfilDesa;
+use App\Models\ProfilKampung;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +14,7 @@ class AuthController extends Controller
         if (auth()->check()) {
             return redirect()->route('admin.dashboard');
         }
-        $fotoLogin = ProfilDesa::get('foto_login');
+        $fotoLogin = ProfilKampung::get('foto_login');
         return view('admin.login', compact('fotoLogin'));
     }
 

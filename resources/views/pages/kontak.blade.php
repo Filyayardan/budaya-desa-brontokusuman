@@ -8,7 +8,7 @@
         <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Hubungi Kami</span>
         <h1 class="font-display text-5xl sm:text-6xl font-bold text-white mt-3 mb-4">Kontak</h1>
         <div class="line-gold w-24 mx-auto mb-6"></div>
-        <p class="text-gray-400 max-w-xl mx-auto">Silakan hubungi kami untuk informasi lebih lanjut tentang kebudayaan Desa Brontokusuman</p>
+        <p class="text-gray-400 max-w-xl mx-auto">Silakan hubungi kami untuk informasi lebih lanjut tentang kebudayaan Kampung Brontokusuman</p>
     </div>
 </section>
 
@@ -78,7 +78,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-10">
             <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Lokasi</span>
-            <h2 class="font-display text-3xl font-bold text-white mt-3">Desa Brontokusuman</h2>
+            <h2 class="font-display text-3xl font-bold text-white mt-3">Kampung Brontokusuman</h2>
             <div class="line-gold w-24 mx-auto mt-4"></div>
         </div>
         <div class="rounded-2xl overflow-hidden border border-gold-500/20 shadow-xl">

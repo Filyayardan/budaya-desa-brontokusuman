@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ProfilDesa;
+use App\Models\ProfilKampung;
 use Illuminate\Http\Request;
 
-class ProfilDesaController extends Controller
+class ProfilKampungController extends Controller
 {
     public function index()
     {
-        $profil = ProfilDesa::all()->pluck('value', 'key');
+        $profil = ProfilKampung::all()->pluck('value', 'key');
         return view('admin.profil.index', compact('profil'));
     }
 
@@ -35,25 +35,25 @@ class ProfilDesaController extends Controller
         $validated = $request->validate($fields);
 
         if ($request->hasFile('gambar')) {
-            if (ProfilDesa::get('gambar')) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete(ProfilDesa::get('gambar'));
+            if (ProfilKampung::get('gambar')) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete(ProfilKampung::get('gambar'));
             }
             $validated['gambar'] = $request->file('gambar')->store('profil', 'public');
         }
 
         if ($request->hasFile('foto_login')) {
-            if (ProfilDesa::get('foto_login')) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete(ProfilDesa::get('foto_login'));
+            if (ProfilKampung::get('foto_login')) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete(ProfilKampung::get('foto_login'));
             }
             $validated['foto_login'] = $request->file('foto_login')->store('profil', 'public');
         }
 
         foreach ($validated as $key => $value) {
             if ($value !== null || $key !== 'gambar') {
-                ProfilDesa::set($key, $value);
+                ProfilKampung::set($key, $value);
             }
         }
 
-        return redirect()->route('admin.profil.index')->with('success', 'Profil desa berhasil diperbarui.');
+        return redirect()->route('admin.profil.index')->with('success', 'Profil kampung berhasil diperbarui.');
     }
 }

@@ -6,9 +6,9 @@
     <div class="absolute inset-0 hero-pattern opacity-20"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Masa Lalu</span>
-        <h1 class="font-display text-5xl sm:text-6xl font-bold text-white mt-3 mb-4">Sejarah Desa</h1>
+        <h1 class="font-display text-5xl sm:text-6xl font-bold text-white mt-3 mb-4">Sejarah Kampung</h1>
         <div class="line-gold w-24 mx-auto mb-6"></div>
-        <p class="text-gray-400 max-w-xl mx-auto">Perjalanan panjang Desa Brontokusuman dari masa ke masa</p>
+        <p class="text-gray-400 max-w-xl mx-auto">Perjalanan panjang Kampung Brontokusuman dari masa ke masa</p>
     </div>
 </section>
 

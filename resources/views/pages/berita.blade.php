@@ -8,7 +8,7 @@
         <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Informasi</span>
         <h1 class="font-display text-5xl sm:text-6xl font-bold text-white mt-3 mb-4">Berita Terbaru</h1>
         <div class="line-gold w-24 mx-auto mb-6"></div>
-        <p class="text-gray-400 max-w-xl mx-auto">Kabar dan informasi terkini seputar kebudayaan Desa Brontokusuman</p>
+        <p class="text-gray-400 max-w-xl mx-auto">Kabar dan informasi terkini seputar kebudayaan Kampung Brontokusuman</p>
     </div>
 </section>
 

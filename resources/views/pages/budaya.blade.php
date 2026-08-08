@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Kebudayaan Desa Brontokusuman')
+@section('title', 'Kebudayaan Kampung Brontokusuman')
 
 @section('content')
 <section class="pt-32 pb-16 bg-dark-950 relative overflow-hidden">
@@ -8,7 +8,7 @@
         <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Koleksi</span>
         <h1 class="font-display text-5xl sm:text-6xl font-bold text-white mt-3 mb-4">Kebudayaan</h1>
         <div class="line-gold w-24 mx-auto mb-6"></div>
-        <p class="text-gray-400 max-w-xl mx-auto">Beragam warisan budaya yang dilestarikan di Desa Brontokusuman</p>
+        <p class="text-gray-400 max-w-xl mx-auto">Beragam warisan budaya yang dilestarikan di Kampung Brontokusuman</p>
     </div>
 </section>
 

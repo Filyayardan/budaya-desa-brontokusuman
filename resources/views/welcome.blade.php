@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Beranda - Kebudayaan Desa Brontokusuman')
+@section('title', 'Beranda - Kebudayaan Kampung Brontokusuman')
 
 @section('content')
 <section class="relative min-h-screen flex items-center overflow-hidden">
@@ -29,7 +29,7 @@
                 </h1>
 
                 <p class="text-gray-400 text-lg leading-relaxed mb-10 max-w-xl">
-                    {{ $banner->deskripsi ?? 'Mengenal lebih dekat keindahan tradisi, seni, dan warisan budaya Desa Brontokusuman yang telah mengakar sejak berabad-abad lamanya.' }}
+                    {{ $banner->deskripsi ?? 'Mengenal lebih dekat keindahan tradisi, seni, dan warisan budaya Kampung Brontokusuman yang telah mengakar sejak berabad-abad lamanya.' }}
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4">
@@ -104,7 +104,7 @@
             <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Kategori</span>
             <h2 class="font-display text-4xl sm:text-5xl font-bold text-white mt-3 mb-4">Jenis Kebudayaan</h2>
             <div class="line-gold w-24 mx-auto mb-6"></div>
-            <p class="text-gray-400 max-w-2xl mx-auto">Beragam warisan budaya yang dilestarikan di Desa Brontokusuman</p>
+            <p class="text-gray-400 max-w-2xl mx-auto">Beragam warisan budaya yang dilestarikan di Kampung Brontokusuman</p>
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
@@ -323,7 +323,7 @@
             "Budaya adalah identitas kita. Melestarikan budaya berarti menjaga jati diri bangsa."
         </blockquote>
         <div class="line-gold w-24 mx-auto mb-6"></div>
-        <p class="text-gold-400 font-semibold">Desa Brontokusuman</p>
+        <p class="text-gold-400 font-semibold">Kampung Brontokusuman</p>
         <p class="text-gray-500 text-sm">Kecamatan Mergangsan, Kota Yogyakarta</p>
     </div>
 </section>

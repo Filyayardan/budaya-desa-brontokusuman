@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProfilDesa extends Model
+class ProfilKampung extends Model
 {
     use HasFactory;
 
-    protected $table = 'profil_desa';
+    protected $table = 'profil_kampung';
 
     protected $fillable = ['key', 'value'];
 

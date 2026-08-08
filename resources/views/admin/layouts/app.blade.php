@@ -54,7 +54,7 @@
                         'admin.sejarah.*' => ['label' => 'Sejarah', 'icon' => 'fa-book', 'route' => 'admin.sejarah.index'],
                         'admin.pengurus.*' => ['label' => 'Pengurus', 'icon' => 'fa-users', 'route' => 'admin.pengurus.index'],
                         'admin.banner.*' => ['label' => 'Banner', 'icon' => 'fa-images', 'route' => 'admin.banner.index'],
-                        'admin.profil.*' => ['label' => 'Profil Desa', 'icon' => 'fa-id-card', 'route' => 'admin.profil.index'],
+                        'admin.profil.*' => ['label' => 'Profil Kampung', 'icon' => 'fa-id-card', 'route' => 'admin.profil.index'],
                     ];
                 @endphp
                 @foreach($menu as $pattern => $item)

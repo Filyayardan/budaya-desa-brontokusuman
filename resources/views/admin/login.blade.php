@@ -14,7 +14,7 @@
 <body class="min-h-screen flex items-center justify-center relative">
     <div class="absolute inset-0 z-0" style="background: linear-gradient(135deg, #1a1820, #2d2b33);">
         @if($fotoLogin)
-            <img src="{{ asset('storage/' . $fotoLogin) }}" alt="Desa Brontokusuman" class="w-full h-full object-cover">
+            <img src="{{ asset('storage/' . $fotoLogin) }}" alt="Kampung Brontokusuman" class="w-full h-full object-cover">
         @endif
         <div class="absolute inset-0 bg-black/50"></div>
     </div>
@@ -58,7 +58,7 @@
                 </button>
             </form>
         </div>
-        <p class="text-center text-white/70 text-sm mt-6">&copy; {{ date('Y') }} Desa Brontokusuman</p>
+        <p class="text-center text-white/70 text-sm mt-6">&copy; {{ date('Y') }} Kampung Brontokusuman</p>
     </div>
 </body>
 </html>

@@ -101,7 +101,7 @@ class PageController extends Controller
     public function profil()
     {
         $pengurus = Pengurus::all();
-        $profil = \App\Models\ProfilDesa::all()->pluck('value', 'key');
+        $profil = \App\Models\ProfilKampung::all()->pluck('value', 'key');
 
         return view('pages.profil', compact('pengurus', 'profil'));
     }

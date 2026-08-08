@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\AcaraController;
 use App\Http\Controllers\Admin\GaleriController;
 use App\Http\Controllers\Admin\SejarahController;
 use App\Http\Controllers\Admin\PengurusController;
-use App\Http\Controllers\Admin\ProfilDesaController;
+use App\Http\Controllers\Admin\ProfilKampungController;
 use App\Http\Controllers\Admin\BannerController;
 
 Route::prefix('admin')->middleware('web')->name('admin.')->group(function () {
@@ -30,7 +30,7 @@ Route::prefix('admin')->middleware('web')->name('admin.')->group(function () {
         Route::resource('pengurus', PengurusController::class)->except(['show']);
         Route::resource('banner', BannerController::class)->except(['show']);
 
-        Route::get('/profil', [ProfilDesaController::class, 'index'])->name('profil.index');
-        Route::put('/profil', [ProfilDesaController::class, 'update'])->name('profil.update');
+        Route::get('/profil', [ProfilKampungController::class, 'index'])->name('profil.index');
+        Route::put('/profil', [ProfilKampungController::class, 'update'])->name('profil.update');
     });
 });

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
-@section('title', 'Profil Desa')
-@section('header', 'Edit Profil Desa')
+@section('title', 'Profil Kampung')
+@section('header', 'Edit Profil Kampung')
 
 @section('content')
 <form action="{{ route('admin.profil.update') }}" method="POST" enctype="multipart/form-data">
@@ -8,7 +8,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div class="bg-white rounded-xl border border-gray-200 p-6">
-            <h3 class="font-semibold text-gray-900 mb-4 flex items-center"><i class="fas fa-info-circle text-gold-500 mr-2"></i>Tentang Desa</h3>
+            <h3 class="font-semibold text-gray-900 mb-4 flex items-center"><i class="fas fa-info-circle text-gold-500 mr-2"></i>Tentang Kampung</h3>
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Judul</label>
                 <input type="text" name="tentang_judul" value="{{ $profil['tentang_judul'] ?? '' }}" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
@@ -35,7 +35,7 @@
         </div>
 
         <div class="bg-white rounded-xl border border-gray-200 p-6">
-            <h3 class="font-semibold text-gray-900 mb-4 flex items-center"><i class="fas fa-map-marker-alt text-gold-500 mr-2"></i>Informasi Desa</h3>
+            <h3 class="font-semibold text-gray-900 mb-4 flex items-center"><i class="fas fa-map-marker-alt text-gold-500 mr-2"></i>Informasi Kampung</h3>
             <div class="grid grid-cols-2 gap-4 mb-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Lokasi / Kecamatan</label>
