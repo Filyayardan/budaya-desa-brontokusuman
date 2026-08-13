@@ -39,6 +39,8 @@ class AcaraController extends Controller
             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'status' => 'required|in:upcoming,ongoing,completed',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
         ]);
 
         if ($request->hasFile('gambar')) {
@@ -65,6 +67,8 @@ class AcaraController extends Controller
             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'status' => 'required|in:upcoming,ongoing,completed',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
         ]);
 
         if ($request->hasFile('gambar')) {

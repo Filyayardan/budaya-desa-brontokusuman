@@ -18,7 +18,7 @@ Route::prefix('admin')->middleware('web')->name('admin.')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login.post');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // Route::middleware('admin')->group(function () {
+    Route::middleware('admin')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::resource('kategori-budaya', KategoriBudayaController::class)->except(['show']);
@@ -32,5 +32,5 @@ Route::prefix('admin')->middleware('web')->name('admin.')->group(function () {
 
         Route::get('/profil', [ProfilKampungController::class, 'index'])->name('profil.index');
         Route::put('/profil', [ProfilKampungController::class, 'update'])->name('profil.update');
-    // });
+    });
 });

@@ -66,12 +66,14 @@
                         @endif
                     </div>
                     <div class="flex gap-4 justify-center lg:justify-start">
-                        <button
-                            class="bg-main_txt text-white rounded-lg font-label-lg text-label-lg px-8 py-4  hover:text-on-tertiary transition-colors shadow-sm">Lihat
-                            Koleksi</button>
-                        <button
-                            class="border border-tertiary text-tertiary rounded-lg font-label-lg text-label-lg px-8 py-4 hover:bg-tertiary hover:text-on-tertiary transition-colors">Baca
-                            Sejarah</button>
+                        <a href="{{ route('galeri') }}"
+                            class="bg-main_txt text-white rounded-lg font-label-lg text-label-lg px-8 py-4 hover:text-on-tertiary transition-colors shadow-sm inline-block text-center">
+                            Lihat Koleksi
+                        </a>
+                        <a href="{{ route('sejarah') }}"
+                            class="border border-tertiary text-tertiary rounded-lg font-label-lg text-label-lg px-8 py-4 hover:bg-tertiary hover:text-on-tertiary transition-colors inline-block text-center">
+                            Baca Sejarah
+                        </a>
                     </div>
                 </div>
 

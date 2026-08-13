@@ -43,6 +43,8 @@ class BudayaController extends Controller
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'video' => 'nullable|file|mimes:mp4,webm,mov,avi|max:512000',
             'lokasi' => 'nullable|string|max:255',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
         ]);
 
         if ($request->hasFile('gambar')) {
@@ -74,6 +76,8 @@ class BudayaController extends Controller
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'video' => 'nullable|file|mimes:mp4,webm,mov,avi|max:512000',
             'lokasi' => 'nullable|string|max:255',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
         ]);
 
         if ($request->hasFile('gambar')) {

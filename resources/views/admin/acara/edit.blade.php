@@ -39,6 +39,20 @@
                     </select>
                 </div>
             </div>
+               <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                        Posisi di Peta
+                    </label>
+
+                    <div id="map" class="w-full h-80 rounded-xl border border-gray-300"></div>
+
+                    <input type="hidden" name="latitude" id="latitude"
+                        value="{{ old('latitude', $acara->latitude ?? -7.7956) }}">
+                    <input type="hidden" name="longitude" id="longitude"
+                        value="{{ old('longitude', $acara->longitude ?? 110.3695) }}">
+
+                    <p class="text-xs text-gray-500 mt-2">Klik peta untuk menentukan lokasi budaya.</p>
+                </div>
             <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Gambar</label>
                 @if($acara->gambar)

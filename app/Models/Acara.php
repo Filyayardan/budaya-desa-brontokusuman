@@ -11,5 +11,7 @@ class Acara extends Model
 
     protected $table = 'acara';
 
-    protected $fillable = ['nama_acara', 'deskripsi', 'lokasi', 'tanggal_mulai', 'tanggal_selesai', 'gambar', 'status'];
+    protected $fillable = ['nama_acara', 'deskripsi', 'lokasi', 'tanggal_mulai', 'tanggal_selesai', 'gambar', 'status',
+        'latitude',
+        'longitude'];
 }

@@ -11,7 +11,18 @@ class Budaya extends Model
 
     protected $table = 'budaya';
 
-    protected $fillable = ['kategori_id', 'judul', 'deskripsi', 'deskripsi_lengkap', 'gambar', 'video', 'lokasi', 'unggulan'];
+    protected $fillable = [
+        'kategori_id',
+        'judul',
+        'deskripsi',
+        'deskripsi_lengkap',
+        'gambar',
+        'video',
+        'lokasi',
+        'latitude',
+        'longitude',
+        'unggulan',
+    ];
 
     public function kategori()
     {

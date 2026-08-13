@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -21,12 +23,16 @@
     </script>
     <style>
         body { font-family: 'Inter', sans-serif; }
+
+        #map{
+            z-index: 0;
+        }
     </style>
     @stack('styles')
 </head>
 <body class="bg-gray-50 min-h-screen">
     <div class="flex min-h-screen">
-        <aside id="sidebar" class="w-64 bg-dark-900 text-white flex flex-col fixed h-full z-40 transition-transform -translate-x-full lg:translate-x-0">
+        <aside id="sidebar" class="w-64 bg-dark-900 text-white flex flex-col fixed h-full z-[1000] transition-transform -translate-x-full lg:translate-x-0">
             <div class="p-6 border-b border-gold-500/10">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-3">
                     <div class="w-10 h-10 gradient-gold rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #d4a017, #f5de8c);">
@@ -117,10 +123,47 @@
     </div>
 
     <script>
+          const latInput = document.getElementById('latitude');
+        const lngInput = document.getElementById('longitude');
+    
+        const defaultLat = {{ old('latitude', $budaya->latitude ?? -7.7956) }};
+        const defaultLng = {{ old('longitude', $budaya->longitude ?? 110.3695) }};
+    
+        const map = L.map('map').setView([defaultLat, defaultLng], 13);
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+    
+        let marker = null;
+    
+        if (latInput.value && lngInput.value) {
+            marker = L.marker([latInput.value, lngInput.value]).addTo(map);
+        }
+    
+        map.on('click', function(e) {
+            const lat = e.latlng.lat;
+            const lng = e.latlng.lng;
+    
+            latInput.value = lat.toFixed(7);
+            lngInput.value = lng.toFixed(7);
+    
+            if (marker) {
+                marker.setLatLng([lat, lng]);
+            } else {
+                marker = L.marker([lat, lng]).addTo(map);
+            }
+    
+            marker.bindPopup(`Lat: ${lat.toFixed(6)}<br>Lng: ${lng.toFixed(6)}`).openPopup();
+        });
+        
         document.getElementById('sidebarToggle')?.addEventListener('click', () => {
             document.getElementById('sidebar').classList.toggle('-translate-x-full');
         });
+
+
     </script>
     @stack('scripts')
+    
 </body>
 </html>
