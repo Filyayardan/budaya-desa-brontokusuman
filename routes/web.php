@@ -3,6 +3,10 @@
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/bud',function(){
+  return view('wel');
+});
+
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/budaya', [PageController::class, 'budaya'])->name('budaya');
 Route::get('/budaya/{id}', [PageController::class, 'budayaDetail'])->name('budaya.detail');

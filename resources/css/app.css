@@ -4,6 +4,92 @@
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-display: "Playfair Display", serif;
+
+    --color-surface: #fff8f6;
+    --color-surface-dim: #e8d6d2;
+    --color-surface-bright: #fff8f6;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #fff1ed;
+    --color-surface-container: #fceae6;
+    --color-surface-container-high: #f7e4e0;
+    --color-surface-container-highest: #f1dfda;
+    --color-on-surface: #231917;
+    --color-on-surface-variant: #55423e;
+    --color-inverse-surface: #392e2b;
+    --color-inverse-on-surface: #ffede9;
+    --color-outline: #89726d;
+    --color-outline-variant: #dcc1ba;
+    --color-surface-tint: #9b442d;
+
+    --color-primary: #6f2410;
+    --color-on-primary: #ffffff;
+    --color-primary-container: #8e3a24;
+    --color-on-primary-container: #ffb8a6;
+    --color-inverse-primary: #ffb4a1;
+
+    --color-secondary: #735c00;
+    --color-on-secondary: #ffffff;
+    --color-secondary-container: #fed65b;
+    --color-on-secondary-container: #745c00;
+
+    --color-tertiary: #2f422b;
+    --color-on-tertiary: #ffffff;
+    --color-tertiary-container: #455941;
+    --color-on-tertiary-container: #b8cfb0;
+
+    --color-error: #ba1a1a;
+    --color-on-error: #ffffff;
+    --color-error-container: #ffdad6;
+    --color-on-error-container: #93000a;
+
+    --color-primary-fixed: #ffdbd2;
+    --color-primary-fixed-dim: #ffb4a1;
+    --color-on-primary-fixed: #3c0800;
+    --color-on-primary-fixed-variant: #7c2d18;
+
+    --color-secondary-fixed: #ffe088;
+    --color-secondary-fixed-dim: #e9c349;
+    --color-on-secondary-fixed: #241a00;
+    --color-on-secondary-fixed-variant: #574500;
+
+    --color-tertiary-fixed: #d2e9c9;
+    --color-tertiary-fixed-dim: #b6cdae;
+    --color-on-tertiary-fixed: #0e200c;
+    --color-on-tertiary-fixed-variant: #384c34;
+
+    --color-background: #fff8f6;
+    --color-on-background: #231917;
+    --color-surface-variant: #f1dfda;
+
+    /* alias agar class lama tetap bekerja */
+    --color-gold-50: #fdf8e8;
+    --color-gold-100: #faefc5;
+    --color-gold-200: #f5de8c;
+    --color-gold-300: #efc94b;
+    --color-gold-400: #e8b923;
+    --color-gold-500: #d4a017;
+    --color-gold-600: #b8860b;
+    --color-gold-700: #8b6508;
+    --color-gold-800: #6b4e0a;
+    --color-gold-900: #5a420d;
+
+    --color-dark-50: #f6f6f7;
+    --color-dark-100: #e2e1e5;
+    --color-dark-200: #c4c3ca;
+    --color-dark-300: #9f9da7;
+    --color-dark-400: #7b7986;
+    --color-dark-500: #615f6c;
+    --color-dark-600: #4d4b56;
+    --color-dark-700: #3f3d47;
+    --color-dark-800: #2d2b33;
+    --color-dark-900: #1a1820;
+    --color-dark-950: #0f0e14;
+}
+
+body {
+    background-color: var(--color-background);
+    color: var(--color-on-background);
+    font-family: var(--font-sans);
 }
