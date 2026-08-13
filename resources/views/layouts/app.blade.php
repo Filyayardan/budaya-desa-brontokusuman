@@ -171,6 +171,13 @@
                 pointer-events: none;
             }
 
+            .header-section{
+                margin-top: 55px;
+                padding-top:56px;
+                padding-bottom:64px; 
+                background-color: #f1dfda;
+            }
+
             ::-webkit-scrollbar {
                 width: 8px;
             }
@@ -229,7 +236,7 @@
                 <div class="px-4 py-4 space-y-1">
                     @foreach ($links as $label => $route)
                         <a href="{{ route($route) }}"
-                            class="block px-4 py-3 rounded-lg text-sm font-medium {{ request()->routeIs($route) ? 'bg-main_txt-500/10 text-main_txt-300' : 'text-gray-300 hover:bg-main_txt-500/5 hover:text-main_txt-300' }} transition-all">
+                            class="block px-4 py-3 rounded-lg text-sm font-medium {{ request()->routeIs($route) ? 'bg-main_txt-500/10 text-main_txt-300' : 'text-gray-700 hover:bg-main_txt-500/5 hover:text-main_txt-300' }} transition-all">
                             {{ $label }}
                         </a>
                     @endforeach

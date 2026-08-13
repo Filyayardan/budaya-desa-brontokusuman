@@ -2,13 +2,13 @@
 @section('title', 'Galeri - Brontokusuman')
 
 @section('content')
-<section class="pt-32 pb-16 bg-dark-950 relative overflow-hidden">
+<section class="header-section relative overflow-hidden">
     <div class="absolute inset-0 hero-pattern opacity-20"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Dokumentasi</span>
-        <h1 class="font-display text-5xl sm:text-6xl font-bold text-white mt-3 mb-4">Galeri</h1>
+        <span class="text-tertiary text-sm font-semibold tracking-widest uppercase">Dokumentasi</span>
+        <h1 class="font-display text-5xl sm:text-6xl font-bold text-main_txt mt-3 mb-4">Galeri</h1>
         <div class="line-gold w-24 mx-auto mb-6"></div>
-        <p class="text-gray-400 max-w-xl mx-auto">Koleksi foto dan video kegiatan kebudayaan Kampung Brontokusuman</p>
+        <p class="text-main_txt-400 max-w-xl mx-auto">Koleksi foto dan video kegiatan kebudayaan Kampung Brontokusuman</p>
     </div>
 </section>
 

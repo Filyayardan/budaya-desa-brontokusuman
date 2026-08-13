@@ -246,7 +246,7 @@
                                     @endif
                                     <div class="absolute top-4 right-4">
                                         <span
-                                            class="bg-dark-900/80 backdrop-blur text-main_txt-300 text-xs font-bold px-3 py-1 rounded-full border border-main_txt-500/20">
+                                            class="bg-main_txt backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full border border-main_txt-500/20">
                                             {{ \Carbon\Carbon::parse($a->tanggal_mulai)->translatedFormat('d M Y') }}
                                         </span>
                                     </div>

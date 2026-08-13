@@ -2,13 +2,13 @@
 @section('title', 'Sejarah - Brontokusuman')
 
 @section('content')
-<section class="pt-32 pb-16 bg-dark-950 relative overflow-hidden">
+<section class="header-section relative overflow-hidden">
     <div class="absolute inset-0 hero-pattern opacity-20"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Masa Lalu</span>
-        <h1 class="font-display text-5xl sm:text-6xl font-bold text-white mt-3 mb-4">Sejarah Kampung</h1>
+        <span class="text-tertiary text-sm font-semibold tracking-widest uppercase">Masa Lalu</span>
+        <h1 class="font-display text-5xl sm:text-6xl font-bold text-main_txt mt-3 mb-4">Sejarah Kampung</h1>
         <div class="line-gold w-24 mx-auto mb-6"></div>
-        <p class="text-gray-400 max-w-xl mx-auto">Perjalanan panjang Kampung Brontokusuman dari masa ke masa</p>
+        <p class="text-main_txt-400 max-w-xl mx-auto">Perjalanan panjang Kampung Brontokusuman dari masa ke masa</p>
     </div>
 </section>
 
@@ -28,8 +28,8 @@
                         <img src="{{ asset('storage/' . $s->gambar) }}" alt="{{ $s->judul }}" class="w-full h-48 object-cover">
                     </div>
                     @endif
-                    <h3 class="font-display text-2xl font-bold text-white mb-3">{{ $s->judul }}</h3>
-                    <p class="text-gray-400 leading-relaxed">{{ Str::limit($s->isi, 300) }}</p>
+                    <h3 class="font-display text-2xl font-bold text-main_txt mb-3">{{ $s->judul }}</h3>
+                    <p class="text-tertiary leading-relaxed">{{ Str::limit($s->isi, 300) }}</p>
                 </div>
 
                 <div class="hidden md:block md:w-1/2"></div>
@@ -39,7 +39,7 @@
         @else
         <div class="text-center py-20">
             <i class="fas fa-landmark-dome text-6xl text-gold-500/20 mb-6"></i>
-            <p class="text-gray-400 text-lg">Data sejarah belum tersedia.</p>
+            <p class="text-tertiary-400 text-lg">Data sejarah belum tersedia.</p>
         </div>
         @endif
     </div>

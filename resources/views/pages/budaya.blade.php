@@ -2,13 +2,13 @@
 @section('title', 'Kebudayaan Kampung Brontokusuman')
 
 @section('content')
-<section class="pt-32 pb-16 bg-dark-950 relative overflow-hidden">
+<section class="header-section  relative overflow-hidden">
     <div class="absolute inset-0 hero-pattern opacity-20"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Koleksi</span>
-        <h1 class="font-display text-5xl sm:text-6xl font-bold text-white mt-3 mb-4">Kebudayaan</h1>
+        <span class="text-tertiary text-sm font-semibold tracking-widest uppercase">Koleksi</span>
+        <h1 class="font-display text-5xl sm:text-6xl font-bold text-main_txt mt-3 mb-4">Kebudayaan</h1>
         <div class="line-gold w-24 mx-auto mb-6"></div>
-        <p class="text-gray-400 max-w-xl mx-auto">Beragam warisan budaya yang dilestarikan di Kampung Brontokusuman</p>
+        <p class="text-main_txt-400 max-w-xl mx-auto">Beragam warisan budaya yang dilestarikan di Kampung Brontokusuman</p>
     </div>
 </section>
 
@@ -29,8 +29,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($budaya as $b)
             <a href="{{ route('budaya.detail', $b->id) }}" class="card-hover group">
-                <div class="bg-dark-800/80 backdrop-blur rounded-2xl overflow-hidden border border-gold-500/10 hover:border-gold-500/30 h-full">
-                    <div class="relative h-56 bg-gradient-to-br from-gold-600/20 to-dark-700 overflow-hidden">
+                <div class="bg-white backdrop-blur rounded-2xl overflow-hidden border border-gold-500/10 hover:border-gold-500/30 h-full">
+                    <div class="relative aspect-[3/2]  bg-gradient-to-br from-gold-600/20 to-dark-700 overflow-hidden">
                         @if($b->gambar)
                             <img src="{{ asset('storage/' . $b->gambar) }}" alt="{{ $b->judul }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         @else
@@ -48,10 +48,10 @@
                         @endif
                     </div>
                     <div class="p-6">
-                        <h3 class="font-display text-xl font-bold text-white group-hover:text-gold-300 transition-colors mb-3">{{ $b->judul }}</h3>
-                        <p class="text-gray-400 text-sm line-clamp-2 mb-4">{{ Str::limit($b->deskripsi, 120) }}</p>
+                        <h3 class="font-display text-xl font-bold text-main_txt group-hover:text-gold-300 transition-colors mb-3">{{ $b->judul }}</h3>
+                        <p class="text-tertiary text-sm line-clamp-2 mb-4">{{ Str::limit($b->deskripsi, 120) }}</p>
                         @if($b->lokasi)
-                        <div class="flex items-center text-gray-500 text-sm">
+                        <div class="flex items-center text-gray-700 text-sm">
                             <i class="fas fa-map-marker-alt text-gold-500/60 mr-2"></i>{{ $b->lokasi }}
                         </div>
                         @endif
