@@ -54,6 +54,7 @@
                     $menu = [
                         'admin.kategori-budaya.*' => ['label' => 'Kategori Budaya', 'icon' => 'fa-tags', 'route' => 'admin.kategori-budaya.index'],
                         'admin.budaya.*' => ['label' => 'Budaya', 'icon' => 'fa-landmark', 'route' => 'admin.budaya.index'],
+                        'admin.umkm.*' => ['label' => 'UMKM', 'icon' => 'fa-store', 'route' => 'admin.umkm.index'],
                         'admin.berita.*' => ['label' => 'Berita', 'icon' => 'fa-newspaper', 'route' => 'admin.berita.index'],
                         'admin.acara.*' => ['label' => 'Acara', 'icon' => 'fa-calendar-alt', 'route' => 'admin.acara.index'],
                         'admin.galeri.*' => ['label' => 'Galeri', 'icon' => 'fa-images', 'route' => 'admin.galeri.index'],
@@ -123,40 +124,43 @@
     </div>
 
     <script>
-          const latInput = document.getElementById('latitude');
+        const latInput = document.getElementById('latitude');
         const lngInput = document.getElementById('longitude');
-    
-        const defaultLat = {{ old('latitude', $budaya->latitude ?? -7.7956) }};
-        const defaultLng = {{ old('longitude', $budaya->longitude ?? 110.3695) }};
-    
-        const map = L.map('map').setView([defaultLat, defaultLng], 13);
-    
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; OpenStreetMap contributors'
-        }).addTo(map);
-    
-        let marker = null;
-    
-        if (latInput.value && lngInput.value) {
-            marker = L.marker([latInput.value, lngInput.value]).addTo(map);
-        }
-    
-        map.on('click', function(e) {
-            const lat = e.latlng.lat;
-            const lng = e.latlng.lng;
-    
-            latInput.value = lat.toFixed(7);
-            lngInput.value = lng.toFixed(7);
-    
-            if (marker) {
-                marker.setLatLng([lat, lng]);
-            } else {
-                marker = L.marker([lat, lng]).addTo(map);
+        const mapEl = document.getElementById('map');
+
+        if (mapEl && latInput && lngInput) {
+            const defaultLat = parseFloat(latInput.value) || -7.8170000;
+            const defaultLng = parseFloat(lngInput.value) || 110.3703000;
+
+            const map = L.map('map').setView([defaultLat, defaultLng], 15);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            let marker = null;
+
+            if (latInput.value && lngInput.value) {
+                marker = L.marker([latInput.value, lngInput.value]).addTo(map);
             }
-    
-            marker.bindPopup(`Lat: ${lat.toFixed(6)}<br>Lng: ${lng.toFixed(6)}`).openPopup();
-        });
-        
+
+            map.on('click', function(e) {
+                const lat = e.latlng.lat;
+                const lng = e.latlng.lng;
+
+                latInput.value = lat.toFixed(7);
+                lngInput.value = lng.toFixed(7);
+
+                if (marker) {
+                    marker.setLatLng([lat, lng]);
+                } else {
+                    marker = L.marker([lat, lng]).addTo(map);
+                }
+
+                marker.bindPopup(`Lat: ${lat.toFixed(6)}<br>Lng: ${lng.toFixed(6)}`).openPopup();
+            });
+        }
+
         document.getElementById('sidebarToggle')?.addEventListener('click', () => {
             document.getElementById('sidebar').classList.toggle('-translate-x-full');
         });

@@ -13,6 +13,7 @@ Route::get('/budaya/{id}', [PageController::class, 'budayaDetail'])->name('buday
 Route::get('/budaya/kategori/{id}', [PageController::class, 'budayaByKategori'])->name('budaya.kategori');
 Route::get('/acara', [PageController::class, 'acara'])->name('acara');
 Route::get('/acara/{id}', [PageController::class, 'acaraDetail'])->name('acara.detail');
+Route::get('/peta', [PageController::class, 'peta'])->name('peta');
 Route::get('/galeri', [PageController::class, 'galeri'])->name('galeri');
 Route::get('/berita', [PageController::class, 'berita'])->name('berita');
 Route::get('/berita/{id}', [PageController::class, 'beritaDetail'])->name('berita.detail');

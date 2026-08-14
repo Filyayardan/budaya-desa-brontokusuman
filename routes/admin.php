@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\SejarahController;
 use App\Http\Controllers\Admin\PengurusController;
 use App\Http\Controllers\Admin\ProfilKampungController;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\UmkmController;
 
 Route::prefix('admin')->middleware('web')->name('admin.')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -23,6 +24,7 @@ Route::prefix('admin')->middleware('web')->name('admin.')->group(function () {
 
         Route::resource('kategori-budaya', KategoriBudayaController::class)->except(['show']);
         Route::resource('budaya', BudayaController::class)->except(['show']);
+        Route::resource('umkm', UmkmController::class)->except(['show']);
         Route::resource('berita', BeritaController::class)->except(['show'])->parameters(['berita' => 'berita']);
         Route::resource('acara', AcaraController::class)->except(['show']);
         Route::resource('galeri', GaleriController::class)->except(['show']);

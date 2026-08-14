@@ -10,6 +10,8 @@ use App\Models\Berita;
 use App\Models\Sejarah;
 use App\Models\Pengurus;
 use App\Models\Banner;
+use App\Models\Umkm;
+use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
@@ -74,6 +76,41 @@ class PageController extends Controller
         $kategori = Galeri::distinct()->pluck('kategori')->filter();
 
         return view('pages.galeri', compact('galeri', 'kategori'));
+    }
+
+    public function peta()
+    {
+        $umkm = Umkm::whereNotNull('latitude')->whereNotNull('longitude')->get()->map(fn ($u) => [
+            'nama' => $u->nama_usaha,
+            'kategori' => $u->kategori ?? 'UMKM',
+            'lokasi' => $u->alamat,
+            'deskripsi' => Str::limit($u->deskripsi, 100),
+            'lat' => (float) $u->latitude,
+            'lng' => (float) $u->longitude,
+            'url' => null,
+        ])->values();
+
+        $budaya = Budaya::with('kategori')->whereNotNull('latitude')->whereNotNull('longitude')->get()->map(fn ($b) => [
+            'nama' => $b->judul,
+            'kategori' => $b->kategori->nama_kategori ?? 'Budaya',
+            'lokasi' => $b->lokasi,
+            'deskripsi' => Str::limit($b->deskripsi, 100),
+            'lat' => (float) $b->latitude,
+            'lng' => (float) $b->longitude,
+            'url' => route('budaya.detail', $b->id),
+        ])->values();
+
+        $acara = Acara::whereNotNull('latitude')->whereNotNull('longitude')->get()->map(fn ($a) => [
+            'nama' => $a->nama_acara,
+            'kategori' => 'Acara',
+            'lokasi' => $a->lokasi,
+            'deskripsi' => Str::limit($a->deskripsi, 100),
+            'lat' => (float) $a->latitude,
+            'lng' => (float) $a->longitude,
+            'url' => route('acara.detail', $a->id),
+        ])->values();
+
+        return view('pages.peta', compact('umkm', 'budaya', 'acara'));
     }
 
     public function berita()

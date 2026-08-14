@@ -76,66 +76,6 @@
                 <div class="mt-12">
                     {{ $budaya->withQueryString()->links('vendor.pagination.tailwind') }}
                 </div>
-                <div class="px-4">
-                    <h1>Map Desa</h1>
-
-                    <div id="map" class="z-0"></div>
-
-                    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-                    <script>
-                        const budaya = @json($budaya)
-
-                        // Koordinat awal
-                        const map = L.map('map').setView([-7.7956, 110.3695], 13);
-
-                        // OpenStreetMap
-                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                            attribution: '&copy; OpenStreetMap contributors'
-                        }).addTo(map);
-
-                        // Marker
-
-                        function createIcon() {
-                            const color = '#4287f5';
-                            return L.divIcon({
-                                html: `
-            <svg width="28" height="36" viewBox="0 0 28 36" fill="none">
-                <path d="M14 0C6.27 0 0 6.27 0 14c0 10.5 14 22 14 22s14-11.5 14-22C28 6.27 21.73 0 14 0z" fill="${color}"/>
-                <circle cx="14" cy="14" r="6" fill="white"/>
-            </svg>
-        `,
-                                iconSize: [28, 36],
-                                iconAnchor: [14, 36],
-                                popupAnchor: [0, -38],
-                                className: ''
-                            });
-                        }
-
-                        // Render semua marker
-                        budaya.data.forEach(bud => {
-                            if (!bud.latitude || !bud.longitude) return; // Skip jika tidak ada koordinat
-                        
-                            const lat = parseFloat(bud.latitude);
-                            const lng = parseFloat(bud.longitude);
-
-                            // 2. Pastikan hasil parse valid (bukan NaN)
-                            if (isNaN(lat) || isNaN(lng)) return;
-
-                            const marker = L.marker([bud.latitude, bud.longitude], {
-                                icon: createIcon()
-                            }).addTo(map);
-
-                            marker.bindPopup(`
-      <div class="text-center flex flex-col gap-1  items-center" >
-            <p class="font-body text-[10px]  text-white font-bold bg-main_txt w-fit px-2 py-1 rounded-2xl " style="margin: 0;">${bud.kategori.nama_kategori}</p>
-            <p class="font-display text-main_txt text-2xl " style="margin: 0;"><b>${bud.judul || 'Tanpa Judul'}</b></p>
-            ${bud.lokasi ? `<p class="text-[10px] text-tertiary m-0 font-bold" style="margin: 0;">Lokasi : ${bud.lokasi}</p>` : ''}
-        </div>
-    `);
-                        });
-                    </script>
-                </div>
             @else
                 <div class="text-center py-20">
                     <i class="fas fa-inbox text-6xl text-gold-500/20 mb-6"></i>

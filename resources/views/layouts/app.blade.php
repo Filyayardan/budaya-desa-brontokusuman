@@ -221,7 +221,7 @@
                     </a>
 
                     <div class="hidden lg:flex items-center space-x-1">
-                        @php $links = ['Beranda'=>'home','Kebudayaan'=>'budaya','Acara'=>'acara','Galeri'=>'galeri','Berita'=>'berita','Sejarah'=>'sejarah','Profil'=>'profil','Kontak'=>'kontak']; @endphp
+                        @php $links = ['Beranda'=>'home','Kebudayaan'=>'budaya','Acara'=>'acara','Peta'=>'peta','Galeri'=>'galeri','Berita'=>'berita','Sejarah'=>'sejarah','Profil'=>'profil','Kontak'=>'kontak']; @endphp
                         @foreach ($links as $label => $route)
                             <a href="{{ route($route) }}"
                                 class="px-4 py-2 text-sm font-medium {{ request()->routeIs($route) ? 'text-main_txt' : 'text-gray-700 hover:text-main_txt-300' }} transition-colors duration-300 relative group">
