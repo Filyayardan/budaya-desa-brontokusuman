@@ -89,18 +89,18 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-10">
                 <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">Lokasi</span>
-                <h2 class="font-display text-3xl font-bold text-white mt-3">Kampung Brontokusuman</h2>
+                <h2 class="font-display text-3xl font-bold text-white mt-3">Depan Museum Perjuangan</h2>
                 <div class="line-gold w-24 mx-auto mt-4"></div>
             </div>
             <div class="rounded-2xl overflow-hidden border border-gold-500/20 shadow-xl">
                 <iframe
-                    src="https://maps.google.com/maps?q=-7.822656077037122,110.36961693442929&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                    src="https://maps.google.com/maps?q=-7.81649070688264,110.37186112414891&t=&z=16&ie=UTF8&iwloc=&output=embed"
                     width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </div>
             <div class="mt-6 text-center">
-                <a href="https://maps.app.goo.gl/JFJRnLabUfGwEKV87" target="_blank" rel="noopener noreferrer"
+                <a href="https://www.google.com/maps/search/?api=1&query=-7.81649070688264,110.37186112414891" target="_blank" rel="noopener noreferrer"
                     class="inline-flex items-center gradient-gold text-dark-950 font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity shadow-lg shadow-gold-500/20">
                     <i class="fas fa-map-marker-alt mr-2"></i>Buka di Google Maps
                 </a>

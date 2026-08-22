@@ -100,15 +100,19 @@ class PageController extends Controller
             'url' => route('budaya.detail', $b->id),
         ])->values();
 
-        $acara = Acara::whereNotNull('latitude')->whereNotNull('longitude')->get()->map(fn ($a) => [
-            'nama' => $a->nama_acara,
-            'kategori' => 'Acara',
-            'lokasi' => $a->lokasi,
-            'deskripsi' => Str::limit($a->deskripsi, 100),
-            'lat' => (float) $a->latitude,
-            'lng' => (float) $a->longitude,
-            'url' => route('acara.detail', $a->id),
-        ])->values();
+        $acara = Acara::whereNotNull('latitude')->whereNotNull('longitude')
+            ->get()
+            ->reject(fn ($a) => $a->status === 'completed')
+            ->map(fn ($a) => [
+                'nama' => $a->nama_acara,
+                'kategori' => 'Acara',
+                'lokasi' => $a->lokasi,
+                'deskripsi' => Str::limit($a->deskripsi, 100),
+                'lat' => (float) $a->latitude,
+                'lng' => (float) $a->longitude,
+                'status' => $a->status,
+                'url' => route('acara.detail', $a->id),
+            ])->values();
 
         return view('pages.peta', compact('umkm', 'budaya', 'acara'));
     }

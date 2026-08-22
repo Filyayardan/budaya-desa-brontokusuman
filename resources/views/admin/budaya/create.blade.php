@@ -50,12 +50,24 @@
 
                     <div id="map" class="w-full h-80 rounded-xl border border-gray-300"></div>
 
-                    <input type="hidden" name="latitude" id="latitude"
-                        value="{{ old('latitude', $budaya->latitude ?? '') }}">
-                    <input type="hidden" name="longitude" id="longitude"
-                        value="{{ old('longitude', $budaya->longitude ?? '') }}">
+                    <div class="grid grid-cols-2 gap-3 mt-3">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Latitude</label>
+                            <input type="text" name="latitude" id="latitude"
+                                value="{{ old('latitude', $budaya->latitude ?? '') }}"
+                                placeholder="contoh: -7.8164907"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Longitude</label>
+                            <input type="text" name="longitude" id="longitude"
+                                value="{{ old('longitude', $budaya->longitude ?? '') }}"
+                                placeholder="contoh: 110.3718611"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                        </div>
+                    </div>
 
-                    <p class="text-xs text-gray-500 mt-2">Klik peta untuk menentukan lokasi budaya.</p>
+                    <p class="text-xs text-gray-500 mt-2">Klik peta atau masukkan koordinat secara manual.</p>
                 </div>
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
@@ -100,22 +112,38 @@
 
         if (latInput.value && lngInput.value) {
             marker = L.marker([latInput.value, lngInput.value]).addTo(map);
+            map.setView([latInput.value, lngInput.value], 16);
         }
 
-        map.on('click', function(e) {
-            const lat = e.latlng.lat;
-            const lng = e.latlng.lng;
-
+        function updateMarker(lat, lng) {
             latInput.value = lat.toFixed(7);
             lngInput.value = lng.toFixed(7);
-
             if (marker) {
                 marker.setLatLng([lat, lng]);
             } else {
                 marker = L.marker([lat, lng]).addTo(map);
             }
-
             marker.bindPopup(`Lat: ${lat.toFixed(6)}<br>Lng: ${lng.toFixed(6)}`).openPopup();
+        }
+
+        map.on('click', function(e) {
+            updateMarker(e.latlng.lat, e.latlng.lng);
         });
+
+        let debounceTimer;
+        function onCoordInput() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(function() {
+                const lat = parseFloat(latInput.value);
+                const lng = parseFloat(lngInput.value);
+                if (!isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+                    map.setView([lat, lng], 16);
+                    updateMarker(lat, lng);
+                }
+            }, 500);
+        }
+
+        latInput.addEventListener('input', onCoordInput);
+        lngInput.addEventListener('input', onCoordInput);
     </script>
 @endsection

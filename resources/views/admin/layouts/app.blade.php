@@ -140,25 +140,41 @@
 
             let marker = null;
 
-            if (latInput.value && lngInput.value) {
-                marker = L.marker([latInput.value, lngInput.value]).addTo(map);
-            }
-
-            map.on('click', function(e) {
-                const lat = e.latlng.lat;
-                const lng = e.latlng.lng;
-
+            function updateMarker(lat, lng) {
                 latInput.value = lat.toFixed(7);
                 lngInput.value = lng.toFixed(7);
-
                 if (marker) {
                     marker.setLatLng([lat, lng]);
                 } else {
                     marker = L.marker([lat, lng]).addTo(map);
                 }
-
                 marker.bindPopup(`Lat: ${lat.toFixed(6)}<br>Lng: ${lng.toFixed(6)}`).openPopup();
+            }
+
+            if (latInput.value && lngInput.value) {
+                marker = L.marker([latInput.value, lngInput.value]).addTo(map);
+                map.setView([latInput.value, lngInput.value], 16);
+            }
+
+            map.on('click', function(e) {
+                updateMarker(e.latlng.lat, e.latlng.lng);
             });
+
+            let debounceTimer;
+            function onCoordInput() {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(function() {
+                    const lat = parseFloat(latInput.value);
+                    const lng = parseFloat(lngInput.value);
+                    if (!isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+                        map.setView([lat, lng], 16);
+                        updateMarker(lat, lng);
+                    }
+                }, 500);
+            }
+
+            latInput.addEventListener('input', onCoordInput);
+            lngInput.addEventListener('input', onCoordInput);
         }
 
         document.getElementById('sidebarToggle')?.addEventListener('click', () => {

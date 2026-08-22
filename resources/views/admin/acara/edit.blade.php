@@ -31,12 +31,15 @@
                     <input type="text" name="lokasi" value="{{ old('lokasi', $acara->lokasi) }}" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Status <span class="text-red-500">*</span></label>
-                    <select name="status" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
-                        <option value="upcoming" {{ old('status', $acara->status) == 'upcoming' ? 'selected' : '' }}>Mendatang</option>
-                        <option value="ongoing" {{ old('status', $acara->status) == 'ongoing' ? 'selected' : '' }}>Berlangsung</option>
-                        <option value="completed" {{ old('status', $acara->status) == 'completed' ? 'selected' : '' }}>Selesai</option>
-                    </select>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    @php $statusLabel = ['upcoming' => 'Mendatang', 'ongoing' => 'Berlangsung', 'completed' => 'Selesai'][$acara->status]; ?>
+                    <div class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm">
+                        <span class="inline-flex items-center gap-1 font-medium {{ $acara->status === 'upcoming' ? 'text-blue-600' : ($acara->status === 'ongoing' ? 'text-green-600' : 'text-gray-500') }}">
+                            <i class="fas fa-circle text-[8px]"></i>{{ $statusLabel }}
+                        </span>
+                        <span class="text-gray-400 ml-1">(otomatis)</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-1">Mendatang &rarr; Berlangsung &rarr; Selesai</p>
                 </div>
             </div>
                <div class="mb-4">
@@ -46,12 +49,24 @@
 
                     <div id="map" class="w-full h-80 rounded-xl border border-gray-300"></div>
 
-                    <input type="hidden" name="latitude" id="latitude"
-                        value="{{ old('latitude', $acara->latitude ?? -7.7956) }}">
-                    <input type="hidden" name="longitude" id="longitude"
-                        value="{{ old('longitude', $acara->longitude ?? 110.3695) }}">
+                    <div class="grid grid-cols-2 gap-3 mt-3">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Latitude</label>
+                            <input type="text" name="latitude" id="latitude"
+                                value="{{ old('latitude', $acara->latitude ?? '') }}"
+                                placeholder="contoh: -7.8164907"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Longitude</label>
+                            <input type="text" name="longitude" id="longitude"
+                                value="{{ old('longitude', $acara->longitude ?? '') }}"
+                                placeholder="contoh: 110.3718611"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                        </div>
+                    </div>
 
-                    <p class="text-xs text-gray-500 mt-2">Klik peta untuk menentukan lokasi budaya.</p>
+                    <p class="text-xs text-gray-500 mt-2">Klik peta atau masukkan koordinat secara manual.</p>
                 </div>
             <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Gambar</label>

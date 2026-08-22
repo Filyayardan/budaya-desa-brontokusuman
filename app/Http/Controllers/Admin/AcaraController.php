@@ -17,7 +17,15 @@ class AcaraController extends Controller
             $query->where('nama_acara', 'like', "%{$request->search}%");
         }
         if ($request->filled('status')) {
-            $query->where('status', $request->status);
+            $today = now()->toDateString();
+
+            match ($request->status) {
+                'upcoming' => $query->where('tanggal_mulai', '>', $today),
+                'ongoing' => $query->where('tanggal_mulai', '<=', $today)
+                    ->whereRaw('COALESCE(tanggal_selesai, tanggal_mulai) >= ?', [$today]),
+                'completed' => $query->whereRaw('COALESCE(tanggal_selesai, tanggal_mulai) < ?', [$today]),
+                default => null,
+            };
         }
 
         $acara = $query->paginate(10)->withQueryString();
@@ -38,7 +46,6 @@ class AcaraController extends Controller
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-            'status' => 'required|in:upcoming,ongoing,completed',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
         ]);
@@ -66,7 +73,6 @@ class AcaraController extends Controller
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-            'status' => 'required|in:upcoming,ongoing,completed',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
         ]);

@@ -51,12 +51,24 @@
 
                     <div id="map" class="w-full h-80 rounded-xl border border-gray-300"></div>
 
-                    <input type="hidden" name="latitude" id="latitude"
-                        value="{{ old('latitude', $budaya->latitude ?? -7.7956) }}">
-                    <input type="hidden" name="longitude" id="longitude"
-                        value="{{ old('longitude', $budaya->longitude ?? 110.3695) }}">
+                    <div class="grid grid-cols-2 gap-3 mt-3">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Latitude</label>
+                            <input type="text" name="latitude" id="latitude"
+                                value="{{ old('latitude', $budaya->latitude ?? '') }}"
+                                placeholder="contoh: -7.8164907"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Longitude</label>
+                            <input type="text" name="longitude" id="longitude"
+                                value="{{ old('longitude', $budaya->longitude ?? '') }}"
+                                placeholder="contoh: 110.3718611"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                        </div>
+                    </div>
 
-                    <p class="text-xs text-gray-500 mt-2">Klik peta untuk menentukan lokasi budaya.</p>
+                    <p class="text-xs text-gray-500 mt-2">Klik peta atau masukkan koordinat secara manual.</p>
                 </div>
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>

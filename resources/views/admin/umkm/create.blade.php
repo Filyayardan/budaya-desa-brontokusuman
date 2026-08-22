@@ -56,12 +56,24 @@
 
                     <div id="map" class="w-full h-80 rounded-xl border border-gray-300"></div>
 
-                    <input type="hidden" name="latitude" id="latitude"
-                        value="{{ old('latitude', '') }}">
-                    <input type="hidden" name="longitude" id="longitude"
-                        value="{{ old('longitude', '') }}">
+                    <div class="grid grid-cols-2 gap-3 mt-3">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Latitude</label>
+                            <input type="text" name="latitude" id="latitude"
+                                value="{{ old('latitude', '') }}"
+                                placeholder="contoh: -7.8164907"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Longitude</label>
+                            <input type="text" name="longitude" id="longitude"
+                                value="{{ old('longitude', '') }}"
+                                placeholder="contoh: 110.3718611"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                        </div>
+                    </div>
 
-                    <p class="text-xs text-gray-500 mt-2">Klik peta untuk menentukan lokasi UMKM.</p>
+                    <p class="text-xs text-gray-500 mt-2">Klik peta atau masukkan koordinat secara manual.</p>
                 </div>
                 <div class="flex items-center space-x-3">
                     <button type="submit" class="px-5 py-2.5 rounded-lg text-white text-sm font-medium"

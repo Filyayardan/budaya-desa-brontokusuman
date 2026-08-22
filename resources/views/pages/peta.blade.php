@@ -47,8 +47,15 @@
                 <div class="flex items-center gap-2">
                     <span class="w-4 h-4 rounded-full" style="background:#1565c0;"></span>
                     <span class="text-gray-700 font-medium">Acara</span>
-                    <span class="text-gray-400">({{ count($acara) }})</span>
+                    <span class="text-gray-400">({{ $acara->where('status', '!=', 'ongoing')->count() }})</span>
                 </div>
+                @if($acara->contains('status', 'ongoing'))
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded-full animate-pulse" style="background:#22c55e;"></span>
+                        <span class="text-gray-700 font-medium">Acara Berlangsung</span>
+                        <span class="text-gray-400">({{ $acara->where('status', 'ongoing')->count() }})</span>
+                    </div>
+                @endif
             </div>
         </div>
     </section>
@@ -127,11 +134,18 @@
                 }[c]));
             }
 
-            function iconFor(type) {
+            function colorFor(type, item) {
+                if (type === 'acara' && item.status === 'ongoing') {
+                    return '#22c55e';
+                }
+                return markerConf[type].color;
+            }
+
+            function iconFor(type, item) {
                 const c = markerConf[type];
                 return L.divIcon({
                     className: 'peta-divicon',
-                    html: `<div class="peta-pin" style="background:${c.color};"><i class="fas ${c.icon}"></i></div>`,
+                    html: `<div class="peta-pin" style="background:${colorFor(type, item)};"><i class="fas ${c.icon}"></i></div>`,
                     iconSize: [36, 42],
                     iconAnchor: [18, 42],
                     popupAnchor: [0, -40],
@@ -140,9 +154,10 @@
 
             function popupContent(item, type) {
                 const c = markerConf[type];
+                const color = colorFor(type, item);
                 return `
                     <div class="peta-popup" style="font-family:Inter,sans-serif;min-width:200px;">
-                        <span class="text-xs font-semibold uppercase tracking-wider" style="color:${c.color};">${c.label} · ${esc(item.kategori)}</span>
+                        <span class="text-xs font-semibold uppercase tracking-wider" style="color:${color};">${c.label} · ${esc(item.kategori)}</span>
                         <h4 class="font-bold text-base mt-1 mb-1" style="color:#331006;">${esc(item.nama)}</h4>
                         ${item.lokasi ? `<p class="text-xs mb-1" style="color:#615f6c;"><i class="fas fa-map-marker-alt mr-1"></i>${esc(item.lokasi)}</p>` : ''}
                         ${item.deskripsi ? `<p class="text-xs leading-relaxed" style="color:#4d4b56;">${esc(item.deskripsi)}</p>` : ''}
@@ -165,7 +180,7 @@
                     const lat = parseFloat(item.lat);
                     const lng = parseFloat(item.lng);
                     if (!isNaN(lat) && !isNaN(lng)) {
-                        L.marker([lat, lng], { icon: iconFor(type) })
+                        L.marker([lat, lng], { icon: iconFor(type, item) })
                             .bindPopup(popupContent(item, type))
                             .addTo(groups[type]);
                         allBounds.push([lat, lng]);
