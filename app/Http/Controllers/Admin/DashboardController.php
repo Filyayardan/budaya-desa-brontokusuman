@@ -10,6 +10,7 @@ use App\Models\Berita;
 use App\Models\Galeri;
 use App\Models\Sejarah;
 use App\Models\Pengurus;
+use App\Models\Visitor;
 
 class DashboardController extends Controller
 {
@@ -23,6 +24,7 @@ class DashboardController extends Controller
             'galeri' => Galeri::count(),
             'sejarah' => Sejarah::count(),
             'pengurus' => Pengurus::count(),
+            'visitor' => Visitor::count(),
         ];
 
         $recentBudaya = Budaya::with('kategori')->latest()->limit(5)->get();

@@ -13,6 +13,7 @@
             ['label' => 'Galeri', 'count' => $stats['galeri'], 'icon' => 'fa-images', 'route' => 'admin.galeri.index', 'color' => 'pink'],
             ['label' => 'Sejarah', 'count' => $stats['sejarah'], 'icon' => 'fa-book', 'route' => 'admin.sejarah.index', 'color' => 'indigo'],
             ['label' => 'Pengurus', 'count' => $stats['pengurus'], 'icon' => 'fa-users', 'route' => 'admin.pengurus.index', 'color' => 'teal'],
+              ['label' => 'Pengunjung', 'count' => $stats['visitor'], 'icon' => 'fa-eye', 'route' => 'admin.pengunjung.index', 'color' => 'orange'],
         ];
     @endphp
     @foreach($cards as $c)
@@ -25,7 +26,10 @@
                 {{ $c['color'] == 'purple' ? 'bg-purple-50 text-purple-600' : '' }}
                 {{ $c['color'] == 'pink' ? 'bg-pink-50 text-pink-600' : '' }}
                 {{ $c['color'] == 'indigo' ? 'bg-indigo-50 text-indigo-600' : '' }}
-                {{ $c['color'] == 'teal' ? 'bg-teal-50 text-teal-600' : '' }}">
+                {{ $c['color'] == 'teal' ? 'bg-teal-50 text-teal-600' : '' }}
+                   {{ $c['color'] == 'orange' ? 'bg-orange-50 text-orange-600' : '' }} 
+                ">
+              
                 <i class="fas {{ $c['icon'] }}"></i>
             </div>
         </div>

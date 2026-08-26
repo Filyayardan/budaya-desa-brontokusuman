@@ -27,7 +27,11 @@ class PengurusController extends Controller
             'jabatan' => 'required|string|max:255',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'telepon' => 'nullable|string|max:255',
-            'email' => 'nullable|email|max:255',
+            'email' => 'required|email|max:255',
+            'password' => 'required_if:subAdminSelect,true|confirmed',
+            'subAdminSelect' => 'required|boolean',
+            'adminOption' => 'required_if:subAdminSelect,true|array|min:1',
+            'adminOption.*' => 'string',
         ]);
 
         if ($request->hasFile('foto')) {
@@ -52,6 +56,7 @@ class PengurusController extends Controller
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'telepon' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
         if ($request->hasFile('foto')) {

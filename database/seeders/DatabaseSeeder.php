@@ -12,5 +12,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UmkmSeeder::class);
         $this->call(AdminSeeder::class);
         $this->call(ProfilKampungSeeder::class);
+        $this->call(VisitorSeeder::class);
     }
 }

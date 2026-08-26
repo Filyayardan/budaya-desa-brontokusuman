@@ -332,6 +332,7 @@
                         </ul>
                     </div>
                 </div>
+                </div>
             </div>
 
             <div class="border-t border-main_txt-500/10 py-6">
