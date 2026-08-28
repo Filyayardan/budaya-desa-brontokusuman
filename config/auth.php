@@ -42,6 +42,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'subadmin' => [
+            'driver' => 'session',
+            'provider' => 'subadmins',
+        ],
     ],
 
     /*
@@ -67,10 +72,10 @@ return [
             'model' => env('AUTH_MODEL', User::class),
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'subadmins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\SubAdmin::class,
+        ],
     ],
 
     /*

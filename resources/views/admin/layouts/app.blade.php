@@ -130,10 +130,20 @@
                                 'icon' => 'fa-id-card',
                                 'route' => 'admin.profil.index',
                             ],
+                            'admin.faq.*' => [
+                                'label' => 'FAQ',
+                                'icon' => 'fa-question-circle',
+                                'route' => 'admin.faq.index',
+                            ],
                             'admin.pengunjung.*' => [
                                 'label' => 'Pengunjung',
                                 'icon' => 'fa-eye',
                                 'route' => 'admin.pengunjung.index',
+                            ],
+                            'admin.user.*' => [
+                                'label' => 'Kelola Subadmin',
+                                'icon' => 'fa-user',
+                                'route' => 'admin.userManagement.index',
                             ],
                         ];
                     @endphp

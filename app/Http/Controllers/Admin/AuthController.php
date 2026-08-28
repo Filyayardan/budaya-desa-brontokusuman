@@ -11,8 +11,12 @@ class AuthController extends Controller
 {
     public function showLogin()
     {
-        if (auth()->check()) {
+        if (
+            Auth::guard('web')->check() ||
+            Auth::guard('subadmin')->check()
+        ) {
             return redirect()->route('admin.dashboard');
+
         }
         $fotoLogin = ProfilKampung::get('foto_login');
         return view('admin.login', compact('fotoLogin'));
@@ -20,22 +24,37 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
+        // 1. Validasi input (menggunakan nama field 'login' atau 'email')
+        $request->validate([
+            'email' => 'required|string',
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
+        $loginInput = $request->input('email');
+        $password = $request->input('password');
+
+        // 2. Cek apakah inputan berupa email atau username, lalu coba login ke guard 'web'
+        // $webField = filter_var($loginInput, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $webField = 'email';
+        if (Auth::guard('web')->attempt([$webField => $loginInput, 'password' => $password])) {
             $request->session()->regenerate();
             return redirect()->intended(route('admin.dashboard'));
         }
 
-        return back()->withErrors(['email' => 'Email atau password salah.'])->onlyInput('email');
+        // 3. Coba login ke guard 'subadmin' (biasanya sub-admin menggunakan username)
+        if (Auth::guard('subadmin')->attempt(['username' => $loginInput, 'password' => $password])) {
+            $request->session()->regenerate();
+            return redirect()->intended(route('admin.dashboard'));
+        }
+
+        // 4. Jika semuanya gagal
+        return back()->withErrors(['email' => 'Email/Username atau password salah.'])->onlyInput('email');
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
+        Auth::guard('subadmin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('admin.login');

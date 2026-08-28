@@ -19,7 +19,7 @@
                     @foreach ($acara as $a)
                         <a href="{{ route('acara.detail', $a->id) }}" class="card-hover group">
                             <div
-                                class="bg-white backdrop-blur rounded-2xl overflow-hidden border border-gold-500/10 hover:border-gold-500/30 h-full">
+                                class="bg-white backdrop-blur rounded-md overflow-hidden border border-gold-500/10 hover:border-gold-500/30 h-full">
                                 <div class="relative h-52 bg-gradient-to-br from-gold-600/20 to-dark-700 overflow-hidden">
                                     @if ($a->gambar)
                                         <img src="{{ asset('storage/' . $a->gambar) }}" alt="{{ $a->nama_acara }}"
