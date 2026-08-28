@@ -12,8 +12,12 @@
                 kebudayaan Kampung Brontokusuman</p>
         </div>
     </section>
+    <section class="pt-20 pb-8 bg-pattern">
 
-    <section class="py-20 bg-pattern">
+    </section>
+
+
+    <section class="py-8 bg-pattern ">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-3 gap-12">
                 <div class="space-y-8">
@@ -85,6 +89,43 @@
         </div>
     </section>
 
+    
+    <div class="line-gold w-[500px] mx-auto mb-6"></div>
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+        <h1 class="font-display text-5xl sm:text-6xl font-bold text-main_txt mt-3 mb-8 text-center">FAQ</h1>
+        @if ($faqs->count())
+            <div class="space-y-6">
+                @foreach ($faqs as $faq)
+                    <div x-data="{ open: false }"
+                        class="bg-white shadow-md rounded-lg overflow-hidden border border-gold-500/10">
+                        <button @click="open = !open"
+                            class="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none">
+                            <span class="font-semibold text-main_txt text-lg">{{ $faq->question }}</span>
+                            <span :class="{ 'rotate-180': open, 'rotate-0': !open }"
+                                class="transform transition-transform duration-300 text-main_txt-400">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </button>
+                        <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="opacity-0 transform -translate-y-4"
+                            x-transition:enter-end="opacity-100 transform translate-y-0"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="opacity-100 transform translate-y-0"
+                            x-transition:leave-end="opacity-0 transform -translate-y-4"
+                            class="px-6 pb-4 text-tertiary border-t border-gold-500/10">
+                            <p>{{ $faq->answer }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="text-center py-12">
+                <p class="text-gray-500 text-lg">Belum ada FAQ yang tersedia saat ini.</p>
+            </div>
+        @endif
+    </section>
+
+
     <section class="py-16 bg-main_txt">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-10">
@@ -100,7 +141,8 @@
                 </iframe>
             </div>
             <div class="mt-6 text-center">
-                <a href="https://www.google.com/maps/search/?api=1&query=-7.81649070688264,110.37186112414891" target="_blank" rel="noopener noreferrer"
+                <a href="https://www.google.com/maps/search/?api=1&query=-7.81649070688264,110.37186112414891"
+                    target="_blank" rel="noopener noreferrer"
                     class="inline-flex items-center gradient-gold text-dark-950 font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity shadow-lg shadow-gold-500/20">
                     <i class="fas fa-map-marker-alt mr-2"></i>Buka di Google Maps
                 </a>
@@ -108,3 +150,6 @@
         </div>
     </section>
 @endsection
+@push('scripts')
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+@endpush

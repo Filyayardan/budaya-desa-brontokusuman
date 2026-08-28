@@ -38,9 +38,9 @@
             <form method="POST" action="{{ route('admin.login.post') }}">
                 @csrf
                 <div class="mb-5">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Masukkan Email/Username</label>
                     <div class="relative">
-                        <input type="email" name="email" value="{{ old('email') }}" required autofocus
+                        <input type="text" name="email" value="{{ old('email') }}" required autofocus
                             class="w-full px-4 py-3 pl-11 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none transition">
                         <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
                     </div>

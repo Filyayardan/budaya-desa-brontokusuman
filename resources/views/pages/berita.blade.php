@@ -18,7 +18,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($berita as $br)
             <a href="{{ route('berita.detail', $br->id) }}" class="card-hover group">
-                <div class="bg-white backdrop-blur rounded-2xl overflow-hidden border border-gold-500/10 hover:border-gold-500/30 h-full">
+                <div class="bg-white backdrop-blur rounded-md overflow-hidden border border-gold-500/10 hover:border-gold-500/30 h-full">
                     <div class="relative h-52 bg-gradient-to-br from-gold-600/20 to-dark-700 overflow-hidden">
                         @if($br->gambar)
                             <img src="{{ asset('storage/' . $br->gambar) }}" alt="{{ $br->judul }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
