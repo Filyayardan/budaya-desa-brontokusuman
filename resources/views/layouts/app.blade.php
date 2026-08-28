@@ -35,6 +35,7 @@
                                 800: '#471609',
                                 900: '#331006',
                             },
+                            
                             surface: '#fff8f6',
                             'on-surface': '#231917',
                              "surface-container-high": "#f7e4e0",
@@ -203,9 +204,8 @@
         @stack('styles')
     </head>
     
-    <body
-    
-        class=" bg-surface   text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container ">
+<body
+  class="relative min-h-screen bg-surface text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container before:fixed before:inset-0 before:-z-10 before:bg-[url('/images/bg-batik(9.16).png')] before:bg-[length:100%_auto] before:bg-center before:bg-no-repeat before:opacity-50">
     <div class="bg-texture-layer"></div>
         <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 bg-transparent">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

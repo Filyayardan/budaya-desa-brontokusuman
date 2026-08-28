@@ -111,7 +111,7 @@
         <div class="absolute bottom-0 left-0 right-0 h-32 "></div>
     </section>
 
-    <section class="py-8 bg-surface-container-highest">
+    <section class="py-8 bg-second_bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
                 @php $stats = [['icon'=>'fa-landmark','count'=>$kategori->count(),'label'=>'Kategori Budaya'],['icon'=>'fa-scroll','count'=>App\Models\Budaya::count(),'label'=>'Item Budaya'],['icon'=>'fa-calendar-check','count'=>App\Models\Acara::count(),'label'=>'Acara Budaya'],['icon'=>'fa-images','count'=>App\Models\Galeri::count(),'label'=>'Foto Galeri']]; @endphp
@@ -488,21 +488,21 @@
                     <section class="grid grid-cols-1 sm:grid-cols-2  content-center h-full gap-6">
                         <!-- Total  -->
                         <div
-                            class="bg-white rounded-xl shadow-card p-5 border border-brand-border flex items-center space-x-4">
-                            <div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue">
-                                <i class="fa-solid fa-users text-xl"></i>
+                            class="bg-second_bg rounded-xl shadow-card p-5 border border-brand-border flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-lg bg-main_txt-500/10 flex items-center justify-center text-brand-blue">
+                                <i class="fa-solid fa-users text-xl text-main_txt"></i>
                             </div>
                             <div>
-                                <p class="text-sm font-medium text-brand-gray mb-1">Total Pengunjung</p>
-                                <p class="text-2xl font-bold text-gray-800">{{ $totalVisitors }}</p>
+                                <p class="text-sm font-medium text-black mb-1">Total Pengunjung</p>
+                                <p class="text-2xl font-bold text-black">{{ $totalVisitors }}</p>
                             </div>
                         </div>
                         <!-- Total Hari Ini -->
                         <div
-                            class="bg-white rounded-xl shadow-card p-5 border border-brand-border flex items-center space-x-4">
+                            class="bg-second_bg rounded-xl shadow-card p-5 border border-brand-border flex items-center space-x-4">
                             <div
-                                class="w-12 h-12 rounded-lg bg-green-50 flex items-center justify-center text-brand-green">
-                                <i class="fa-solid fa-user-clock text-xl"></i>
+                                class="w-12 h-12 rounded-lg bg-main_txt-500/10 flex items-center justify-center text-brand-green">
+                                <i class="fa-solid fa-user-clock text-xl text-main_txt"></i>
                             </div>
                             <div>
                                 <p class="text-sm font-medium text-brand-gray mb-1">Pengunjung Hari ini</p>
@@ -517,12 +517,12 @@
                     <section class=" ">
                         <!-- Chart Card -->
                         {{-- Chart Harian --}}
-                        <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+                        <div class="overflow-hidden rounded-lg border border-slate-200 bg-surface-container-highest shadow-sm">
                             <div
-                                class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-5 py-3.5">
+                                class="flex items-center justify-between border-b border-slate-200 bg-main_txt-500/10 px-5 py-3.5">
                                 <span class="flex items-center gap-2 text-sm font-semibold text-slate-800">
-                                    <i class="bi bi-graph-up text-blue-600"></i>
-                                    Pengunjung Harian
+                                    <i class="bi bi-graph-up text-black"></i>
+                                    Pengunjung Harian Bulan {{now()->translatedFormat('F')  }}
                                 </span>
 
                                 <span
@@ -732,11 +732,11 @@
                 datasets: [{
                     label: 'Jumlah Pengunjung',
                     data: @json($visitorData),
-                    borderColor: '#2563eb',
-                    backgroundColor: 'rgba(37, 99, 235, 0.08)',
+                    borderColor: '#6f2410',
+                    backgroundColor: 'rgba(111, 36, 16, 0.2)',
                     borderWidth: 2,
                     pointRadius: 3,
-                    pointBackgroundColor: '#2563eb',
+                    pointBackgroundColor: 'white',
                     fill: true,
                     tension: 0.35
                 }]
