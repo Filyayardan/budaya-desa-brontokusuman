@@ -129,7 +129,7 @@
         </div>
     </section>
 
-    @if ($kategori->count())
+    {{-- @if ($kategori->count())
         <section class="py-24 bg-pattern">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
@@ -157,9 +157,9 @@
                 </div>
             </div>
         </section>
-    @endif
+    @endif --}}
 
-    @if ($budayaUnggulan->count())
+    {{-- @if ($budayaUnggulan->count())
         <section class="py-15 ">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
@@ -215,78 +215,159 @@
                 </div>
             </div>
         </section>
-    @endif
+    @endif --}}
 
-    @if ($acaraTerbaru->count())
-        <section class="py-16 bg-pattern">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
+    <section class="py-16 bg-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Bagi menjadi 2 kolom di dalam container yang sudah sejajar -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                <!-- Kolom Kiri: Acara Budaya -->
+                @if ($acaraTerbaru->count())
                     <div>
-                        <span class="text-tertiary text-sm font-semibold tracking-widest uppercase">Agenda</span>
-                        <h2 class="font-display text-4xl sm:text-5xl font-bold text-main_txt mt-3">Acara Budaya</h2>
-                        <div class="line-main_txt w-24 mt-4"></div>
-                    </div>
-                    <a href="{{ route('acara') }}"
-                        class="mt-6 md:mt-0 text-main_txt-400 hover:text-main_txt-300 font-medium text-sm transition-colors">
-                        Lihat Semua <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
-                </div>
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
+                            <div>
+                                <span class="text-tertiary text-sm font-semibold tracking-widest uppercase">Agenda</span>
+                                <h2 class="font-display text-4xl sm:text-5xl font-bold text-main_txt mt-3">Acara Budaya</h2>
+                                <div class="line-main_txt w-24 mt-4"></div>
+                            </div>
+                            <a href="{{ route('acara') }}"
+                                class="mt-6 md:mt-0 text-main_txt-400 hover:text-main_txt-300 font-medium text-sm transition-colors">
+                                Lihat Semua <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    @foreach ($acaraTerbaru as $a)
-                        <a href="{{ route('acara.detail', $a->id) }}" class="card-hover group">
-                            <div
-                                class="bg-white backdrop-blur rounded-md overflow-hidden border border-outline-variant/50 hover:border-main_txt-500/30 h-full">
-                                <div class="relative  aspect-[3/2] overflow-hidden">
-                                    @if ($a->gambar)
-                                        <img src="{{ asset('storage/' . $a->gambar) }}" alt="{{ $a->nama_acara }}"
-                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                    @else
-                                        <div class="absolute inset-0 flex items-center justify-center">
-                                            <i class="fas fa-calendar-day text-5xl text-main_txt-500/20"></i>
+                        <div class="">
+                            @foreach ($acaraTerbaru as $a)
+                                <a href="{{ route('acara.detail', $a->id) }}" class="card-hover group">
+                                    <div
+                                        class="bg-white backdrop-blur rounded-md overflow-hidden border border-outline-variant/50 hover:border-main_txt-500/30 h-full">
+                                        <div class="relative  aspect-[3/2] overflow-hidden">
+                                            @if ($a->gambar)
+                                                <img src="{{ asset('storage/' . $a->gambar) }}" alt="{{ $a->nama_acara }}"
+                                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                            @else
+                                                <div class="absolute inset-0 flex items-center justify-center">
+                                                    <i class="fas fa-calendar-day text-5xl text-main_txt-500/20"></i>
+                                                </div>
+                                            @endif
+                                            <div class="absolute top-4 right-4">
+                                                <span
+                                                    class="bg-main_txt backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full border border-main_txt-500/20">
+                                                    {{ \Carbon\Carbon::parse($a->tanggal_mulai)->translatedFormat('d M Y') }}
+                                                </span>
+                                            </div>
                                         </div>
-                                    @endif
-                                    <div class="absolute top-4 right-4">
-                                        <span
-                                            class="bg-main_txt backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full border border-main_txt-500/20">
-                                            {{ \Carbon\Carbon::parse($a->tanggal_mulai)->translatedFormat('d M Y') }}
-                                        </span>
+                                        <div class="p-6">
+                                            <div
+                                                class="font-label-sm text-label-sm  text-tertiary mb-3 flex items-center gap-2">
+                                                <span class="material-symbols-outlined text-[18px]"><i
+                                                        class="fa-regular fa-calendar-days"></i></span>
+                                                {{ \Carbon\Carbon::parse($a->tanggal_mulai)->translatedFormat('d M Y') }}
+                                            </div>
+                                            <h3
+                                                class="font-display text-xl font-bold text-main_txt group-hover:text-main_txt-300 transition-colors mb-3">
+                                                {{ Str::limit($a->nama_acara, 80) }}</h3>
+                                            <p class="text-tertiary text-sm line-clamp-2 mb-4">
+                                                {{ Str::limit($a->deskripsi, 120) }}</p>
+                                            <div class="flex items-center justify-between">
+                                                @if ($a->lokasi)
+                                                    <div class="flex items-center text-gray-500 text-sm">
+                                                        <i
+                                                            class="fas fa-map-marker-alt text-main_txt-500/60 mr-2"></i>{{ Str::limit($a->lokasi, 30) }}
+                                                    </div>
+                                                @endif
+                                                <span
+                                                    class="text-xs font-semibold px-3 py-1 rounded-full
+                                {{ $a->status === 'upcoming' ? 'bg-blue-500/10 text-blue-400' : ($a->status === 'ongoing' ? 'bg-green-500/10 text-green-400' : 'bg-gray-500/10 text-gray-400') }}">
+                                                    {{ $a->status === 'upcoming' ? 'Mendatang' : ($a->status === 'ongoing' ? 'Berlangsung' : 'Selesai') }}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="p-6">
-                                    <div class="font-label-sm text-label-sm  text-tertiary mb-3 flex items-center gap-2">
-                                        <span class="material-symbols-outlined text-[18px]"><i
-                                                class="fa-regular fa-calendar-days"></i></span>
-                                        {{ \Carbon\Carbon::parse($a->tanggal_mulai)->translatedFormat('d M Y') }}
-                                    </div>
-                                    <h3
-                                        class="font-display text-xl font-bold text-main_txt group-hover:text-main_txt-300 transition-colors mb-3">
-                                        {{ $a->nama_acara }}</h3>
-                                    <p class="text-tertiary text-sm line-clamp-2 mb-4">
-                                        {{ Str::limit($a->deskripsi, 120) }}</p>
-                                    <div class="flex items-center justify-between">
-                                        @if ($a->lokasi)
-                                            <div class="flex items-center text-gray-500 text-sm">
-                                                <i
-                                                    class="fas fa-map-marker-alt text-main_txt-500/60 mr-2"></i>{{ Str::limit($a->lokasi, 30) }}
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Kolom Kanan: Berita Terbaru -->
+                <div>
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
+                        <div>
+                            <span class="text-tertiary text-sm font-semibold tracking-widest uppercase">Informasi</span>
+                            <h2 class="font-display text-4xl sm:text-5xl font-bold text-main_txt mt-3">Berita Terbaru</h2>
+                            <div class="line-main_txt w-24 mt-4"></div>
+                        </div>
+                        <a href="{{ route('berita') }}"
+                            class="mt-6 md:mt-0 text-main_txt-400 hover:text-main_txt-300 font-medium text-sm transition-colors">
+                            Lihat Semua <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+
+                    <div class="">
+                        @foreach ($beritaTerbaru as $br)
+                            <a href="{{ route('berita.detail', $br->id) }}" class="card-hover group">
+                                <div
+                                    class="bg-white backdrop-blur rounded-md overflow-hidden border border-main_txt-500/10 hover:border-main_txt-500/30 h-full">
+                                    <div class="relative  aspect-[3/2] overflow-hidden">
+                                        @if ($br->gambar)
+                                            <img src="{{ asset('storage/' . $br->gambar) }}" alt="{{ $br->judul }}"
+                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                        @else
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <i class="fas fa-newspaper text-5xl text-main_txt-500/20"></i>
                                             </div>
                                         @endif
-                                        <span
-                                            class="text-xs font-semibold px-3 py-1 rounded-full
-                                {{ $a->status === 'upcoming' ? 'bg-blue-500/10 text-blue-400' : ($a->status === 'ongoing' ? 'bg-green-500/10 text-green-400' : 'bg-gray-500/10 text-gray-400') }}">
-                                            {{ $a->status === 'upcoming' ? 'Mendatang' : ($a->status === 'ongoing' ? 'Berlangsung' : 'Selesai') }}
-                                        </span>
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="flex items-center text-tertiary text-xs mb-3">
+                                            <i class="far fa-clock mr-1"></i>
+                                            {{ $br->created_at->translatedFormat('d M Y') }}
+                                            @if ($br->penulis)
+                                                <span class="mx-2">•</span>
+                                                <i class="far fa-user mr-1"></i>{{ $br->penulis }}
+                                            @endif
+                                        </div>
+                                        <h3
+                                            class="font-display text-xl font-bold text-main_txt group-hover:text-main_txt-300 transition-colors mb-3">
+                                            {{ Str::limit($br->judul, 50) }}</h3>
+                                        <p class="text-gray-400 text-sm line-clamp-2">
+                                            {{ Str::limit($br->ringkasan ?? $br->isi, 120) }}</p>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-                    @endforeach
+                            </a>
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-        </section>
-    @endif
 
-    @if ($galeriTerbaru->count())
+            </div>
+
+        </div>
+    </section>
+
+    {{-- <div class="flex">
+        @if ($acaraTerbaru->count())
+            <section class="py-16 bg-pattern  bg-amber-400 w-1/2  ">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-amber-800 ">
+
+
+                    
+                </div>
+            </section>
+        @endif
+
+        @if ($beritaTerbaru->count())
+            <section class="py-16 bg-pattern  w-1/2 ">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                </div>
+            </section>
+        @endif
+    </div> --}}
+
+    {{-- @if ($galeriTerbaru->count())
         <section class="py-16 ">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10">
@@ -329,61 +410,139 @@
                 </div>
             </div>
         </section>
-    @endif
+    @endif --}}
 
-    @if ($beritaTerbaru->count())
-        <section class="py-16 bg-pattern">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
-                    <div>
-                        <span class="text-tertiary text-sm font-semibold tracking-widest uppercase">Informasi</span>
-                        <h2 class="font-display text-4xl sm:text-5xl font-bold text-main_txt mt-3">Berita Terbaru</h2>
-                        <div class="line-main_txt w-24 mt-4"></div>
-                    </div>
-                    <a href="{{ route('berita') }}"
-                        class="mt-6 md:mt-0 text-main_txt-400 hover:text-main_txt-300 font-medium text-sm transition-colors">
-                        Lihat Semua <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
+    <section class="header-section relative overflow-hidden">
+        <div class="absolute inset-0 hero-pattern opacity-20"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="text-tertiary text-sm font-semibold tracking-widest uppercase">Jelajahi</span>
+            <h1 class="font-display text-5xl sm:text-6xl font-bold text-main_txt mt-3 mb-4">Peta Kampung</h1>
+            <div class="line-gold w-24 mx-auto mb-6"></div>
+            <p class="text-main_txt-400 max-w-xl mx-auto">Temukan lokasi UMKM, kebudayaan, dan acara di Kampung
+                Brontokusuman</p>
+        </div>
+    </section>
+
+    <section class="py-16 bg-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap gap-3 justify-center mb-8">
+                <button data-filter="all"
+                    class="filter-btn active px-5 py-2.5 rounded-full text-sm font-medium transition-all">Semua</button>
+                <button data-filter="umkm"
+                    class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all"><i
+                        class="fas fa-store mr-2"></i>UMKM</button>
+                <button data-filter="budaya"
+                    class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all"><i
+                        class="fas fa-landmark mr-2"></i>Budaya</button>
+                <button data-filter="acara"
+                    class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all"><i
+                        class="fas fa-calendar-alt mr-2"></i>Acara</button>
+            </div>
+
+            <div class="bg-white rounded-2xl overflow-hidden border border-gold-500/10 shadow-lg relative z-10  ">
+                <div id="map" style="height: 600px; width: 100%;"></div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-6 mt-8 text-sm">
+                <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 rounded-full" style="background:#2e7d32;"></span>
+                    <span class="text-gray-700 font-medium">UMKM</span>
+                    <span class="text-gray-400">({{ count($umkm) }})</span>
                 </div>
+                <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 rounded-full" style="background:#b8860b;"></span>
+                    <span class="text-gray-700 font-medium">Budaya</span>
+                    <span class="text-gray-400">({{ count($budaya) }})</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 rounded-full" style="background:#1565c0;"></span>
+                    <span class="text-gray-700 font-medium">Acara</span>
+                    <span class="text-gray-400">({{ $acara->where('status', '!=', 'ongoing')->count() }})</span>
+                </div>
+                @if ($acara->contains('status', 'ongoing'))
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded-full animate-pulse" style="background:#22c55e;"></span>
+                        <span class="text-gray-700 font-medium">Acara Berlangsung</span>
+                        <span class="text-gray-400">({{ $acara->where('status', 'ongoing')->count() }})</span>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </section>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    @foreach ($beritaTerbaru as $br)
-                        <a href="{{ route('berita.detail', $br->id) }}" class="card-hover group">
+    {{-- visitor section end --}}
+      <section class=" relative overflow-hidden">
+        <div class="absolute inset-0 hero-pattern opacity-20"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            {{-- <span class="text-tertiary text-sm font-semibold tracking-widest uppercase">Jelajahi</span> --}}
+            <h1 class="font-display text-5xl sm:text-6xl font-bold text-main_txt mt-3 mb-4">Traffic Pengunjung</h1>
+            <div class="line-gold w-24 mx-auto mb-6"></div>
+            {{-- <p class="text-main_txt-400 max-w-xl mx-auto">Temukan lokasi UMKM, kebudayaan, dan acara di Kampung
+                Brontokusuman</p> --}}
+        </div>
+    </section>
+    <section class="pb-16 pt-5 bg-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+                <div class=" ">
+                    <section class="grid grid-cols-1 sm:grid-cols-2  content-center h-full gap-6">
+                        <!-- Total  -->
+                        <div
+                            class="bg-white rounded-xl shadow-card p-5 border border-brand-border flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center text-brand-blue">
+                                <i class="fa-solid fa-users text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-brand-gray mb-1">Total Pengunjung</p>
+                                <p class="text-2xl font-bold text-gray-800">{{ $totalVisitors }}</p>
+                            </div>
+                        </div>
+                        <!-- Total Hari Ini -->
+                        <div
+                            class="bg-white rounded-xl shadow-card p-5 border border-brand-border flex items-center space-x-4">
                             <div
-                                class="bg-white backdrop-blur rounded-md overflow-hidden border border-main_txt-500/10 hover:border-main_txt-500/30 h-full">
-                                <div class="relative  aspect-[3/2] overflow-hidden">
-                                    @if ($br->gambar)
-                                        <img src="{{ asset('storage/' . $br->gambar) }}" alt="{{ $br->judul }}"
-                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                    @else
-                                        <div class="absolute inset-0 flex items-center justify-center">
-                                            <i class="fas fa-newspaper text-5xl text-main_txt-500/20"></i>
-                                        </div>
-                                    @endif
-                                </div>
-                                <div class="p-6">
-                                    <div class="flex items-center text-tertiary text-xs mb-3">
-                                        <i class="far fa-clock mr-1"></i>
-                                        {{ $br->created_at->translatedFormat('d M Y') }}
-                                        @if ($br->penulis)
-                                            <span class="mx-2">•</span>
-                                            <i class="far fa-user mr-1"></i>{{ $br->penulis }}
-                                        @endif
-                                    </div>
-                                    <h3
-                                        class="font-display text-xl font-bold text-main_txt group-hover:text-main_txt-300 transition-colors mb-3">
-                                        {{ $br->judul }}</h3>
-                                    <p class="text-gray-400 text-sm line-clamp-2">
-                                        {{ Str::limit($br->ringkasan ?? $br->isi, 120) }}</p>
+                                class="w-12 h-12 rounded-lg bg-green-50 flex items-center justify-center text-brand-green">
+                                <i class="fa-solid fa-user-clock text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-brand-gray mb-1">Pengunjung Hari ini</p>
+                                <p class="text-2xl font-bold text-brand-green">{{ $todayVisitors }}</p>
+                            </div>
+                        </div>
+
+
+                    </section>
+                </div>
+                <div>
+                    <section class=" ">
+                        <!-- Chart Card -->
+                        {{-- Chart Harian --}}
+                        <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+                            <div
+                                class="flex items-center justify-between border-b border-slate-200 bg-slate-50 px-5 py-3.5">
+                                <span class="flex items-center gap-2 text-sm font-semibold text-slate-800">
+                                    <i class="bi bi-graph-up text-blue-600"></i>
+                                    Pengunjung Harian
+                                </span>
+
+                                <span
+                                    class="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs text-slate-500">
+                                    {{-- {{ \Carbon\Carbon::createFromDate(request('bulan'), request('bulan'), 1)->isoFormat('MMMM Y') }} --}}
+                                </span>
+                            </div>
+
+                            <div class="p-5">
+                                <div class="relative h-72 w-full">
+                                    <canvas id="chartHarian"></canvas>
                                 </div>
                             </div>
-                        </a>
-                    @endforeach
+                        </div>
+                    </section>
                 </div>
             </div>
-        </section>
-    @endif
-
+        </div>
+    </section>
+      {{-- visitor section end --}}
     <section class="py-24  relative overflow-hidden">
         <div class="absolute inset-0 bg-main_txt from-main_txt-600/5 via-transparent to-main_txt-600/5"></div>
         <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -396,4 +555,232 @@
             <p class="text-second_bg text-sm">Kecamatan Mergangsan, Kota Yogyakarta</p>
         </div>
     </section>
+
+
+
+    @push('styles')
+        <style>
+            .filter-btn {
+                background: #2d2b33;
+                color: #9f9da7;
+                border: 1px solid rgba(212, 160, 23, 0.1);
+            }
+
+            .filter-btn:hover {
+                background: rgba(212, 160, 23, 0.1);
+                color: #b8860b;
+            }
+
+            .filter-btn.active {
+                background: linear-gradient(135deg, #d4a017 0%, #f5de8c 50%, #d4a017 100%);
+                color: #1a1820;
+                border-color: transparent;
+                font-weight: 700;
+            }
+
+            .peta-divicon {
+                background: transparent;
+                border: none;
+            }
+
+            .peta-pin {
+                width: 36px;
+                height: 36px;
+                border-radius: 50% 50% 50% 0;
+                transform: rotate(-45deg);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+                border: 2px solid rgba(255, 255, 255, 0.9);
+            }
+
+            .peta-pin i {
+                transform: rotate(45deg);
+                color: #fff;
+                font-size: 14px;
+            }
+
+            .peta-popup a:hover {
+                text-decoration: underline;
+            }
+        </style>
+    @endpush
+
+    @push('scripts')
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script>
+            const petaData = {
+                umkm: @json($umkm),
+                budaya: @json($budaya),
+                acara: @json($acara),
+            };
+
+            const markerConf = {
+                umkm: {
+                    color: '#2e7d32',
+                    icon: 'fa-store',
+                    label: 'UMKM'
+                },
+                budaya: {
+                    color: '#b8860b',
+                    icon: 'fa-landmark',
+                    label: 'Budaya'
+                },
+                acara: {
+                    color: '#1565c0',
+                    icon: 'fa-calendar-alt',
+                    label: 'Acara'
+                },
+            };
+
+            function esc(s) {
+                return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                } [c]));
+            }
+
+            function colorFor(type, item) {
+                if (type === 'acara' && item.status === 'ongoing') {
+                    return '#22c55e';
+                }
+                return markerConf[type].color;
+            }
+
+            function iconFor(type, item) {
+                const c = markerConf[type];
+                return L.divIcon({
+                    className: 'peta-divicon',
+                    html: `<div class="peta-pin" style="background:${colorFor(type, item)};"><i class="fas ${c.icon}"></i></div>`,
+                    iconSize: [36, 42],
+                    iconAnchor: [18, 42],
+                    popupAnchor: [0, -40],
+                });
+            }
+
+            function popupContent(item, type) {
+                const c = markerConf[type];
+                const color = colorFor(type, item);
+                return `
+                    <div class="peta-popup" style="font-family:Inter,sans-serif;min-width:200px;">
+                        <span class="text-xs font-semibold uppercase tracking-wider" style="color:${color};">${c.label} · ${esc(item.kategori)}</span>
+                        <h4 class="font-bold text-base mt-1 mb-1" style="color:#331006;">${esc(item.nama)}</h4>
+                        ${item.lokasi ? `<p class="text-xs mb-1" style="color:#615f6c;"><i class="fas fa-map-marker-alt mr-1"></i>${esc(item.lokasi)}</p>` : ''}
+                        ${item.deskripsi ? `<p class="text-xs leading-relaxed" style="color:#4d4b56;">${esc(item.deskripsi)}</p>` : ''}
+                        ${item.url ? `<a href="${esc(item.url)}" class="inline-block mt-2 text-xs font-bold" style="color:#8f2a1c;">Lihat Detail &rarr;</a>` : ''}
+                    </div>`;
+            }
+
+            const map = L.map('map').setView([-7.8170, 110.3703], 16);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            const groups = {};
+            const allBounds = [];
+
+            Object.keys(petaData).forEach(type => {
+                groups[type] = L.layerGroup();
+                petaData[type].forEach(item => {
+                    const lat = parseFloat(item.lat);
+                    const lng = parseFloat(item.lng);
+                    if (!isNaN(lat) && !isNaN(lng)) {
+                        L.marker([lat, lng], {
+                                icon: iconFor(type, item)
+                            })
+                            .bindPopup(popupContent(item, type))
+                            .addTo(groups[type]);
+                        allBounds.push([lat, lng]);
+                    }
+                });
+                groups[type].addTo(map);
+            });
+
+            if (allBounds.length) {
+                map.fitBounds(L.latLngBounds(allBounds).pad(0.25));
+            }
+
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const f = btn.dataset.filter;
+                    Object.keys(groups).forEach(type => {
+                        if (f === 'all' || f === type) {
+                            map.addLayer(groups[type]);
+                        } else {
+                            map.removeLayer(groups[type]);
+                        }
+                    });
+                });
+            });
+        </script>
+    @endpush
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        new Chart(document.getElementById('chartHarian'), {
+            type: 'line',
+            data: {
+                labels: @json($visitorLabels),
+                datasets: [{
+                    label: 'Jumlah Pengunjung',
+                    data: @json($visitorData),
+                    borderColor: '#2563eb',
+                    backgroundColor: 'rgba(37, 99, 235, 0.08)',
+                    borderWidth: 2,
+                    pointRadius: 3,
+                    pointBackgroundColor: '#2563eb',
+                    fill: true,
+                    tension: 0.35
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: context =>
+                                context.parsed.y.toLocaleString('id-ID') + ' pengunjung'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            // color: '#64748b'
+                            display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1,
+                            color: '#64748b',
+                            callback: value =>
+                                Number(value).toLocaleString('id-ID')
+                        },
+                        title: {
+                            display: true,
+                            text: 'Jumlah Pengunjung'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 @endsection

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Visitor;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +38,7 @@ class VisitorController extends Controller
                     'Tanggal sampai harus sama atau setelah tanggal mulai.',
             ]
         );
-        
+
         $periode = $request->input('bulan');
 
         if (blank($periode)) {

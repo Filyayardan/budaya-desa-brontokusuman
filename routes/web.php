@@ -20,3 +20,4 @@ Route::get('/berita/{id}', [PageController::class, 'beritaDetail'])->name('berit
 Route::get('/sejarah', [PageController::class, 'sejarah'])->name('sejarah');
 Route::get('/profil', [PageController::class, 'profil'])->name('profil');
 Route::get('/kontak', [PageController::class, 'kontak'])->name('kontak');
+Route::get('/faq', [PageController::class, 'faq'])->name('faq');

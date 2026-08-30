@@ -33,7 +33,7 @@
                     @foreach ($budaya as $b)
                         <a href="{{ route('budaya.detail', $b->id) }}" class="card-hover group">
                             <div
-                                class="bg-white backdrop-blur rounded-2xl overflow-hidden border border-gold-500/10 hover:border-gold-500/30 h-full">
+                                class="bg-white backdrop-blur rounded-md overflow-hidden border border-gold-500/10 hover:border-gold-500/30 h-full">
                                 <div
                                     class="relative aspect-[3/2]  bg-gradient-to-br from-gold-600/20 to-dark-700 overflow-hidden">
                                     @if ($b->gambar)
