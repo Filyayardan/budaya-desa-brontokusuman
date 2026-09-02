@@ -229,6 +229,8 @@
                                     class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 gradient-darkred group-hover:w-3/4 transition-all duration-300"></span>
                             </a>
                         @endforeach
+                        <img src="{{ asset('images/logo-uad.png') }}" alt="Logo Universitas Ahmad Dahlan"
+                            class="ml-2 h-10 w-10 shrink-0 object-contain">
                     </div>
 
                     <button id="mobileToggle" class="lg:hidden text-main_txt-300 text-2xl focus:outline-none">
