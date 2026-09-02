@@ -216,7 +216,7 @@
   {{-- <body --}}
   {{-- class="relative min-h-screen bg-surface text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container before:absolute before:inset-0 before:-z-10 before:bg-[url('/images/bg-batik(9.16).png')] before:bg-cover before:bg-top before:bg-no-repeat before:opacity-50"> --}}
   <div class="bg-texture-layer"></div>
-        <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 bg-transparent">
+        <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 bg-main_txt-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-20">
                     <a href="{{ route('home') }}" class="flex items-center space-x-3">
@@ -262,7 +262,7 @@
 
         @yield('content')
 
-        <footer class="bg-second_bg border-t border-main_txt-500/10">
+       <!-- #region --> <footer class="bg-second_bg border-t border-main_txt-500/10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                     <div>

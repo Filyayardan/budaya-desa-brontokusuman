@@ -411,142 +411,137 @@
             </div>
         </section>
     @endif --}}
-
+    
     <section class="header-section relative overflow-hidden">
         <div class="absolute inset-0 hero-pattern opacity-20"></div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            {{-- <span class="text-tertiary text-sm font-semibold tracking-widest uppercase">Jelajahi</span> --}}
+            <span class="text-tertiary text-sm font-semibold tracking-widest uppercase">Jelajahi</span>
             <h1 class="font-display text-5xl sm:text-6xl font-bold text-main_txt mt-3 mb-4">Peta Kampung</h1>
             <div class="line-gold w-24 mx-auto mb-6"></div>
-            {{-- <p class="text-main_txt-400 max-w-xl mx-auto">Temukan lokasi UMKM, kebudayaan, dan acara di Kampung
-                Brontokusuman</p> --}}
+            <p class="text-main_txt-400 max-w-xl mx-auto">Temukan lokasi UMKM, kebudayaan, dan acara di Kampung
+                Brontokusuman</p>
         </div>
     </section>
 
+    <section class="py-16 bg-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap gap-3 justify-center mb-8">
+                <button data-filter="all"
+                    class="filter-btn active px-5 py-2.5 rounded-full text-sm font-medium transition-all">Semua</button>
+                <button data-filter="umkm"
+                    class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all"><i
+                        class="fas fa-store mr-2"></i>UMKM</button>
+                <button data-filter="budaya"
+                    class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all"><i
+                        class="fas fa-landmark mr-2"></i>Budaya</button>
+                <button data-filter="acara"
+                    class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all"><i
+                        class="fas fa-calendar-alt mr-2"></i>Acara</button>
+            </div>
+
+            <div class="bg-white rounded-2xl overflow-hidden border border-gold-500/10 shadow-lg relative z-10  ">
+                <div id="map" style="height: 600px; width: 100%;"></div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-6 mt-8 text-sm">
+                <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 rounded-full" style="background:#2e7d32;"></span>
+                    <span class="text-gray-700 font-medium">UMKM</span>
+                    <span class="text-gray-400">({{ count($umkm) }})</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 rounded-full" style="background:#b8860b;"></span>
+                    <span class="text-gray-700 font-medium">Budaya</span>
+                    <span class="text-gray-400">({{ count($budaya) }})</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 rounded-full" style="background:#1565c0;"></span>
+                    <span class="text-gray-700 font-medium">Acara</span>
+                    <span class="text-gray-400">({{ $acara->where('status', '!=', 'ongoing')->count() }})</span>
+                </div>
+                @if ($acara->contains('status', 'ongoing'))
+                    <div class="flex items-center gap-2">
+                        <span class="w-4 h-4 rounded-full animate-pulse" style="background:#22c55e;"></span>
+                        <span class="text-gray-700 font-medium">Acara Berlangsung</span>
+                        <span class="text-gray-400">({{ $acara->where('status', 'ongoing')->count() }})</span>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </section>
 
     {{-- visitor section end --}}
-    <section class=" relative overflow-hidden">
+      <section class=" relative overflow-hidden">
         <div class="absolute inset-0 hero-pattern opacity-20"></div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-
-            <h1 class="font-display text-5xl sm:text-6xl font-bold text-main_txt mt-3 mb-4">Statistik Pengunjung</h1>
+      
+            <h1 class="font-display text-5xl sm:text-6xl font-bold text-main_txt mt-3 mb-4">Traffic Pengunjung</h1>
             <div class="line-gold w-24 mx-auto mb-6"></div>
-
+    
         </div>
     </section>
-
-    <div class="flex justify-center ">
-        <section class="pb-16 pt-5 bg-pattern">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-wrap gap-3 justify-center mb-8">
-                    <button data-filter="all"
-                        class="filter-btn active px-5 py-2.5 rounded-full text-sm font-medium transition-all">Semua</button>
-                    <button data-filter="umkm"
-                        class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all"><i
-                            class="fas fa-store mr-2"></i>UMKM</button>
-                    <button data-filter="budaya"
-                        class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all"><i
-                            class="fas fa-landmark mr-2"></i>Budaya</button>
-                    <button data-filter="acara"
-                        class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all"><i
-                            class="fas fa-calendar-alt mr-2"></i>Acara</button>
-                </div>
-
-                <div class="bg-white rounded-2xl overflow-hidden border border-gold-500/10 shadow-lg relative z-10  ">
-                    <div id="map" style="height: 380px; width: 100%;"></div>
-                </div>
-
-                <div class="flex flex-wrap items-center justify-center gap-6 mt-8 text-sm">
-                    <div class="flex items-center gap-2">
-                        <span class="w-4 h-4 rounded-full" style="background:#2e7d32;"></span>
-                        <span class="text-gray-700 font-medium">UMKM</span>
-                        <span class="text-gray-400">({{ count($umkm) }})</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="w-4 h-4 rounded-full" style="background:#b8860b;"></span>
-                        <span class="text-gray-700 font-medium">Budaya</span>
-                        <span class="text-gray-400">({{ count($budaya) }})</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="w-4 h-4 rounded-full" style="background:#1565c0;"></span>
-                        <span class="text-gray-700 font-medium">Acara</span>
-                        <span class="text-gray-400">({{ $acara->where('status', '!=', 'ongoing')->count() }})</span>
-                    </div>
-                    @if ($acara->contains('status', 'ongoing'))
-                        <div class="flex items-center gap-2">
-                            <span class="w-4 h-4 rounded-full animate-pulse" style="background:#22c55e;"></span>
-                            <span class="text-gray-700 font-medium">Acara Berlangsung</span>
-                            <span class="text-gray-400">({{ $acara->where('status', 'ongoing')->count() }})</span>
+    <section class="pb-16 pt-5 bg-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+                <div class=" ">
+                    <section class="grid grid-cols-1 sm:grid-cols-2  content-center h-full gap-6">
+                        <!-- Total  -->
+                        <div
+                            class="bg-second_bg rounded-xl shadow-card p-5 border border-brand-border flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-lg bg-main_txt-500/10 flex items-center justify-center text-brand-blue">
+                                <i class="fa-solid fa-users text-xl text-main_txt"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-black mb-1">Total Pengunjung</p>
+                                <p class="text-2xl font-bold text-black">{{ $totalVisitors }}</p>
+                            </div>
                         </div>
-                    @endif
+                        <!-- Total Hari Ini -->
+                        <div
+                            class="bg-second_bg rounded-xl shadow-card p-5 border border-brand-border flex items-center space-x-4">
+                            <div
+                                class="w-12 h-12 rounded-lg bg-main_txt-500/10 flex items-center justify-center text-brand-green">
+                                <i class="fa-solid fa-user-clock text-xl text-main_txt"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-brand-gray mb-1">Pengunjung Hari ini</p>
+                                <p class="text-2xl font-bold text-brand-green">{{ $todayVisitors }}</p>
+                            </div>
+                        </div>
+
+
+                    </section>
+                </div>
+                <div>
+                    <section class=" ">
+                        <!-- Chart Card -->
+                        {{-- Chart Harian --}}
+                        <div class="overflow-hidden rounded-lg border border-slate-200 bg-surface-container-highest shadow-sm">
+                            <div
+                                class="flex items-center justify-between border-b border-slate-200 bg-main_txt-500/10 px-5 py-3.5">
+                                <span class="flex items-center gap-2 text-sm font-semibold text-slate-800">
+                                    <i class="bi bi-graph-up text-black"></i>
+                                    Pengunjung Harian Bulan {{now()->translatedFormat('F')  }}
+                                </span>
+
+                                <span
+                                    class="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs text-slate-500">
+                                    {{-- {{ \Carbon\Carbon::createFromDate(request('bulan'), request('bulan'), 1)->isoFormat('MMMM Y') }} --}}
+                                </span>
+                            </div>
+
+                            <div class="p-5">
+                                <div class="relative h-72 w-full">
+                                    <canvas id="chartHarian"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
-        </section>
-        <section class="pb-16 pt-5 bg-pattern">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
-                    <div class=" ">
-                        <section class="grid grid-cols-1 sm:grid-cols-2  content-center h-full gap-6">
-                            <!-- Total  -->
-                            <div
-                                class="bg-second_bg rounded-xl shadow-card p-2 border border-brand-border flex items-center space-x-4">
-                                <div
-                                    class="w-12 h-12 rounded-lg bg-main_txt-500/10 flex items-center justify-center text-brand-blue">
-                                    <i class="fa-solid fa-users text-xl text-main_txt"></i>
-                                </div>
-                                <div>
-                                    <p class="text-sm font-medium text-black mb-1">Total Pengunjung</p>
-                                    <p class="text-2xl font-bold text-black">{{ $totalVisitors }}</p>
-                                </div>
-                            </div>
-                            <!-- Total Hari Ini -->
-                            <div
-                                class="bg-second_bg rounded-xl shadow-card p-5 border border-brand-border flex items-center space-x-4">
-                                <div
-                                    class="w-12 h-12 rounded-lg bg-main_txt-500/10 flex items-center justify-center text-brand-green">
-                                    <i class="fa-solid fa-user-clock text-xl text-main_txt"></i>
-                                </div>
-                                <div>
-                                    <p class="text-sm font-medium text-brand-gray mb-1">Pengunjung Hari ini</p>
-                                    <p class="text-2xl font-bold text-brand-green">{{ $todayVisitors }}</p>
-                                </div>
-                            </div>
-
-
-                        </section>
-                    </div>
-                    <div>
-                        <section class=" ">
-                            <!-- Chart Card -->
-                            {{-- Chart Harian --}}
-                            <div
-                                class="overflow-hidden rounded-lg border border-slate-200 bg-surface-container-highest shadow-sm">
-                                <div
-                                    class="flex items-center justify-between border-b border-slate-200 bg-main_txt-500/10 px-5 py-3.5">
-                                    <span class="flex items-center gap-2 text-sm font-semibold text-slate-800">
-                                        <i class="bi bi-graph-up text-black"></i>
-                                        Pengunjung Harian Bulan {{ now()->translatedFormat('F') }}
-                                    </span>
-
-                                    <span
-                                        class="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs text-slate-500">
-                                        {{-- {{ \Carbon\Carbon::createFromDate(request('bulan'), request('bulan'), 1)->isoFormat('MMMM Y') }} --}}
-                                    </span>
-                                </div>
-
-                                <div class="p-5">
-                                    <div class="relative h-72 w-full">
-                                        <canvas id="chartHarian"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-    {{-- visitor section end --}}
+        </div>
+    </section>
+      {{-- visitor section end --}}
     <section class="py-24  relative overflow-hidden">
         <div class="absolute inset-0 bg-main_txt from-main_txt-600/5 via-transparent to-main_txt-600/5"></div>
         <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
