@@ -35,6 +35,7 @@
                                 800: '#471609',
                                 900: '#331006',
                             },
+                            
                             surface: '#fff8f6',
                             'on-surface': '#231917',
                              "surface-container-high": "#f7e4e0",
@@ -203,17 +204,15 @@
         @stack('styles')
     </head>
     
-    <body
-    
-        class=" bg-surface   text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container ">
+<body
+  class="relative min-h-screen bg-surface text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container before:absolute before:inset-0 before:-z-10 before:bg-[url('/images/bg-batik(9.16).png')] before:bg-[length:100%_auto] before:bg-top before:bg-repeat before:opacity-50">
     <div class="bg-texture-layer"></div>
-        <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 bg-transparent">
+        <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 bg-main_txt-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-20">
                     <a href="{{ route('home') }}" class="flex items-center space-x-3">
-                        {{-- <div class="w-16 h-16 bg-dark_red rounded-lg flex items-center justify-center">
-                            <i class="fas fa-landmark text-dark-950 text-lg"></i>
-                        </div> --}}
+                        <img src="{{ asset('images/logo-desa-brontokusuman.png') }}"
+                            alt="Logo Desa Brontokusuman" class="h-14 w-14 shrink-0 object-contain sm:h-16 sm:w-16">
                         <div>
                             <span class="font-display text-[32px] font-bold text-main_txt">Brontokusuman</span>
                             <span class="block text-[22px]text-main_txt tracking-widest uppercase">KAMPUNG BUDAYA</span>
@@ -230,6 +229,8 @@
                                     class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 gradient-darkred group-hover:w-3/4 transition-all duration-300"></span>
                             </a>
                         @endforeach
+                        <img src="{{ asset('images/logo-uad.png') }}" alt="Logo Universitas Ahmad Dahlan"
+                            class="ml-2 h-10 w-10 shrink-0 object-contain">
                     </div>
 
                     <button id="mobileToggle" class="lg:hidden text-main_txt-300 text-2xl focus:outline-none">
@@ -253,7 +254,7 @@
 
         @yield('content')
 
-        <footer class="bg-second_bg border-t border-main_txt-500/10">
+       <!-- #region --> <footer class="bg-second_bg border-t border-main_txt-500/10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                     <div>

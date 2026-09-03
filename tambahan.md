@@ -1,0 +1,1 @@
+- buat skala 10 atau 50 

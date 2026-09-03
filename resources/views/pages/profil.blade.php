@@ -93,8 +93,8 @@
                     <div class="p-6">
                         <h3 class="font-display text-lg font-bold text-main_txt group-hover:text-gold-300 transition-colors">{{ $p->nama }}</h3>
                         <p class="text-tertiary text-sm font-medium mt-1">{{ $p->jabatan }}</p>
-                        @if($p->telepon)
-                        <p class="text-gray-500 text-xs mt-3"><i class="fas fa-phone mr-1"></i>{{ $p->telepon }}</p>
+                        @if($p->email)
+                        <p class="text-gray-500 text-xs mt-3"><i class="fas fa-envelope mr-1"></i>{{ $p->email }}</p>
                         @endif
                     </div>
                 </div>

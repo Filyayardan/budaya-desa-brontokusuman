@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\DB;
 class PageController extends Controller
 {
     public function index()
-    {   
+    {
         $budayaUnggulan = Budaya::with('kategori')->where('unggulan', true)->limit(6)->get();
         $acaraTerbaru = Acara::orderBy('tanggal_mulai', 'desc')->limit(1)->get();
         $beritaTerbaru = Berita::orderBy('created_at', 'desc')->limit(1)->get();
@@ -34,23 +34,60 @@ class PageController extends Controller
             'visited_at',
             today()
         )->count();
+
+        // untuk menampilkan graf hanya jika ada pengunjung pada hari itu
+        // $monthVisitors = Visitor::whereMonth('visited_at', now()->month)
+        //     ->whereYear('visited_at', now()->year)
+        //     ->count();
+        // $visitorPerHari = DB::table('visitors')
+        //     ->selectRaw('DATE(visited_at) as hari, COUNT(DISTINCT session_id) as jumlah')
+        //     ->whereYear('visited_at', now()->year)
+        //     ->whereMonth('visited_at', now()->month)
+        //     ->groupByRaw('DATE(visited_at)')
+        //     ->orderBy('hari')
+        //     ->get();
+        // $visitorLabels = $visitorPerHari->pluck('hari')->toArray();
+        // $visitorData = $visitorPerHari
+        //     ->pluck('jumlah')
+        //     ->map(fn($jumlah) => (int) $jumlah)
+        //     ->toArray();
+        // $rangeVisitors = 0;
+
+        // untuk menampilkan graf sebulan penuh maupun tidak pengunjung
+        $totalVisitors = Visitor::count();
+        $todayVisitors = Visitor::whereDate('visited_at', today())->count();
+
         $monthVisitors = Visitor::whereMonth('visited_at', now()->month)
             ->whereYear('visited_at', now()->year)
             ->count();
-        $visitorPerHari = DB::table('visitors')
+
+        // 1. Ambil data agregat dari DB dan jadikan associative array [ 'YYYY-MM-DD' => jumlah ]
+        $visitorMap = DB::table('visitors')
             ->selectRaw('DATE(visited_at) as hari, COUNT(DISTINCT session_id) as jumlah')
             ->whereYear('visited_at', now()->year)
             ->whereMonth('visited_at', now()->month)
             ->groupByRaw('DATE(visited_at)')
-            ->orderBy('hari')
-            ->get();
-        $visitorLabels = $visitorPerHari->pluck('hari')->toArray();
-        $visitorData = $visitorPerHari
-            ->pluck('jumlah')
-            ->map(fn($jumlah) => (int) $jumlah)
+            ->pluck('jumlah', 'hari')
             ->toArray();
 
+        // 2. Generate seluruh tanggal di bulan ini (tanggal 1 s.d. tanggal terakhir)
+        $startOfMonth = now()->startOfMonth();
+        $endOfMonth = now()->endOfMonth();
+        $period = \Carbon\CarbonPeriod::create($startOfMonth, $endOfMonth);
+
+        $visitorLabels = [];
+        $visitorData = [];
+
+        foreach ($period as $date) {
+            $dateKey = $date->format('Y-m-d'); // Cocokkan format key dengan DATE(visited_at)
+
+            $visitorLabels[] = $date->format('d'); // Format label: "01", "02", dst.
+            $visitorData[] = (int) ($visitorMap[$dateKey] ?? 0); // Isi 0 jika tidak ada kunjungan
+        }
+
         $rangeVisitors = 0;
+
+
 
         //section pengunjung end
 
@@ -88,10 +125,21 @@ class PageController extends Controller
                 'url' => route('acara.detail', $a->id),
             ])->values();
 
-        return view('welcome', compact('budayaUnggulan', 'acaraTerbaru', 'beritaTerbaru', 'galeriTerbaru', 'kategori', 'banner', 'umkm', 'budaya', 'acara',    'totalVisitors',
+        return view('welcome', compact(
+            'budayaUnggulan',
+            'acaraTerbaru',
+            'beritaTerbaru',
+            'galeriTerbaru',
+            'kategori',
+            'banner',
+            'umkm',
+            'budaya',
+            'acara',
+            'totalVisitors',
             'visitorLabels',
             'todayVisitors',
-            'visitorData'));
+            'visitorData'
+        ));
     }
 
     public function budaya()
@@ -101,7 +149,7 @@ class PageController extends Controller
 
         return view('pages.budaya', compact('budaya', 'kategori'));
     }
-    
+
 
     public function budayaDetail($id)
     {
@@ -148,7 +196,7 @@ class PageController extends Controller
 
     public function peta()
     {
-        $umkm = Umkm::whereNotNull('latitude')->whereNotNull('longitude')->get()->map(fn ($u) => [
+        $umkm = Umkm::whereNotNull('latitude')->whereNotNull('longitude')->get()->map(fn($u) => [
             'nama' => $u->nama_usaha,
             'kategori' => $u->kategori ?? 'UMKM',
             'lokasi' => $u->alamat,
@@ -158,7 +206,7 @@ class PageController extends Controller
             'url' => null,
         ])->values();
 
-        $budaya = Budaya::with('kategori')->whereNotNull('latitude')->whereNotNull('longitude')->get()->map(fn ($b) => [
+        $budaya = Budaya::with('kategori')->whereNotNull('latitude')->whereNotNull('longitude')->get()->map(fn($b) => [
             'nama' => $b->judul,
             'kategori' => $b->kategori->nama_kategori ?? 'Budaya',
             'lokasi' => $b->lokasi,
@@ -170,8 +218,8 @@ class PageController extends Controller
 
         $acara = Acara::whereNotNull('latitude')->whereNotNull('longitude')
             ->get()
-            ->reject(fn ($a) => $a->status === 'completed')
-            ->map(fn ($a) => [
+            ->reject(fn($a) => $a->status === 'completed')
+            ->map(fn($a) => [
                 'nama' => $a->nama_acara,
                 'kategori' => 'Acara',
                 'lokasi' => $a->lokasi,
@@ -218,7 +266,7 @@ class PageController extends Controller
     public function kontak()
     {
         $faqs = Faq::all();
-        return view('pages.kontak',compact('faqs'));
+        return view('pages.kontak', compact('faqs'));
     }
 
     public function faq()
