@@ -46,7 +46,7 @@
                                     <h3
                                         class="font-display text-xl font-bold text-main_txt group-hover:text-gold-300 transition-colors mb-3">
                                         {{ $a->nama_acara }}</h3>
-                                    <p class="text-tertiary text-sm line-clamp-2 mb-4">{{ Str::limit($a->deskripsi, 120) }}
+                                    <p class="text-tertiary text-sm line-clamp-2 mb-4">{!! nl2br(e(Str::limit($a->deskripsi, 120))) !!}
                                     </p>
                                     @if ($a->lokasi)
                                         <div class="flex items-center text-gray-500 text-sm">

@@ -29,7 +29,7 @@
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">{{ Str::limit($faq->question, 50) }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ Str::limit($faq->answer, 50) }}</td>
+                            <td class="px-6 py-4">{!! nl2br(e(Str::limit($faq->answer, 50))) !!}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                 <a href="{{ route('admin.faq.edit', $faq->id) }}"
                                     class="px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-medium hover:bg-blue-100">

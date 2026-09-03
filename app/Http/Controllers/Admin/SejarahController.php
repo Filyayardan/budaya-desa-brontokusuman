@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Sejarah;
+use App\Services\ImageUploader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -30,7 +31,7 @@ class SejarahController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            $validated['gambar'] = $request->file('gambar')->store('sejarah', 'public');
+            $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'sejarah');
         }
 
         $validated['urutan'] = $validated['urutan'] ?? 0;
@@ -57,7 +58,7 @@ class SejarahController extends Controller
             if ($sejarah->gambar) {
                 Storage::disk('public')->delete($sejarah->gambar);
             }
-            $validated['gambar'] = $request->file('gambar')->store('sejarah', 'public');
+            $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'sejarah');
         }
 
         $sejarah->update($validated);

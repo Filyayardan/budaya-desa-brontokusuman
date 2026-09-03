@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Budaya;
 use App\Models\KategoriBudaya;
+use App\Services\ImageUploader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -48,7 +49,7 @@ class BudayaController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            $validated['gambar'] = $request->file('gambar')->store('budaya', 'public');
+            $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'budaya');
         }
 
         if ($request->hasFile('video')) {
@@ -84,7 +85,7 @@ class BudayaController extends Controller
             if ($budaya->gambar) {
                 Storage::disk('public')->delete($budaya->gambar);
             }
-            $validated['gambar'] = $request->file('gambar')->store('budaya', 'public');
+            $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'budaya');
         }
 
         if ($request->hasFile('video')) {

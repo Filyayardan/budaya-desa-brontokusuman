@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Galeri;
+use App\Services\ImageUploader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -42,7 +43,7 @@ class GaleriController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            $validated['gambar'] = $request->file('gambar')->store('galeri', 'public');
+            $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'galeri');
         }
 
         if ($request->hasFile('video')) {
@@ -73,7 +74,7 @@ class GaleriController extends Controller
             if ($galeri->gambar) {
                 Storage::disk('public')->delete($galeri->gambar);
             }
-            $validated['gambar'] = $request->file('gambar')->store('galeri', 'public');
+            $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'galeri');
         }
 
         if ($request->hasFile('video')) {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Berita;
+use App\Services\ImageUploader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,6 +29,7 @@ class BeritaController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
             'ringkasan' => 'nullable|string',
@@ -35,12 +37,13 @@ class BeritaController extends Controller
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'penulis' => 'nullable|string|max:255',
             'featured' => 'nullable|boolean',
+        ], [
+            'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 5 MB.'
         ]);
 
         if ($request->hasFile('gambar')) {
-            $validated['gambar'] = $request->file('gambar')->store('berita', 'public');
+            $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'berita');
         }
-
         $validated['featured'] = $request->boolean('featured');
         Berita::create($validated);
 
@@ -54,6 +57,7 @@ class BeritaController extends Controller
 
     public function update(Request $request, Berita $berita)
     {
+
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
             'ringkasan' => 'nullable|string',
@@ -67,9 +71,8 @@ class BeritaController extends Controller
             if ($berita->gambar) {
                 Storage::disk('public')->delete($berita->gambar);
             }
-            $validated['gambar'] = $request->file('gambar')->store('berita', 'public');
+            $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'berita');
         }
-
         $validated['featured'] = $request->boolean('featured');
         $berita->update($validated);
 

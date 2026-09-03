@@ -89,7 +89,7 @@
         </div>
     </section>
 
-    
+
     <div class="line-gold w-[500px] mx-auto mb-6"></div>
     <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
         <h1 class="font-display text-5xl sm:text-6xl font-bold text-main_txt mt-3 mb-8 text-center">FAQ</h1>
@@ -113,7 +113,7 @@
                             x-transition:leave-start="opacity-100 transform translate-y-0"
                             x-transition:leave-end="opacity-0 transform -translate-y-4"
                             class="px-6 pb-4 text-tertiary border-t border-gold-500/10">
-                            <p>{{ $faq->answer }}</p>
+                            <p>{!! nl2br(e($faq->answer)) !!}</p>
                         </div>
                     </div>
                 @endforeach

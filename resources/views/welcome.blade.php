@@ -25,7 +25,6 @@
                             </div>
                             <div class="relative overflow-hidden w-full aspect-[4/3]">
                                 <img class="w-full h-full object-cover filter sepia-[.08] contrast-105 relative z-10 transition-transform duration-[2000ms] hover:scale-105"
-                                    data-alt="A highly detailed, high-resolution museum-quality photograph of an intricately carved Indonesian Wayang Kulit shadow puppet. The puppet is made of dark buffalo hide with precise, delicate perforations, depicting a mythological figure. It is presented against a pure, bright off-white minimalist gallery background, bathed in soft, warm directional light that casts a subtle, elegant shadow to emphasize its flat, two-dimensional nature. The overall aesthetic is curatorial, timeless, and perfectly aligned with a light-mode Modern Heritage design system."
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkePIH-M8Z3uW0ljksQM42G2IQF06jAq1HiHT1HLbOH7uivJkhrzNQgdiJhHvIzStAvc3fIBP5iMFki-8tN5lvWh28MqnkVnJ3PHh3OyAXmwuWIGLIpmxSBKASXSs-seFFXXHIKo0hEKpECXOq4vCMgBjyn-2w49RMIPpMWcjapVLysByiUdjo9XZMwPfeFe6jDePAvOhkCgdyMffw_rNIuTc44EAZCW1oRpAo4CPzBwjc7W3Ye5VVew" />
                             </div>
                         </div>
@@ -48,7 +47,12 @@
                     </h1>
 
                     <p class="text-tertiary text-lg leading-relaxed mb-10 max-w-xl text-center lg:text-start">
-                        {{ $banner->deskripsi ?? 'Mengenal lebih dekat keindahan tradisi, seni, dan warisan budaya Kampung Brontokusuman yang telah mengakar sejak berabad-abad lamanya.' }}
+                        {!! nl2br(
+                            e(
+                                $banner->deskripsi ??
+                                    'Mengenal lebih dekat keindahan tradisi, seni, dan warisan budaya Kampung Brontokusuman yang telah mengakar sejak berabad-abad lamanya.',
+                            ),
+                        ) !!}
                     </p>
 
                     <div class="flex flex-col sm:flex-row gap-4 ">
@@ -200,7 +204,7 @@
                                         class="font-display text-[32px] font-bold text-main_txt group-hover:text-main_txt-300 transition-colors mb-3">
                                         {{ $b->judul }}</h3>
                                     <p class="text-tertiary text-[16px] line-clamp-2 mb-4">
-                                        {{ Str::limit($b->deskripsi, 120) }}
+                                        {!! nl2br(e(Str::limit($b->deskripsi, 120))) !!}
                                     </p>
                                     @if ($b->lokasi)
                                         <div class="flex items-center text-gray-500 text-sm">
@@ -270,7 +274,7 @@
                                                 class="font-display text-xl font-bold text-main_txt group-hover:text-main_txt-300 transition-colors mb-3">
                                                 {{ Str::limit($a->nama_acara, 80) }}</h3>
                                             <p class="text-tertiary text-sm line-clamp-2 mb-4">
-                                                {{ Str::limit($a->deskripsi, 120) }}</p>
+                                                {!! nl2br(e(Str::limit($a->deskripsi, 120))) !!}</p>
                                             <div class="flex items-center justify-between">
                                                 @if ($a->lokasi)
                                                     <div class="flex items-center text-gray-500 text-sm">
@@ -334,7 +338,7 @@
                                             class="font-display text-xl font-bold text-main_txt group-hover:text-main_txt-300 transition-colors mb-3">
                                             {{ Str::limit($br->judul, 50) }}</h3>
                                         <p class="text-gray-400 text-sm line-clamp-2">
-                                            {{ Str::limit($br->ringkasan ?? $br->isi, 120) }}</p>
+                                            {!! nl2br(e(Str::limit($br->ringkasan ?? $br->isi, 120))) !!}</p>
                                     </div>
                                 </div>
                             </a>
@@ -412,9 +416,9 @@
         </section>
     @endif --}}
 
-    <div class="lg:flex justify-center ">
+    <div class="md:flex justify-center ">
         <section class="pb-16 pt-5 bg-pattern lg:w-1/2 min-w-0">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-8">
                     <h1 class="font-display text-3xl sm:text-4xl font-bold text-main_txt mb-4">Peta Kampung</h1>
                     <div class="line-gold w-16 mx-auto"></div>
@@ -463,8 +467,8 @@
                 </div>
             </div>
         </section>
-      <section class="pb-16 pt-5 bg-pattern lg:w-1/2 min-w-0">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section class="pb-16 pt-5 bg-pattern lg:w-1/2 min-w-0">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-8">
                     <h1 class="font-display text-3xl sm:text-4xl font-bold text-main_txt mb-4">Statistik Pengunjung</h1>
                     <div class="line-gold w-16 mx-auto"></div>
@@ -749,9 +753,9 @@
                             // maxTicksLimit: 10,
                             // font: {
                             //     size: 11
-                            display:false
-                            }
-                        
+                            display: false
+                        }
+
                     },
                     y: {
                         beginAtZero: true,

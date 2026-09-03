@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pengurus;
+use App\Services\ImageUploader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -35,7 +36,7 @@ class PengurusController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
-            $validated['foto'] = $request->file('foto')->store('pengurus', 'public');
+            $validated['foto'] = app(ImageUploader::class)->store($request->file('foto'), 'pengurus');
         }
 
         Pengurus::create($validated);
@@ -63,7 +64,7 @@ class PengurusController extends Controller
             if ($pengurus->foto) {
                 Storage::disk('public')->delete($pengurus->foto);
             }
-            $validated['foto'] = $request->file('foto')->store('pengurus', 'public');
+            $validated['foto'] = app(ImageUploader::class)->store($request->file('foto'), 'pengurus');
         }
 
         $pengurus->update($validated);

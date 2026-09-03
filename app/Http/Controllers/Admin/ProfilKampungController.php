@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProfilKampung;
+use App\Services\ImageUploader;
 use Illuminate\Http\Request;
 
 class ProfilKampungController extends Controller
@@ -38,14 +39,14 @@ class ProfilKampungController extends Controller
             if (ProfilKampung::get('gambar')) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete(ProfilKampung::get('gambar'));
             }
-            $validated['gambar'] = $request->file('gambar')->store('profil', 'public');
+            $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'profil');
         }
 
         if ($request->hasFile('foto_login')) {
             if (ProfilKampung::get('foto_login')) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete(ProfilKampung::get('foto_login'));
             }
-            $validated['foto_login'] = $request->file('foto_login')->store('profil', 'public');
+            $validated['foto_login'] = app(ImageUploader::class)->store($request->file('foto_login'), 'profil');
         }
 
         foreach ($validated as $key => $value) {

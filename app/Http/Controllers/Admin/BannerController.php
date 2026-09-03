@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Services\ImageUploader;
 use Illuminate\Http\Request;
 
 class BannerController extends Controller
@@ -36,7 +37,7 @@ class BannerController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            $validated['gambar'] = $request->file('gambar')->store('banner', 'public');
+            $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'banner');
         }
 
         $validated['aktif'] = $request->boolean('aktif');
@@ -71,7 +72,7 @@ class BannerController extends Controller
             if ($banner->gambar) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete($banner->gambar);
             }
-            $validated['gambar'] = $request->file('gambar')->store('banner', 'public');
+            $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'banner');
         }
 
         $validated['aktif'] = $request->boolean('aktif');

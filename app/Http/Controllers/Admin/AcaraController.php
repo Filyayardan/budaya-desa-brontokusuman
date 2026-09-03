@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Acara;
+use App\Services\ImageUploader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -51,7 +52,7 @@ class AcaraController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            $validated['gambar'] = $request->file('gambar')->store('acara', 'public');
+            $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'acara');
         }
 
         Acara::create($validated);
@@ -81,7 +82,7 @@ class AcaraController extends Controller
             if ($acara->gambar) {
                 Storage::disk('public')->delete($acara->gambar);
             }
-            $validated['gambar'] = $request->file('gambar')->store('acara', 'public');
+            $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'acara');
         }
 
         $acara->update($validated);
