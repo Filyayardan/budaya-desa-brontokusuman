@@ -412,9 +412,9 @@
         </section>
     @endif --}}
 
-    <div class="flex justify-center ">
-        <section class="pb-16 pt-5 bg-pattern">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="lg:flex justify-center ">
+        <section class="pb-16 pt-5 bg-pattern lg:w-1/2 min-w-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-8">
                     <h1 class="font-display text-3xl sm:text-4xl font-bold text-main_txt mb-4">Peta Kampung</h1>
                     <div class="line-gold w-16 mx-auto"></div>
@@ -463,8 +463,8 @@
                 </div>
             </div>
         </section>
-        <section class="pb-16 pt-5 bg-pattern">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section class="pb-16 pt-5 bg-pattern lg:w-1/2 min-w-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-8">
                     <h1 class="font-display text-3xl sm:text-4xl font-bold text-main_txt mb-4">Statistik Pengunjung</h1>
                     <div class="line-gold w-16 mx-auto"></div>
@@ -481,36 +481,37 @@
                         <span class="font-bold">{{ $todayVisitors }}</span>
                     </div>
                 </div>
-                    <div>
-                        <section class=" ">
-                            <!-- Chart Card -->
-                            {{-- Chart Harian --}}
+                <div>
+                    <section class=" ">
+                        <!-- Chart Card -->
+                        {{-- Chart Harian --}}
+                        <div
+                            class="overflow-hidden rounded-lg border border-slate-200 bg-surface-container-highest shadow-sm">
                             <div
-                                class="overflow-hidden rounded-lg border border-slate-200 bg-surface-container-highest shadow-sm">
-                                <div
-                                    class="flex items-center justify-between border-b border-slate-200 bg-main_txt-500/10 px-5 py-3.5">
-                                    <span class="flex items-center gap-2 text-sm font-semibold text-slate-800">
-                                        <i class="bi bi-graph-up text-black"></i>
-                                        Pengunjung Harian Bulan {{ now()->translatedFormat('F') }}
-                                    </span>
+                                class="flex items-center justify-between border-b border-slate-200 bg-main_txt-500/10 px-5 py-3.5">
+                                <span class="flex items-center gap-2 text-sm font-semibold text-slate-800">
+                                    <i class="bi bi-graph-up text-black"></i>
+                                    Pengunjung Harian Bulan {{ now()->translatedFormat('F') }}
+                                </span>
 
-                                    <span
-                                        class="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs text-slate-500">
-                                        {{-- {{ \Carbon\Carbon::createFromDate(request('bulan'), request('bulan'), 1)->isoFormat('MMMM Y') }} --}}
-                                    </span>
-                                </div>
+                                <span
+                                    class="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs text-slate-500">
+                                    {{-- {{ \Carbon\Carbon::createFromDate(request('bulan'), request('bulan'), 1)->isoFormat('MMMM Y') }} --}}
+                                </span>
+                            </div>
 
-                                <div class="p-5">
-                                    <div class="relative h-72 w-full">
-                                        <canvas id="chartHarian"></canvas>
-                                    </div>
+                            <div class="p-5">
+                                <div class="relative h-72 w-full">
+                                    <canvas id="chartHarian"></canvas>
                                 </div>
                             </div>
-                        </section>
-                    </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </section>
+    </div>
+    </section>
     </div>
     {{-- visitor section end --}}
     <section class="py-24  relative overflow-hidden">
@@ -710,13 +711,16 @@
             data: {
                 labels: @json($visitorLabels),
                 datasets: [{
-                    label: 'Jumlah Pengunjung',
+                    label: 'Pengunjung',
                     data: @json($visitorData),
                     borderColor: '#6f2410',
-                    backgroundColor: 'rgba(111, 36, 16, 0.2)',
-                    borderWidth: 2,
+                    backgroundColor: 'rgba(111, 36, 16, 0.15)',
+                    borderWidth: 2.5,
                     pointRadius: 3,
-                    pointBackgroundColor: 'white',
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#6f2410',
+                    pointBorderWidth: 2,
                     fill: true,
                     tension: 0.35
                 }]
@@ -724,15 +728,14 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-
                 plugins: {
                     legend: {
                         display: false
                     },
                     tooltip: {
                         callbacks: {
-                            label: context =>
-                                context.parsed.y.toLocaleString('id-ID') + ' pengunjung'
+                            title: context => `Tanggal ${context[0].label}`,
+                            label: context => ` ${context.parsed.y.toLocaleString('id-ID')} Pengunjung`
                         }
                     }
                 },
@@ -742,21 +745,31 @@
                             display: false
                         },
                         ticks: {
-                            // color: '#64748b'
-                            display: false
-                        }
+                            // color: '#64748b',
+                            // maxTicksLimit: 10,
+                            // font: {
+                            //     size: 11
+                            display:false
+                            }
+                        
                     },
                     y: {
                         beginAtZero: true,
+                        grid: {
+                            color: 'rgba(226, 232, 240, 0.8)'
+                        },
                         ticks: {
-                            stepSize: 50,
+                            stepSize: 10,
                             color: '#64748b',
-                            callback: value =>
-                                Number(value).toLocaleString('id-ID')
+                            callback: value => Number(value).toLocaleString('id-ID')
                         },
                         title: {
                             display: true,
-                            text: 'Jumlah Pengunjung'
+                            text: 'Jumlah Pengunjung',
+                            color: '#64748b',
+                            font: {
+                                size: 12
+                            }
                         }
                     }
                 }

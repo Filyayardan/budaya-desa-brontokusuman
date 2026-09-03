@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\DB;
 class PageController extends Controller
 {
     public function index()
-    {   
+    {
         $budayaUnggulan = Budaya::with('kategori')->where('unggulan', true)->limit(6)->get();
         $acaraTerbaru = Acara::orderBy('tanggal_mulai', 'desc')->limit(1)->get();
         $beritaTerbaru = Berita::orderBy('created_at', 'desc')->limit(1)->get();
@@ -34,6 +34,7 @@ class PageController extends Controller
             'visited_at',
             today()
         )->count();
+
         // untuk menampilkan graf hanya jika ada pengunjung pada hari itu
         // $monthVisitors = Visitor::whereMonth('visited_at', now()->month)
         //     ->whereYear('visited_at', now()->year)
@@ -86,7 +87,8 @@ class PageController extends Controller
 
         $rangeVisitors = 0;
 
-        
+
+
         //section pengunjung end
 
         $umkm = Umkm::whereNotNull('latitude')->whereNotNull('longitude')->get()->map(fn($u) => [
@@ -123,10 +125,21 @@ class PageController extends Controller
                 'url' => route('acara.detail', $a->id),
             ])->values();
 
-        return view('welcome', compact('budayaUnggulan', 'acaraTerbaru', 'beritaTerbaru', 'galeriTerbaru', 'kategori', 'banner', 'umkm', 'budaya', 'acara',    'totalVisitors',
+        return view('welcome', compact(
+            'budayaUnggulan',
+            'acaraTerbaru',
+            'beritaTerbaru',
+            'galeriTerbaru',
+            'kategori',
+            'banner',
+            'umkm',
+            'budaya',
+            'acara',
+            'totalVisitors',
             'visitorLabels',
             'todayVisitors',
-            'visitorData'));
+            'visitorData'
+        ));
     }
 
     public function budaya()
@@ -136,7 +149,7 @@ class PageController extends Controller
 
         return view('pages.budaya', compact('budaya', 'kategori'));
     }
-    
+
 
     public function budayaDetail($id)
     {
@@ -183,7 +196,7 @@ class PageController extends Controller
 
     public function peta()
     {
-        $umkm = Umkm::whereNotNull('latitude')->whereNotNull('longitude')->get()->map(fn ($u) => [
+        $umkm = Umkm::whereNotNull('latitude')->whereNotNull('longitude')->get()->map(fn($u) => [
             'nama' => $u->nama_usaha,
             'kategori' => $u->kategori ?? 'UMKM',
             'lokasi' => $u->alamat,
@@ -193,7 +206,7 @@ class PageController extends Controller
             'url' => null,
         ])->values();
 
-        $budaya = Budaya::with('kategori')->whereNotNull('latitude')->whereNotNull('longitude')->get()->map(fn ($b) => [
+        $budaya = Budaya::with('kategori')->whereNotNull('latitude')->whereNotNull('longitude')->get()->map(fn($b) => [
             'nama' => $b->judul,
             'kategori' => $b->kategori->nama_kategori ?? 'Budaya',
             'lokasi' => $b->lokasi,
@@ -205,8 +218,8 @@ class PageController extends Controller
 
         $acara = Acara::whereNotNull('latitude')->whereNotNull('longitude')
             ->get()
-            ->reject(fn ($a) => $a->status === 'completed')
-            ->map(fn ($a) => [
+            ->reject(fn($a) => $a->status === 'completed')
+            ->map(fn($a) => [
                 'nama' => $a->nama_acara,
                 'kategori' => 'Acara',
                 'lokasi' => $a->lokasi,
@@ -253,7 +266,7 @@ class PageController extends Controller
     public function kontak()
     {
         $faqs = Faq::all();
-        return view('pages.kontak',compact('faqs'));
+        return view('pages.kontak', compact('faqs'));
     }
 
     public function faq()
