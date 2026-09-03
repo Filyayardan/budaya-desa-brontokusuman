@@ -412,32 +412,13 @@
         </section>
     @endif --}}
 
-    <section class="header-section relative overflow-hidden">
-        <div class="absolute inset-0 hero-pattern opacity-20"></div>
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            {{-- <span class="text-tertiary text-sm font-semibold tracking-widest uppercase">Jelajahi</span> --}}
-            <h1 class="font-display text-5xl sm:text-6xl font-bold text-main_txt mt-3 mb-4">Peta Kampung</h1>
-            <div class="line-gold w-24 mx-auto mb-6"></div>
-            {{-- <p class="text-main_txt-400 max-w-xl mx-auto">Temukan lokasi UMKM, kebudayaan, dan acara di Kampung
-                Brontokusuman</p> --}}
-        </div>
-    </section>
-
-
-    {{-- visitor section end --}}
-    <section class=" relative overflow-hidden">
-        <div class="absolute inset-0 hero-pattern opacity-20"></div>
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-
-            <h1 class="font-display text-5xl sm:text-6xl font-bold text-main_txt mt-3 mb-4">Statistik Pengunjung</h1>
-            <div class="line-gold w-24 mx-auto mb-6"></div>
-
-        </div>
-    </section>
-
     <div class="flex justify-center ">
         <section class="pb-16 pt-5 bg-pattern">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-8">
+                    <h1 class="font-display text-3xl sm:text-4xl font-bold text-main_txt mb-4">Peta Kampung</h1>
+                    <div class="line-gold w-16 mx-auto"></div>
+                </div>
                 <div class="flex flex-wrap gap-3 justify-center mb-8">
                     <button data-filter="all"
                         class="filter-btn active px-5 py-2.5 rounded-full text-sm font-medium transition-all">Semua</button>
@@ -484,37 +465,22 @@
         </section>
         <section class="pb-16 pt-5 bg-pattern">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
-                    <div class=" ">
-                        <section class="grid grid-cols-1 sm:grid-cols-2  content-center h-full gap-6">
-                            <!-- Total  -->
-                            <div
-                                class="bg-second_bg rounded-xl shadow-card p-2 border border-brand-border flex items-center space-x-4">
-                                <div
-                                    class="w-12 h-12 rounded-lg bg-main_txt-500/10 flex items-center justify-center text-brand-blue">
-                                    <i class="fa-solid fa-users text-xl text-main_txt"></i>
-                                </div>
-                                <div>
-                                    <p class="text-sm font-medium text-black mb-1">Total Pengunjung</p>
-                                    <p class="text-2xl font-bold text-black">{{ $totalVisitors }}</p>
-                                </div>
-                            </div>
-                            <!-- Total Hari Ini -->
-                            <div
-                                class="bg-second_bg rounded-xl shadow-card p-5 border border-brand-border flex items-center space-x-4">
-                                <div
-                                    class="w-12 h-12 rounded-lg bg-main_txt-500/10 flex items-center justify-center text-brand-green">
-                                    <i class="fa-solid fa-user-clock text-xl text-main_txt"></i>
-                                </div>
-                                <div>
-                                    <p class="text-sm font-medium text-brand-gray mb-1">Pengunjung Hari ini</p>
-                                    <p class="text-2xl font-bold text-brand-green">{{ $todayVisitors }}</p>
-                                </div>
-                            </div>
-
-
-                        </section>
+                <div class="text-center mb-8">
+                    <h1 class="font-display text-3xl sm:text-4xl font-bold text-main_txt mb-4">Statistik Pengunjung</h1>
+                    <div class="line-gold w-16 mx-auto"></div>
+                </div>
+                <div class="flex flex-wrap gap-3 justify-center mb-8">
+                    <div class="stat-pill px-5 py-2.5 rounded-full text-sm font-medium flex items-center gap-2">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Total Pengunjung</span>
+                        <span class="font-bold">{{ $totalVisitors }}</span>
                     </div>
+                    <div class="stat-pill px-5 py-2.5 rounded-full text-sm font-medium flex items-center gap-2">
+                        <i class="fa-solid fa-user-clock"></i>
+                        <span>Pengunjung Hari ini</span>
+                        <span class="font-bold">{{ $todayVisitors }}</span>
+                    </div>
+                </div>
                     <div>
                         <section class=" ">
                             <!-- Chart Card -->
@@ -580,6 +546,16 @@
                 color: #1a1820;
                 border-color: transparent;
                 font-weight: 700;
+            }
+
+            .stat-pill,
+            .stat-pill:hover,
+            .stat-pill:active,
+            .stat-pill.active {
+                background: #2d2b33;
+                color: #9f9da7;
+                border: 1px solid rgba(212, 160, 23, 0.1);
+                font-weight: 500;
             }
 
             .peta-divicon {
@@ -773,7 +749,7 @@
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            stepSize: 1,
+                            stepSize: 50,
                             color: '#64748b',
                             callback: value =>
                                 Number(value).toLocaleString('id-ID')
