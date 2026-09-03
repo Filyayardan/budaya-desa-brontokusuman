@@ -5,10 +5,10 @@
 @section('content')
     <section class=" relative min-h-screen flex items-center overflow-hidden">
         <div class="absolute inset-0  from-dark-950 via-dark-900 to-dark-950"></div>
-        @if ($banner && $banner->gambar)
+        {{-- @if ($banner && $banner->gambar)
             <img src="{{ asset('storage/' . $banner->gambar) }}" alt=""
                 class="absolute inset-0 w-full h-full object-cover opacity-30">
-        @endif
+        @endif --}}
         <div class="absolute inset-0 hero-pattern opacity-30"></div>
         <div class="absolute top-0 right-0 w-96 h-96 bg-main_txt-500/5 rounded-full blur-3xl"></div>
         <div class="absolute bottom-0 left-0 w-96 h-96 bg-main_txt-600/5 rounded-full blur-3xl"></div>
@@ -25,7 +25,7 @@
                             </div>
                             <div class="relative overflow-hidden w-full aspect-[4/3]">
                                 <img class="w-full h-full object-cover filter sepia-[.08] contrast-105 relative z-10 transition-transform duration-[2000ms] hover:scale-105"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkePIH-M8Z3uW0ljksQM42G2IQF06jAq1HiHT1HLbOH7uivJkhrzNQgdiJhHvIzStAvc3fIBP5iMFki-8tN5lvWh28MqnkVnJ3PHh3OyAXmwuWIGLIpmxSBKASXSs-seFFXXHIKo0hEKpECXOq4vCMgBjyn-2w49RMIPpMWcjapVLysByiUdjo9XZMwPfeFe6jDePAvOhkCgdyMffw_rNIuTc44EAZCW1oRpAo4CPzBwjc7W3Ye5VVew" />
+                                    src="{{ $banner->gambar ? asset('storage/' . $banner->gambar) : 'https://lh3.googleusercontent.com/aida-public/AB6AXuAkePIH-M8Z3uW0ljksQM42G2IQF06jAq1HiHT1HLbOH7uivJkhrzNQgdiJhHvIzStAvc3fIBP5iMFki-8tN5lvWh28MqnkVnJ3PHh3OyAXmwuWIGLIpmxSBKASXSs-seFFXXHIKo0hEKpECXOq4vCMgBjyn-2w49RMIPpMWcjapVLysByiUdjo9XZMwPfeFe6jDePAvOhkCgdyMffw_rNIuTc44EAZCW1oRpAo4CPzBwjc7W3Ye5VVew' }}" />
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                         ) !!}
                     </p>
 
-                    <div class="flex flex-col sm:flex-row gap-4 ">
+                    {{-- <div class="flex flex-col sm:flex-row gap-4 ">
                         @if ($banner && $banner->btn1_teks)
                             <a href="{{ route($banner->btn1_link ?? 'home') }}"
                                 class="gradient-darkred text-dark-950 font-semibold px-8 py-4 rounded-xl hover:opacity-90 transition-opacity text-center shadow-lg shadow-main_txt-500/20">
@@ -68,7 +68,7 @@
                                 <i class="fas fa-book-open mr-2"></i>{{ $banner->btn2_teks }}
                             </a>
                         @endif
-                    </div>
+                    </div> --}}
                     <div class="flex gap-4 justify-center lg:justify-start">
                         <a href="{{ route('galeri') }}"
                             class="bg-main_txt text-white rounded-lg font-label-lg text-label-lg px-8 py-4 hover:text-on-tertiary transition-colors shadow-sm inline-block text-center">

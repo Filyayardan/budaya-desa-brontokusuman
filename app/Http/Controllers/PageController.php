@@ -7,6 +7,7 @@ use App\Models\KategoriBudaya;
 use App\Models\Acara;
 use App\Models\Galeri;
 use App\Models\Berita;
+use App\Models\ProfilKampung;
 use App\Models\Sejarah;
 use App\Models\Pengurus;
 use App\Models\Banner;
@@ -265,8 +266,11 @@ class PageController extends Controller
 
     public function kontak()
     {
+        $telepon=ProfilKampung::get('telepon');
+        $email = ProfilKampung::get('email');
+        $alamat = ProfilKampung::get('alamat');
         $faqs = Faq::all();
-        return view('pages.kontak', compact('faqs'));
+        return view('pages.kontak', compact('faqs','telepon','email','alamat'));
     }
 
     public function faq()
