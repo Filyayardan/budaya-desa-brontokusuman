@@ -7,6 +7,7 @@ use App\Models\KategoriBudaya;
 use App\Models\Acara;
 use App\Models\Galeri;
 use App\Models\Berita;
+use App\Models\SubBerita;
 use App\Models\ProfilKampung;
 use App\Models\Sejarah;
 use App\Models\Pengurus;
@@ -243,10 +244,19 @@ class PageController extends Controller
 
     public function beritaDetail($id)
     {
-        $berita = Berita::findOrFail($id);
+        $berita = Berita::with('subBerita')->findOrFail($id);
         $beritaLain = Berita::where('id', '!=', $id)->latest()->limit(3)->get();
 
         return view('pages.berita-detail', compact('berita', 'beritaLain'));
+    }
+
+    public function subBeritaDetail($id, $subId)
+    {
+        $berita = Berita::with('subBerita')->findOrFail($id);
+        $subBerita = SubBerita::where('berita_id', $berita->id)->findOrFail($subId);
+        $beritaLain = Berita::where('id', '!=', $berita->id)->latest()->limit(3)->get();
+
+        return view('pages.sub-berita-detail', compact('berita', 'subBerita', 'beritaLain'));
     }
 
     public function sejarah()

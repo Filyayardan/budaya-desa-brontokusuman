@@ -12,4 +12,9 @@ class Berita extends Model
     protected $table = 'berita';
 
     protected $fillable = ['judul', 'ringkasan', 'isi', 'gambar', 'penulis', 'featured'];
+
+    public function subBerita()
+    {
+        return $this->hasMany(SubBerita::class)->orderBy('urutan', 'asc');
+    }
 }

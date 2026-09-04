@@ -17,6 +17,7 @@ Route::get('/peta', [PageController::class, 'peta'])->name('peta');
 Route::get('/galeri', [PageController::class, 'galeri'])->name('galeri');
 Route::get('/berita', [PageController::class, 'berita'])->name('berita');
 Route::get('/berita/{id}', [PageController::class, 'beritaDetail'])->name('berita.detail');
+Route::get('/berita/{id}/sub-berita/{subId}', [PageController::class, 'subBeritaDetail'])->name('berita.sub-berita.detail');
 Route::get('/sejarah', [PageController::class, 'sejarah'])->name('sejarah');
 Route::get('/profil', [PageController::class, 'profil'])->name('profil');
 Route::get('/kontak', [PageController::class, 'kontak'])->name('kontak');

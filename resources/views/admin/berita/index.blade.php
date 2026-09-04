@@ -41,6 +41,7 @@
                 <td class="px-5 py-4 text-gray-600">{{ $br->created_at->format('d M Y') }}</td>
                 <td class="px-5 py-4">
                     <div class="flex items-center space-x-2">
+                        <a href="{{ route('admin.berita.sub-berita.index', $br) }}" class="px-3 py-1.5 bg-green-50 text-green-600 rounded-lg text-xs font-medium hover:bg-green-100"><i class="fas fa-list mr-1"></i>Sub Berita</a>
                         <a href="{{ route('admin.berita.edit', $br) }}" class="px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-medium hover:bg-blue-100"><i class="fas fa-edit mr-1"></i>Edit</a>
                         <form action="{{ route('admin.berita.destroy', $br) }}" method="POST" onsubmit="return confirm('Yakin hapus berita ini?')">
                             @csrf @method('DELETE')

@@ -25,7 +25,7 @@
                             </div>
                             <div class="relative overflow-hidden w-full aspect-[4/3]">
                                 <img class="w-full h-full object-cover filter sepia-[.08] contrast-105 relative z-10 transition-transform duration-[2000ms] hover:scale-105"
-                                    src="{{ $banner->gambar ? asset('storage/' . $banner->gambar) : 'https://lh3.googleusercontent.com/aida-public/AB6AXuAkePIH-M8Z3uW0ljksQM42G2IQF06jAq1HiHT1HLbOH7uivJkhrzNQgdiJhHvIzStAvc3fIBP5iMFki-8tN5lvWh28MqnkVnJ3PHh3OyAXmwuWIGLIpmxSBKASXSs-seFFXXHIKo0hEKpECXOq4vCMgBjyn-2w49RMIPpMWcjapVLysByiUdjo9XZMwPfeFe6jDePAvOhkCgdyMffw_rNIuTc44EAZCW1oRpAo4CPzBwjc7W3Ye5VVew' }}" />
+                                    src="{{ $banner?->gambar ? asset('storage/' . $banner->gambar) : 'https://lh3.googleusercontent.com/aida-public/AB6AXuAkePIH-M8Z3uW0ljksQM42G2IQF06jAq1HiHT1HLbOH7uivJkhrzNQgdiJhHvIzStAvc3fIBP5iMFki-8tN5lvWh28MqnkVnJ3PHh3OyAXmwuWIGLIpmxSBKASXSs-seFFXXHIKo0hEKpECXOq4vCMgBjyn-2w49RMIPpMWcjapVLysByiUdjo9XZMwPfeFe6jDePAvOhkCgdyMffw_rNIuTc44EAZCW1oRpAo4CPzBwjc7W3Ye5VVew' }}" />
                             </div>
                         </div>
                     </div>
@@ -42,14 +42,14 @@
                     <h1
                         class="font-display text-3xl sm:text-4xl lg:text-6xl font-bold leading-tight mb-8 text-center lg:text-start">
                         <span
-                            class="text-xl font-body text-tertiary">{{ $banner->judul_atas ?? 'Jelajahi Kebudayaan' }}</span><br>
-                        <span class="text-main_txt">{{ $banner->judul_bawah ?? 'Brontokusuman' }}</span>
+                            class="text-xl font-body text-tertiary">{{ $banner?->judul_atas ?? 'Jelajahi Kebudayaan' }}</span><br>
+                        <span class="text-main_txt">{{ $banner?->judul_bawah ?? 'Brontokusuman' }}</span>
                     </h1>
 
                     <p class="text-tertiary text-lg leading-relaxed mb-10 max-w-xl text-center lg:text-start">
                         {!! nl2br(
                             e(
-                                $banner->deskripsi ??
+                                $banner?->deskripsi ??
                                     'Mengenal lebih dekat keindahan tradisi, seni, dan warisan budaya Kampung Brontokusuman yang telah mengakar sejak berabad-abad lamanya.',
                             ),
                         ) !!}

@@ -37,6 +37,31 @@
                 </div>
             </div>
 
+            @if ($berita->subBerita->count())
+                <div class="mt-16">
+                    <h2 class="font-display text-2xl font-bold text-main_txt mb-8">Artikel</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @foreach ($berita->subBerita as $sb)
+                            <a href="{{ route('berita.sub-berita.detail', [$berita->id, $sb->id]) }}" class="card-hover group">
+                                <div class="bg-white backdrop-blur rounded-xl overflow-hidden border border-gold-500/10 hover:border-gold-500/30 h-full">
+                                    <div class="relative h-40 bg-gradient-to-br from-gold-600/20 to-dark-700 overflow-hidden">
+                                        @if ($sb->gambar)
+                                            <img src="{{ asset('storage/' . $sb->gambar) }}" alt="{{ $sb->judul_sub }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                        @else
+                                            <div class="absolute inset-0 flex items-center justify-center"><i class="fas fa-newspaper text-4xl text-gold-500/20"></i></div>
+                                        @endif
+                                    </div>
+                                    <div class="p-5">
+                                        <h3 class="font-display text-lg font-bold text-main_txt group-hover:text-gold-300 transition-colors mb-2">{{ $sb->judul_sub }}</h3>
+                                        <span class="text-gold-500 text-xs font-medium"><i class="fas fa-arrow-right mr-1"></i>Baca Selengkapnya</span>
+                                    </div>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             @if ($beritaLain->count())
                 <div class="mt-16">
                     <h2 class="font-display text-2xl font-bold text-main_txt mb-8">Berita Lainnya</h2>

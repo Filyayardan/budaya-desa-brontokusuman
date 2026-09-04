@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\ProfilKampungController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\UmkmController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\SubBeritaController;
 
 Route::prefix('admin')
     ->name('admin.')
@@ -37,6 +38,7 @@ Route::prefix('admin')
             Route::resource('budaya', BudayaController::class)->except(['show']);
             Route::resource('umkm', UmkmController::class)->except(['show']);
             Route::resource('berita', BeritaController::class)->except(['show'])->parameters(['berita' => 'berita']);
+            Route::resource('berita.sub-berita', SubBeritaController::class)->except(['show'])->parameters(['berita' => 'berita', 'sub-berita' => 'subBerita']);
             Route::resource('acara', AcaraController::class)->except(['show']);
             Route::resource('galeri', GaleriController::class)->except(['show']);
             Route::resource('sejarah', SejarahController::class)->except(['show']);
