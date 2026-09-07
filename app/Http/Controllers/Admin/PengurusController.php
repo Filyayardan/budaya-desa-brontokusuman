@@ -60,8 +60,15 @@ class PengurusController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        if ($request->hasFile('foto')) {
+        if ($request->boolean('hapus_foto')) {
             if ($pengurus->foto) {
+                Storage::disk('public')->delete($pengurus->foto);
+            }
+            $validated['foto'] = null;
+        }
+
+        if ($request->hasFile('foto')) {
+            if (!$request->boolean('hapus_foto') && $pengurus->foto) {
                 Storage::disk('public')->delete($pengurus->foto);
             }
             $validated['foto'] = app(ImageUploader::class)->store($request->file('foto'), 'pengurus');

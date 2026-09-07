@@ -24,7 +24,13 @@
             <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Gambar</label>
                 @if($sejarah->gambar)
-                <div class="mb-2"><img src="{{ asset('storage/' . $sejarah->gambar) }}" class="w-24 h-24 rounded-lg object-cover"></div>
+                    <div class="relative group w-fit mb-2">
+                        <img src="{{ asset('storage/' . $sejarah->gambar) }}" class="w-24 h-24 rounded-lg object-cover border border-gray-200">
+                        <button type="button" data-field="hapus_gambar"
+                            class="hapus-media absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition hover:bg-red-600"
+                            title="Hapus gambar">&times;</button>
+                    </div>
+                    <input type="hidden" name="hapus_gambar" class="field-hapus-media" value="">
                 @endif
                 <input type="file" name="gambar" accept="image/*" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-gold-50 file:text-gold-700 file:px-3 file:py-1 file:text-sm file:font-medium">
             </div>

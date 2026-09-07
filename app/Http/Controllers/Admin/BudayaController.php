@@ -81,15 +81,29 @@ class BudayaController extends Controller
             'longitude' => 'nullable|numeric|between:-180,180',
         ]);
 
-        if ($request->hasFile('gambar')) {
+        if ($request->boolean('hapus_gambar')) {
             if ($budaya->gambar) {
+                Storage::disk('public')->delete($budaya->gambar);
+            }
+            $validated['gambar'] = null;
+        }
+
+        if ($request->hasFile('gambar')) {
+            if (!$request->boolean('hapus_gambar') && $budaya->gambar) {
                 Storage::disk('public')->delete($budaya->gambar);
             }
             $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'budaya');
         }
 
-        if ($request->hasFile('video')) {
+        if ($request->boolean('hapus_video')) {
             if ($budaya->video) {
+                Storage::disk('public')->delete($budaya->video);
+            }
+            $validated['video'] = null;
+        }
+
+        if ($request->hasFile('video')) {
+            if (!$request->boolean('hapus_video') && $budaya->video) {
                 Storage::disk('public')->delete($budaya->video);
             }
             $validated['video'] = $request->file('video')->store('budaya/video', 'public');

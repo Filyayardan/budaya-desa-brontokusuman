@@ -28,18 +28,17 @@
                             </div>
 
                             <div class="md:w-1/2 {{ $i % 2 == 0 ? 'md:pr-16 md:text-right' : 'md:pl-16' }} pl-20 md:pl-0">
-                                @if ($s->gambar)
-                                    <div
-                                        class="rounded-xl overflow-hidden border border-gold-500/10 mb-4 {{ $i % 2 == 0 ? 'md:ml-auto' : '' }}">
-                                        <img src="{{ asset('storage/' . $s->gambar) }}" alt="{{ $s->judul }}"
-                                            class="w-full h-48 object-cover">
-                                    </div>
-                                @endif
                                 <h3 class="font-display text-2xl font-bold text-main_txt mb-3">{{ $s->judul }}</h3>
                                 <p class="text-tertiary leading-relaxed">{!! nl2br(e(Str::limit($s->isi, 300))) !!}</p>
                             </div>
 
-                            <div class="hidden md:block md:w-1/2"></div>
+                            <div class="pl-20 md:pl-0 md:w-1/2 {{ $i % 2 == 0 ? 'md:pl-16' : 'md:pr-16' }}">
+                                @if ($s->gambar)
+                                    <div class="rounded-xl overflow-hidden border border-gold-500/10">
+                                        <img src="{{ asset('storage/' . $s->gambar) }}" alt="{{ $s->judul }}" class="w-full h-48 object-cover">
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     @endforeach
                 </div>

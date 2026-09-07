@@ -35,15 +35,29 @@ class ProfilKampungController extends Controller
 
         $validated = $request->validate($fields);
 
-        if ($request->hasFile('gambar')) {
+        if ($request->boolean('hapus_gambar')) {
             if (ProfilKampung::get('gambar')) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete(ProfilKampung::get('gambar'));
+            }
+            ProfilKampung::set('gambar', null);
+        }
+
+        if ($request->hasFile('gambar')) {
+            if (!$request->boolean('hapus_gambar') && ProfilKampung::get('gambar')) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete(ProfilKampung::get('gambar'));
             }
             $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'profil');
         }
 
-        if ($request->hasFile('foto_login')) {
+        if ($request->boolean('hapus_foto_login')) {
             if (ProfilKampung::get('foto_login')) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete(ProfilKampung::get('foto_login'));
+            }
+            ProfilKampung::set('foto_login', null);
+        }
+
+        if ($request->hasFile('foto_login')) {
+            if (!$request->boolean('hapus_foto_login') && ProfilKampung::get('foto_login')) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete(ProfilKampung::get('foto_login'));
             }
             $validated['foto_login'] = app(ImageUploader::class)->store($request->file('foto_login'), 'profil');

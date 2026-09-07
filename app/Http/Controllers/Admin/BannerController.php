@@ -68,8 +68,15 @@ class BannerController extends Controller
             'aktif' => 'boolean',
         ]);
 
-        if ($request->hasFile('gambar')) {
+        if ($request->boolean('hapus_gambar')) {
             if ($banner->gambar) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($banner->gambar);
+            }
+            $validated['gambar'] = null;
+        }
+
+        if ($request->hasFile('gambar')) {
+            if (!$request->boolean('hapus_gambar') && $banner->gambar) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete($banner->gambar);
             }
             $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'banner');

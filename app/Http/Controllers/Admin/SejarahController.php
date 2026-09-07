@@ -54,8 +54,15 @@ class SejarahController extends Controller
             'urutan' => 'nullable|integer|min:0',
         ]);
 
-        if ($request->hasFile('gambar')) {
+        if ($request->boolean('hapus_gambar')) {
             if ($sejarah->gambar) {
+                Storage::disk('public')->delete($sejarah->gambar);
+            }
+            $validated['gambar'] = null;
+        }
+
+        if ($request->hasFile('gambar')) {
+            if (!$request->boolean('hapus_gambar') && $sejarah->gambar) {
                 Storage::disk('public')->delete($sejarah->gambar);
             }
             $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'sejarah');

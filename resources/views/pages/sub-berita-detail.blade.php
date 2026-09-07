@@ -34,7 +34,7 @@
 
             <div class="bg-second_bg backdrop-blur rounded-2xl border border-gold-500/10 p-8 sm:p-10">
                 <div class="prose prose-invert max-w-none text-tertiary leading-relaxed prose-headings:text-white prose-a:text-gold-400 prose-strong:text-white">
-                    {!! nl2br(e($subBerita->isi_sub)) !!}
+                    {!! $subBerita->renderIsi() !!}
                 </div>
             </div>
 

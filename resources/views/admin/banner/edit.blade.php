@@ -60,7 +60,13 @@
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Gambar Saat Ini</label>
                     @if($banner->gambar)
-                        <img src="{{ asset('storage/' . $banner->gambar) }}" class="w-full h-32 rounded-lg object-cover mb-3">
+                        <div class="relative group mb-3">
+                            <img src="{{ asset('storage/' . $banner->gambar) }}" class="w-full h-32 rounded-lg object-cover">
+                            <button type="button" data-field="hapus_gambar"
+                                class="hapus-media absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition hover:bg-red-600"
+                                title="Hapus gambar">&times;</button>
+                        </div>
+                        <input type="hidden" name="hapus_gambar" class="field-hapus-media" value="">
                     @else
                         <p class="text-gray-400 text-sm mb-3">Belum ada gambar.</p>
                     @endif

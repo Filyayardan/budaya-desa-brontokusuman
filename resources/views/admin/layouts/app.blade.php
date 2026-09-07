@@ -269,6 +269,15 @@
             document.getElementById('sidebarToggle')?.addEventListener('click', () => {
                 document.getElementById('sidebar').classList.toggle('-translate-x-full');
             });
+
+            document.querySelectorAll('.hapus-media').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const field = document.querySelector('[name="' + this.getAttribute('data-field') + '"]');
+                    if (field) field.value = '1';
+                    const wrap = this.closest('.group');
+                    if (wrap) wrap.remove();
+                });
+            });
         </script>
         @stack('scripts')
 

@@ -20,7 +20,13 @@
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Gambar</label>
                 @if($profil['gambar'] ?? null)
-                <div class="mb-2"><img src="{{ asset('storage/' . $profil['gambar']) }}" class="w-24 h-24 rounded-lg object-cover"></div>
+                <div class="relative group w-fit mb-2">
+                    <img src="{{ asset('storage/' . $profil['gambar']) }}" class="w-24 h-24 rounded-lg object-cover border border-gray-200">
+                    <button type="button" data-field="hapus_gambar"
+                        class="hapus-media absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition hover:bg-red-600"
+                        title="Hapus gambar">&times;</button>
+                </div>
+                <input type="hidden" name="hapus_gambar" class="field-hapus-media" value="">
                 @endif
                 <input type="file" name="gambar" accept="image/*" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-gold-50 file:text-gold-700 file:px-3 file:py-1 file:text-sm file:font-medium">
             </div>
@@ -28,7 +34,13 @@
                 <label class="block text-sm font-medium text-gray-700 mb-1">Foto Halaman Login</label>
                 <p class="text-xs text-gray-400 mb-2">Foto ini ditampilkan sebagai latar belakang pada halaman login admin.</p>
                 @if($profil['foto_login'] ?? null)
-                <div class="mb-2"><img src="{{ asset('storage/' . $profil['foto_login']) }}" class="w-full h-32 rounded-lg object-cover"></div>
+                <div class="relative group mb-2">
+                    <img src="{{ asset('storage/' . $profil['foto_login']) }}" class="w-full h-32 rounded-lg object-cover">
+                    <button type="button" data-field="hapus_foto_login"
+                        class="hapus-media absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition hover:bg-red-600"
+                        title="Hapus foto">&times;</button>
+                </div>
+                <input type="hidden" name="hapus_foto_login" class="field-hapus-media" value="">
                 @endif
                 <input type="file" name="foto_login" accept="image/*" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-gold-50 file:text-gold-700 file:px-3 file:py-1 file:text-sm file:font-medium">
             </div>

@@ -17,9 +17,15 @@
                     <input type="text" name="penulis" value="{{ old('penulis') }}" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Gambar</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Gambar Utama</label>
                     <input type="file" name="gambar" accept="image/*" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-gold-50 file:text-gold-700 file:px-3 file:py-1 file:text-sm file:font-medium">
                 </div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">Foto Dalam Berita (bisa pilih banyak foto)</label>
+                <input type="file" name="galeri[]" accept="image/*" multiple class="galeri-input w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-gold-50 file:text-gold-700 file:px-3 file:py-1 file:text-sm file:font-medium">
+                <p class="mt-1 text-xs text-gray-400">Setelah upload, tulis <b>[foto1]</b>, <b>[foto2]</b>, dst. di dalam isi berita sesuai posisi foto yang diinginkan (tengah atau akhir paragraf).</p>
+                <div class="galeri-preview flex flex-wrap gap-2 mt-2"></div>
             </div>
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Ringkasan</label>
@@ -28,6 +34,7 @@
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 mb-1">Isi Berita <span class="text-red-500">*</span></label>
                 <textarea name="isi" rows="10" required class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">{{ old('isi') }}</textarea>
+                <p class="mt-1 text-xs text-gray-400">Sisipkan <code>[foto1]</code>, <code>[foto2]</code>, dst. di tengah/akhir paragraf untuk menampilkan foto yang sudah diupload.</p>
             </div>
             <div class="mb-6">
                 <label class="flex items-center space-x-2 cursor-pointer">
@@ -43,3 +50,30 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const input = document.querySelector('.galeri-input');
+        const preview = document.querySelector('.galeri-preview');
+
+        input.addEventListener('change', function () {
+            preview.innerHTML = '';
+            Array.from(this.files).forEach((file, i) => {
+                const url = URL.createObjectURL(file);
+                const wrap = document.createElement('div');
+                wrap.className = 'relative';
+                const img = document.createElement('img');
+                img.src = url;
+                img.className = 'w-20 h-20 rounded-lg object-cover border border-gray-200';
+                const num = document.createElement('span');
+                num.textContent = 'foto' + (i + 1);
+                num.className = 'absolute -top-2 left-0 bg-gold-600 text-white text-[10px] px-1 py-0.5 rounded';
+                wrap.appendChild(num);
+                wrap.appendChild(img);
+                preview.appendChild(wrap);
+            });
+        });
+    });
+</script>
+@endpush

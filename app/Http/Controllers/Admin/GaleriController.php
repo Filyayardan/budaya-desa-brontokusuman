@@ -70,15 +70,29 @@ class GaleriController extends Controller
             'kategori' => 'nullable|string|max:255',
         ]);
 
-        if ($request->hasFile('gambar')) {
+        if ($request->boolean('hapus_gambar')) {
             if ($galeri->gambar) {
+                Storage::disk('public')->delete($galeri->gambar);
+            }
+            $validated['gambar'] = null;
+        }
+
+        if ($request->hasFile('gambar')) {
+            if (!$request->boolean('hapus_gambar') && $galeri->gambar) {
                 Storage::disk('public')->delete($galeri->gambar);
             }
             $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'galeri');
         }
 
-        if ($request->hasFile('video')) {
+        if ($request->boolean('hapus_video')) {
             if ($galeri->video) {
+                Storage::disk('public')->delete($galeri->video);
+            }
+            $validated['video'] = null;
+        }
+
+        if ($request->hasFile('video')) {
+            if (!$request->boolean('hapus_video') && $galeri->video) {
                 Storage::disk('public')->delete($galeri->video);
             }
             $validated['video'] = $request->file('video')->store('galeri/video', 'public');

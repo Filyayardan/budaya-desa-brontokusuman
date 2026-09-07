@@ -78,8 +78,15 @@ class AcaraController extends Controller
             'longitude' => 'nullable|numeric|between:-180,180',
         ]);
 
-        if ($request->hasFile('gambar')) {
+        if ($request->boolean('hapus_gambar')) {
             if ($acara->gambar) {
+                Storage::disk('public')->delete($acara->gambar);
+            }
+            $validated['gambar'] = null;
+        }
+
+        if ($request->hasFile('gambar')) {
+            if (!$request->boolean('hapus_gambar') && $acara->gambar) {
                 Storage::disk('public')->delete($acara->gambar);
             }
             $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'acara');

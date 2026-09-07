@@ -35,14 +35,19 @@ class BeritaController extends Controller
             'ringkasan' => 'nullable|string',
             'isi' => 'required|string',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'galeri.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'penulis' => 'nullable|string|max:255',
             'featured' => 'nullable|boolean',
         ], [
-            'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 5 MB.'
+            'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 5 MB.',
+            'galeri.*.max' => 'Ukuran gambar tidak boleh lebih dari 5 MB.'
         ]);
 
         if ($request->hasFile('gambar')) {
             $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'berita');
+        }
+        if ($request->hasFile('galeri')) {
+            $validated['galeri'] = $this->storeGaleri($request->file('galeri'), 'berita');
         }
         $validated['featured'] = $request->boolean('featured');
         Berita::create($validated);
@@ -63,16 +68,34 @@ class BeritaController extends Controller
             'ringkasan' => 'nullable|string',
             'isi' => 'required|string',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'galeri.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'penulis' => 'nullable|string|max:255',
             'featured' => 'nullable|boolean',
         ]);
 
-        if ($request->hasFile('gambar')) {
+        if ($request->boolean('hapus_gambar')) {
             if ($berita->gambar) {
+                Storage::disk('public')->delete($berita->gambar);
+            }
+            $validated['gambar'] = null;
+        }
+        if ($request->hasFile('gambar')) {
+            if (!$request->boolean('hapus_gambar') && $berita->gambar) {
                 Storage::disk('public')->delete($berita->gambar);
             }
             $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'berita');
         }
+        $galeri = $berita->galeri ?? [];
+        if ($request->filled('hapus_galeri')) {
+            $hapus = json_decode($request->input('hapus_galeri'), true) ?? [];
+            $this->deleteGaleri($berita->galeri, $hapus);
+            $galeri = array_values(array_diff($galeri, $hapus));
+        }
+        if ($request->hasFile('galeri')) {
+            $galeri = array_merge($galeri, $this->storeGaleri($request->file('galeri'), 'berita'));
+        }
+        $validated['galeri'] = $galeri;
+
         $validated['featured'] = $request->boolean('featured');
         $berita->update($validated);
 
@@ -84,7 +107,36 @@ class BeritaController extends Controller
         if ($berita->gambar) {
             Storage::disk('public')->delete($berita->gambar);
         }
+        $this->deleteGaleri($berita->galeri);
+        foreach ($berita->subBerita as $sb) {
+            if ($sb->gambar) {
+                Storage::disk('public')->delete($sb->gambar);
+            }
+            $this->deleteGaleri($sb->galeri);
+        }
         $berita->delete();
         return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil dihapus.');
+    }
+
+    private function storeGaleri(array $files, string $directory): array
+    {
+        $paths = [];
+        foreach ($files as $file) {
+            $paths[] = app(ImageUploader::class)->store($file, $directory);
+        }
+        return $paths;
+    }
+
+    private function deleteGaleri(?array $galeri, ?array $only = null): void
+    {
+        if (!$galeri) {
+            return;
+        }
+        foreach ($galeri as $path) {
+            if ($only !== null && !in_array($path, $only)) {
+                continue;
+            }
+            Storage::disk('public')->delete($path);
+        }
     }
 }
