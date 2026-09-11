@@ -13,17 +13,20 @@ class SubBeritaController extends Controller
 {
     public function index(Berita $berita)
     {
+        abort_unless($this->canManage($berita), 403, 'Anda hanya dapat mengelola berita yang Anda upload.');
         $subBerita = $berita->subBerita()->latest()->paginate(10);
         return view('admin.berita.sub-berita.index', compact('berita', 'subBerita'));
     }
 
     public function create(Berita $berita)
     {
+        abort_unless($this->canManage($berita), 403, 'Anda hanya dapat mengelola berita yang Anda upload.');
         return view('admin.berita.sub-berita.create', compact('berita'));
     }
 
     public function store(Request $request, Berita $berita)
     {
+        abort_unless($this->canManage($berita), 403, 'Anda hanya dapat mengelola berita yang Anda upload.');
         $validated = $request->validate([
             'judul_sub' => 'required|string|max:255',
             'isi_sub' => 'required|string',
@@ -52,11 +55,13 @@ class SubBeritaController extends Controller
 
     public function edit(Berita $berita, SubBerita $subBerita)
     {
+        abort_unless($this->canManage($berita), 403, 'Anda hanya dapat mengelola berita yang Anda upload.');
         return view('admin.berita.sub-berita.edit', compact('berita', 'subBerita'));
     }
 
     public function update(Request $request, Berita $berita, SubBerita $subBerita)
     {
+        abort_unless($this->canManage($berita), 403, 'Anda hanya dapat mengelola berita yang Anda upload.');
         $validated = $request->validate([
             'judul_sub' => 'required|string|max:255',
             'isi_sub' => 'required|string',
@@ -97,6 +102,7 @@ class SubBeritaController extends Controller
 
     public function destroy(Berita $berita, SubBerita $subBerita)
     {
+        abort_unless($this->canManage($berita), 403, 'Anda hanya dapat mengelola berita yang Anda upload.');
         if ($subBerita->gambar) {
             Storage::disk('public')->delete($subBerita->gambar);
         }
@@ -104,6 +110,15 @@ class SubBeritaController extends Controller
         $subBerita->delete();
 
         return redirect()->route('admin.berita.sub-berita.index', $berita)->with('success', 'Sub berita berhasil dihapus.');
+    }
+
+    private function canManage(Berita $berita): bool
+    {
+        if (!$subAdmin = $this->currentSubAdmin()) {
+            return true;
+        }
+
+        return $berita->created_by === $subAdmin->id;
     }
 
     private function storeGaleri(array $files, string $directory): array

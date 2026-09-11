@@ -15,6 +15,11 @@ class BudayaController extends Controller
     {
         $query = Budaya::with('kategori')->latest();
 
+        $subAdmin = $this->currentSubAdmin();
+        if ($subAdmin && !$subAdmin->isSuperAdminFor('budaya')) {
+            $query->whereIn('id', $subAdmin->budayaItemIds());
+        }
+
         if ($request->filled('search')) {
             $query->where('judul', 'like', "%{$request->search}%");
         }
@@ -24,13 +29,20 @@ class BudayaController extends Controller
 
         $budaya = $query->paginate(10)->withQueryString();
         $kategoriList = KategoriBudaya::all();
+        $canCreate = !$subAdmin || $subAdmin->isSuperAdminFor('budaya');
 
-        return view('admin.budaya.index', compact('budaya', 'kategoriList'));
+        return view('admin.budaya.index', compact('budaya', 'kategoriList', 'canCreate'));
     }
 
     public function create()
     {
+        $subAdmin = $this->currentSubAdmin();
+        if ($subAdmin && !$subAdmin->isSuperAdminFor('budaya')) {
+            abort(403, 'Anda tidak memiliki akses untuk menambah budaya.');
+        }
+
         $kategori = KategoriBudaya::all();
+
         return view('admin.budaya.create', compact('kategori'));
     }
 
@@ -48,6 +60,11 @@ class BudayaController extends Controller
             'longitude' => 'nullable|numeric|between:-180,180',
         ]);
 
+        $subAdmin = $this->currentSubAdmin();
+        if ($subAdmin && !$subAdmin->isSuperAdminFor('budaya')) {
+            abort(403, 'Anda tidak memiliki akses untuk menambah budaya.');
+        }
+
         if ($request->hasFile('gambar')) {
             $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'budaya');
         }
@@ -63,7 +80,13 @@ class BudayaController extends Controller
 
     public function edit(Budaya $budaya)
     {
+        $subAdmin = $this->currentSubAdmin();
+        if ($subAdmin && !$subAdmin->canManageBudaya($budaya->id)) {
+            abort(403, 'Anda tidak memiliki akses ke budaya ini.');
+        }
+
         $kategori = KategoriBudaya::all();
+
         return view('admin.budaya.edit', compact('budaya', 'kategori'));
     }
 
@@ -80,6 +103,11 @@ class BudayaController extends Controller
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
         ]);
+
+        $subAdmin = $this->currentSubAdmin();
+        if ($subAdmin && !$subAdmin->canManageBudaya($budaya->id)) {
+            abort(403, 'Anda tidak memiliki akses ke budaya ini.');
+        }
 
         if ($request->boolean('hapus_gambar')) {
             if ($budaya->gambar) {
@@ -116,6 +144,11 @@ class BudayaController extends Controller
 
     public function destroy(Budaya $budaya)
     {
+        $subAdmin = $this->currentSubAdmin();
+        if ($subAdmin && !$subAdmin->canManageBudaya($budaya->id)) {
+            abort(403, 'Anda tidak memiliki akses ke budaya ini.');
+        }
+
         if ($budaya->gambar) {
             Storage::disk('public')->delete($budaya->gambar);
         }

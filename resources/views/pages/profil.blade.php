@@ -129,6 +129,63 @@
                     @endforeach
                 </div>
             @endif
+
+            <div class="pt-16">
+                @if (session('success'))
+                    <div class="max-w-3xl mx-auto mb-8 p-4 bg-green-50 border border-green-200 rounded-xl text-green-700 text-sm flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
+                    </div>
+                @endif
+
+                <div class="text-center mb-12">
+                    <span class="text-tertiary text-sm font-semibold tracking-widest uppercase">Hubungi Kami</span>
+                    <h2 class="font-display text-4xl font-bold text-main_txt mt-3">Kontak</h2>
+                    <div class="line-gold w-24 mx-auto mt-4"></div>
+                </div>
+
+                <div class="max-w-3xl mx-auto mt-12">
+                    <div class="bg-white backdrop-blur rounded-2xl border border-main_txt-500/10 p-8 sm:p-10">
+                        <h2 class="font-display text-2xl font-bold text-main_txt mb-8 text-center">Kirim Pesan</h2>
+                        <form action="{{ route('profil.kirim') }}" method="POST" class="space-y-6">
+                            @csrf
+                            <div class="grid sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-tertiary text-sm mb-2">Nama Lengkap</label>
+                                    <input type="text" name="nama" value="{{ old('nama') }}" required
+                                        class="w-full bg-dark-900/50 border border-main_txt-500/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold-500/50 transition-colors"
+                                        placeholder="Masukkan nama">
+                                    @error('nama')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                                </div>
+                                <div>
+                                    <label class="block text-tertiary text-sm mb-2">Email</label>
+                                    <input type="email" name="email" value="{{ old('email') }}" required
+                                        class="w-full bg-dark-900/50 border border-main_txt-500/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold-500/50 transition-colors"
+                                        placeholder="Masukkan email">
+                                    @error('email')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-tertiary text-sm mb-2">Subjek</label>
+                                <input type="text" name="subjek" value="{{ old('subjek') }}"
+                                    class="w-full bg-dark-900/50 border border-main_txt-500/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold-500/50 transition-colors"
+                                    placeholder="Subjek pesan">
+                                @error('subjek')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                            </div>
+                            <div>
+                                <label class="block text-tertiary text-sm mb-2">Pesan</label>
+                                <textarea name="pesan" rows="6" required
+                                    class="w-full bg-dark-900/50 border border-main_txt-500/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-gold-500/50 transition-colors resize-none"
+                                    placeholder="Tulis pesan Anda...">{{ old('pesan') }}</textarea>
+                                @error('pesan')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+                            </div>
+                            <button type="submit"
+                                class="w-full bg-main_txt-500/10 text-main_txt font-semibold px-8 py-4 rounded-xl hover:opacity-90 transition-opacity shadow-lg shadow-main_txt-500/20">
+                                <i class="fas fa-paper-plane mr-2"></i>Kirim Pesan
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 @endsection

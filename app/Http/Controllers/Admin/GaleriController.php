@@ -23,8 +23,9 @@ class GaleriController extends Controller
 
         $galeri = $query->paginate(12)->withQueryString();
         $kategoriList = Galeri::distinct()->pluck('kategori')->filter();
+        $currentSubAdmin = $this->currentSubAdmin();
 
-        return view('admin.galeri.index', compact('galeri', 'kategoriList'));
+        return view('admin.galeri.index', compact('galeri', 'kategoriList', 'currentSubAdmin'));
     }
 
     public function create()
@@ -36,11 +37,15 @@ class GaleriController extends Controller
     {
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-            'video' => 'nullable|file|mimes:mp4,webm,mov,avi|max:512000',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'video' => 'nullable|file|mimes:mp4,webm,mov,avi',
             'deskripsi' => 'nullable|string',
             'kategori' => 'nullable|string|max:255',
         ]);
+
+        if (!$request->hasFile('gambar') && !$request->hasFile('video')) {
+            return back()->withErrors(['gambar' => 'Pilih file gambar atau video untuk diupload.'])->withInput();
+        }
 
         if ($request->hasFile('gambar')) {
             $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'galeri');
@@ -50,6 +55,10 @@ class GaleriController extends Controller
             $validated['video'] = $request->file('video')->store('galeri/video', 'public');
         }
 
+        if ($subAdmin = $this->currentSubAdmin()) {
+            $validated['created_by'] = $subAdmin->id;
+        }
+
         Galeri::create($validated);
 
         return redirect()->route('admin.galeri.index')->with('success', 'Galeri berhasil ditambahkan.');
@@ -57,15 +66,17 @@ class GaleriController extends Controller
 
     public function edit(Galeri $galeri)
     {
+        abort_unless($this->canManage($galeri), 403, 'Anda hanya dapat mengelola galeri yang Anda upload.');
         return view('admin.galeri.edit', compact('galeri'));
     }
 
     public function update(Request $request, Galeri $galeri)
     {
+        abort_unless($this->canManage($galeri), 403, 'Anda hanya dapat mengelola galeri yang Anda upload.');
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-            'video' => 'nullable|file|mimes:mp4,webm,mov,avi|max:512000',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'video' => 'nullable|file|mimes:mp4,webm,mov,avi',
             'deskripsi' => 'nullable|string',
             'kategori' => 'nullable|string|max:255',
         ]);
@@ -105,6 +116,7 @@ class GaleriController extends Controller
 
     public function destroy(Galeri $galeri)
     {
+        abort_unless($this->canManage($galeri), 403, 'Anda hanya dapat mengelola galeri yang Anda upload.');
         if ($galeri->gambar) {
             Storage::disk('public')->delete($galeri->gambar);
         }
@@ -113,5 +125,14 @@ class GaleriController extends Controller
         }
         $galeri->delete();
         return redirect()->route('admin.galeri.index')->with('success', 'Galeri berhasil dihapus.');
+    }
+
+    private function canManage(Galeri $galeri): bool
+    {
+        if (!$subAdmin = $this->currentSubAdmin()) {
+            return true;
+        }
+
+        return $galeri->created_by === $subAdmin->id;
     }
 }

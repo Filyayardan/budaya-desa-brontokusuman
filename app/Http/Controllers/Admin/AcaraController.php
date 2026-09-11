@@ -30,7 +30,8 @@ class AcaraController extends Controller
         }
 
         $acara = $query->paginate(10)->withQueryString();
-        return view('admin.acara.index', compact('acara'));
+        $currentSubAdmin = $this->currentSubAdmin();
+        return view('admin.acara.index', compact('acara', 'currentSubAdmin'));
     }
 
     public function create()
@@ -54,6 +55,9 @@ class AcaraController extends Controller
         if ($request->hasFile('gambar')) {
             $validated['gambar'] = app(ImageUploader::class)->store($request->file('gambar'), 'acara');
         }
+        if ($subAdmin = $this->currentSubAdmin()) {
+            $validated['created_by'] = $subAdmin->id;
+        }
 
         Acara::create($validated);
 
@@ -62,11 +66,13 @@ class AcaraController extends Controller
 
     public function edit(Acara $acara)
     {
+        abort_unless($this->canManage($acara), 403, 'Anda hanya dapat mengelola acara yang Anda upload.');
         return view('admin.acara.edit', compact('acara'));
     }
 
     public function update(Request $request, Acara $acara)
     {
+        abort_unless($this->canManage($acara), 403, 'Anda hanya dapat mengelola acara yang Anda upload.');
         $validated = $request->validate([
             'nama_acara' => 'required|string|max:255',
             'deskripsi' => 'required|string',
@@ -99,10 +105,20 @@ class AcaraController extends Controller
 
     public function destroy(Acara $acara)
     {
+        abort_unless($this->canManage($acara), 403, 'Anda hanya dapat mengelola acara yang Anda upload.');
         if ($acara->gambar) {
             Storage::disk('public')->delete($acara->gambar);
         }
         $acara->delete();
         return redirect()->route('admin.acara.index')->with('success', 'Acara berhasil dihapus.');
+    }
+
+    private function canManage(Acara $acara): bool
+    {
+        if (!$subAdmin = $this->currentSubAdmin()) {
+            return true;
+        }
+
+        return $acara->created_by === $subAdmin->id;
     }
 }

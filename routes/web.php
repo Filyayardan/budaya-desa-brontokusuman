@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/bud',function(){
@@ -20,5 +21,9 @@ Route::get('/berita/{id}', [PageController::class, 'beritaDetail'])->name('berit
 Route::get('/berita/{id}/sub-berita/{subId}', [PageController::class, 'subBeritaDetail'])->name('berita.sub-berita.detail');
 Route::get('/sejarah', [PageController::class, 'sejarah'])->name('sejarah');
 Route::get('/profil', [PageController::class, 'profil'])->name('profil');
+Route::post('/profil/kirim-pesan', [PageController::class, 'kirimPesan'])->name('profil.kirim');
 Route::get('/kontak', [PageController::class, 'kontak'])->name('kontak');
 Route::get('/faq', [PageController::class, 'faq'])->name('faq');
+
+Route::get('/booking', [BookingController::class, 'create'])->name('booking.create');
+Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');

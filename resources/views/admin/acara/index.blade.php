@@ -27,6 +27,7 @@
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Nama Acara</th>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Tanggal</th>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Lokasi</th>
+                <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Penulis</th>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Status</th>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Aksi</th>
             </tr>
@@ -38,6 +39,7 @@
                 <td class="px-5 py-4 font-medium text-gray-900">{{ $a->nama_acara }}</td>
                 <td class="px-5 py-4 text-gray-600 text-xs">{{ \Carbon\Carbon::parse($a->tanggal_mulai)->format('d M Y') }}{{ $a->tanggal_selesai ? ' - ' . \Carbon\Carbon::parse($a->tanggal_selesai)->format('d M Y') : '' }}</td>
                 <td class="px-5 py-4 text-gray-600">{{ $a->lokasi ?? '-' }}</td>
+                <td class="px-5 py-4 text-gray-600">{{ $a->penulis ?? '-' }}</td>
                 <td class="px-5 py-4">
                     <span class="px-2 py-1 rounded-full text-xs font-medium
                         {{ $a->status === 'upcoming' ? 'bg-blue-50 text-blue-600' : ($a->status === 'ongoing' ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-500') }}">
@@ -45,17 +47,22 @@
                     </span>
                 </td>
                 <td class="px-5 py-4">
-                    <div class="flex items-center space-x-2">
-                        <a href="{{ route('admin.acara.edit', $a) }}" class="px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-medium hover:bg-blue-100"><i class="fas fa-edit mr-1"></i>Edit</a>
-                        <form action="{{ route('admin.acara.destroy', $a) }}" method="POST" onsubmit="return confirm('Yakin hapus acara ini?')">
-                            @csrf @method('DELETE')
-                            <button class="px-3 py-1.5 bg-red-50 text-red-600 rounded-lg text-xs font-medium hover:bg-red-100"><i class="fas fa-trash mr-1"></i>Hapus</button>
-                        </form>
-                    </div>
+                    @php $canCrud = !$currentSubAdmin || $a->created_by === $currentSubAdmin->id; @endphp
+                    @if ($canCrud)
+                        <div class="flex items-center space-x-2">
+                            <a href="{{ route('admin.acara.edit', $a) }}" class="px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-xs font-medium hover:bg-blue-100"><i class="fas fa-edit mr-1"></i>Edit</a>
+                            <form action="{{ route('admin.acara.destroy', $a) }}" method="POST" onsubmit="return confirm('Yakin hapus acara ini?')">
+                                @csrf @method('DELETE')
+                                <button class="px-3 py-1.5 bg-red-50 text-red-600 rounded-lg text-xs font-medium hover:bg-red-100"><i class="fas fa-trash mr-1"></i>Hapus</button>
+                            </form>
+                        </div>
+                    @else
+                        <span class="text-xs text-gray-400">Khusus penulis</span>
+                    @endif
                 </td>
             </tr>
             @empty
-            <tr><td colspan="6" class="px-5 py-8 text-center text-gray-400">Belum ada data</td></tr>
+            <tr><td colspan="7" class="px-5 py-8 text-center text-gray-400">Belum ada data</td></tr>
             @endforelse
         </tbody>
     </table>

@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\UmkmController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\SubBeritaController;
+use App\Http\Controllers\Admin\BookingController;
 
 Route::prefix('admin')
     ->name('admin.')
@@ -52,6 +53,11 @@ Route::prefix('admin')
                 ]);
 
             Route::resource('faq', FaqController::class)->except(['show']);
+
+            Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');
+            Route::get('/booking/{booking}', [BookingController::class, 'show'])->name('booking.show');
+            Route::put('/booking/{booking}/status', [BookingController::class, 'updateStatus'])->name('booking.update-status');
+            Route::delete('/booking/{booking}', [BookingController::class, 'destroy'])->name('booking.destroy');
 
             Route::get('/profil', [ProfilKampungController::class, 'index'])->name('profil.index');
             Route::put('/profil', [ProfilKampungController::class, 'update'])->name('profil.update');

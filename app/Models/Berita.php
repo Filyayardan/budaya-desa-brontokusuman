@@ -11,7 +11,7 @@ class Berita extends Model
 
     protected $table = 'berita';
 
-    protected $fillable = ['judul', 'ringkasan', 'isi', 'gambar', 'galeri', 'penulis', 'featured'];
+    protected $fillable = ['judul', 'ringkasan', 'isi', 'gambar', 'galeri', 'penulis', 'featured', 'created_by'];
 
     protected $casts = [
         'galeri' => 'array',

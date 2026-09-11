@@ -37,7 +37,7 @@
                     <input type="hidden" name="hapus_video" class="field-hapus-media" value="">
                     @endif
                     <input type="file" name="video" accept="video/*" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-gold-50 file:text-gold-700 file:px-3 file:py-1 file:text-sm file:font-medium">
-                    <p class="text-xs text-gray-400 mt-1">MP4, WebM, MOV (maks 500MB)</p>
+                    <p class="text-xs text-gray-400 mt-1">MP4, WebM, MOV (tanpa batas ukuran)</p>
                 </div>
             </div>
             <div class="mb-4">

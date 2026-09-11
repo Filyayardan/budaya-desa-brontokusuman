@@ -270,8 +270,23 @@ class PageController extends Controller
     {
         $pengurus = Pengurus::all();
         $profil = \App\Models\ProfilKampung::all()->pluck('value', 'key');
+        $alamat = ProfilKampung::get('alamat');
 
-        return view('pages.profil', compact('pengurus', 'profil'));
+        return view('pages.profil', compact('pengurus', 'profil', 'alamat'));
+    }
+
+    public function kirimPesan(Request $request)
+    {
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'subjek' => 'nullable|string|max:255',
+            'pesan' => 'required|string',
+        ]);
+
+        \App\Models\ContactMessage::create($validated);
+
+        return redirect()->route('profil')->with('success', 'Pesan berhasil dikirim! Kami akan segera menghubungi Anda.');
     }
 
     public function kontak()

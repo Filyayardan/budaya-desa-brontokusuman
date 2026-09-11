@@ -35,13 +35,18 @@
                 <i class="fas fa-play text-gold-400 text-[10px]"></i>
             </div>
             @endif
-            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
-                <a href="{{ route('admin.galeri.edit', $g) }}" class="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center text-blue-600 hover:bg-white"><i class="fas fa-edit text-sm"></i></a>
-                <form action="{{ route('admin.galeri.destroy', $g) }}" method="POST" onsubmit="return confirm('Yakin hapus?')">
-                    @csrf @method('DELETE')
-                    <button class="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center text-red-600 hover:bg-white"><i class="fas fa-trash text-sm"></i></button>
-                </form>
-            </div>
+            @php $canCrud = !$currentSubAdmin || $g->created_by === $currentSubAdmin->id; @endphp
+            @if ($canCrud)
+                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
+                    <a href="{{ route('admin.galeri.edit', $g) }}" class="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center text-blue-600 hover:bg-white"><i class="fas fa-edit text-sm"></i></a>
+                    <form action="{{ route('admin.galeri.destroy', $g) }}" method="POST" onsubmit="return confirm('Yakin hapus?')">
+                        @csrf @method('DELETE')
+                        <button class="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center text-red-600 hover:bg-white"><i class="fas fa-trash text-sm"></i></button>
+                    </form>
+                </div>
+            @else
+                <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded-full bg-black/60 text-white text-[10px]">Khusus penulis</div>
+            @endif
         </div>
         <div class="p-3">
             <p class="text-sm font-medium text-gray-900 truncate">{{ $g->judul }}</p>

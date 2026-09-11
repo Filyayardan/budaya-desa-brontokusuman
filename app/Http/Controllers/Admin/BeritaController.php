@@ -19,7 +19,8 @@ class BeritaController extends Controller
         }
 
         $berita = $query->paginate(10)->withQueryString();
-        return view('admin.berita.index', compact('berita'));
+        $currentSubAdmin = $this->currentSubAdmin();
+        return view('admin.berita.index', compact('berita', 'currentSubAdmin'));
     }
 
     public function create()
@@ -50,6 +51,9 @@ class BeritaController extends Controller
             $validated['galeri'] = $this->storeGaleri($request->file('galeri'), 'berita');
         }
         $validated['featured'] = $request->boolean('featured');
+        if ($subAdmin = $this->currentSubAdmin()) {
+            $validated['created_by'] = $subAdmin->id;
+        }
         Berita::create($validated);
 
         return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil ditambahkan.');
@@ -57,12 +61,13 @@ class BeritaController extends Controller
 
     public function edit(Berita $berita)
     {
+        abort_unless($this->canManage($berita), 403, 'Anda hanya dapat mengelola berita yang Anda upload.');
         return view('admin.berita.edit', compact('berita'));
     }
 
     public function update(Request $request, Berita $berita)
     {
-
+        abort_unless($this->canManage($berita), 403, 'Anda hanya dapat mengelola berita yang Anda upload.');
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
             'ringkasan' => 'nullable|string',
@@ -104,6 +109,7 @@ class BeritaController extends Controller
 
     public function destroy(Berita $berita)
     {
+        abort_unless($this->canManage($berita), 403, 'Anda hanya dapat mengelola berita yang Anda upload.');
         if ($berita->gambar) {
             Storage::disk('public')->delete($berita->gambar);
         }
@@ -116,6 +122,15 @@ class BeritaController extends Controller
         }
         $berita->delete();
         return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil dihapus.');
+    }
+
+    private function canManage(Berita $berita): bool
+    {
+        if (!$subAdmin = $this->currentSubAdmin()) {
+            return true;
+        }
+
+        return $berita->created_by === $subAdmin->id;
     }
 
     private function storeGaleri(array $files, string $directory): array

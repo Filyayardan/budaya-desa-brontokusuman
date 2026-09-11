@@ -24,14 +24,23 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
                         <input type="text" name="kategori" value="{{ old('kategori', $umkm->kategori) }}" list="kategori-umkm"
                             class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
-                        <datalist id="kategori-umkm">
-                            <option value="Kuliner">
-                            <option value="Kuliner & Herbal">
-                            <option value="Batik & Kerajinan">
-                            <option value="Kerajinan">
-                            <option value="Fashion">
-                            <option value="Jasa">
-                        </datalist>
+                        @if (isset($kategoriList) && $kategoriList->count())
+                            <datalist id="kategori-umkm">
+                                @foreach ($kategoriList as $kat)
+                                    <option value="{{ $kat }}">
+                                @endforeach
+                            </datalist>
+                        @else
+                            <datalist id="kategori-umkm">
+                                <option value="Kuliner">
+                                <option value="Kuliner & Herbal">
+                                <option value="Batik & Kerajinan">
+                                <option value="Kerajinan">
+                                <option value="Fashion">
+                                <option value="Jasa">
+                            </datalist>
+                        @endif
+                        @error('kategori')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Kontak</label>

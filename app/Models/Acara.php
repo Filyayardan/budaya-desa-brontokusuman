@@ -14,7 +14,9 @@ class Acara extends Model
 
     protected $fillable = ['nama_acara', 'deskripsi', 'lokasi', 'tanggal_mulai', 'tanggal_selesai', 'gambar', 'status',
         'latitude',
-        'longitude'];
+        'longitude',
+        'penulis',
+        'created_by'];
 
     protected $casts = [
         'tanggal_mulai' => 'date',

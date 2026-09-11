@@ -48,9 +48,13 @@
                 <div class="mb-6">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
                     <div class="relative">
-                        <input type="password" name="password" required
-                            class="w-full px-4 py-3 pl-11 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none transition">
+                        <input type="password" name="password" id="password" required
+                            class="w-full px-4 py-3 pl-11 pr-11 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none transition">
                         <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <button type="button" data-toggle-password="#password"
+                            class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-eye"></i>
+                        </button>
                     </div>
                 </div>
                 <button type="submit" class="w-full py-3 rounded-lg text-white font-semibold transition" style="background: linear-gradient(135deg, #d4a017, #b8860b);">
@@ -60,5 +64,15 @@
         </div>
         <p class="text-center text-white/70 text-sm mt-6">&copy; {{ date('Y') }} Kampung Brontokusuman</p>
     </div>
+    <script>
+        document.querySelectorAll('[data-toggle-password]').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                const input = document.querySelector(this.dataset.togglePassword);
+                const isPassword = input.type === 'password';
+                input.type = isPassword ? 'text' : 'password';
+                this.querySelector('i').className = 'fas ' + (isPassword ? 'fa-eye-slash' : 'fa-eye');
+            });
+        });
+    </script>
 </body>
 </html>

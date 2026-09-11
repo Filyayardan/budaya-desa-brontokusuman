@@ -140,6 +140,11 @@
                                 'icon' => 'fa-eye',
                                 'route' => 'admin.pengunjung.index',
                             ],
+                            'admin.booking.*' => [
+                                'label' => 'Booking',
+                                'icon' => 'fa-calendar-check',
+                                'route' => 'admin.booking.index',
+                            ],
                             'admin.user.*' => [
                                 'label' => 'Kelola Subadmin',
                                 'icon' => 'fa-user',
@@ -148,6 +153,13 @@
                         ];
                     @endphp
                     @foreach ($menu as $pattern => $item)
+                        @php
+                            $isSuperAdmin = Auth::guard('web')->check();
+                            $subAdminUser = $isSuperAdmin ? null : Auth::guard('subadmin')->user();
+                            if ($subAdminUser && !$subAdminUser->canAccess($item['route'])) {
+                                continue;
+                            }
+                        @endphp
                         <a href="{{ route($item['route']) }}"
                             class="flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium {{ request()->routeIs($pattern) ? 'bg-gold-500/10 text-gold-300' : 'text-gray-400 hover:bg-dark-800 hover:text-white' }}">
                             <i class="fas {{ $item['icon'] }} w-5"></i><span>{{ $item['label'] }}</span>

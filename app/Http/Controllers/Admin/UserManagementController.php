@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Budaya;
 use App\Models\Content;
 use App\Models\SubAdmin;
 use Illuminate\Http\Request;
@@ -12,14 +13,17 @@ use Illuminate\Validation\Rule;
 
 class UserManagementController extends Controller
 {
-    private const ADMIN_OPTIONS = [
-        'admin.budaya.*',
-        'admin.umkm.*',
-        'admin.berita.*',
-        'admin.acara.*',
-        'admin.galeri.*',
-        'admin.pengunjung.*',
-    ];
+    public static function adminOptions(): array
+    {
+        $options = [];
+
+        $options['Budaya']['admin.budaya.*'] = 'Semua Budaya';
+        foreach (Budaya::orderBy('judul')->get() as $budaya) {
+            $options['Budaya']['budaya.item.' . $budaya->id] = $budaya->judul;
+        }
+
+        return $options;
+    }
 
     public function index()
     {
@@ -32,11 +36,15 @@ class UserManagementController extends Controller
 
     public function create()
     {
-        return view('admin.user-management.create');
+        $adminOptions = self::adminOptions();
+
+        return view('admin.user-management.create', compact('adminOptions'));
     }
 
     public function store(Request $request)
     {
+        $validKeys = array_keys(array_merge(...array_values(self::adminOptions())));
+
         $validated = $request->validate([
             'email' => [
                 'required',
@@ -64,7 +72,7 @@ class UserManagementController extends Controller
                 'required',
                 'string',
                 'distinct',
-                Rule::in(self::ADMIN_OPTIONS),
+                Rule::in($validKeys),
             ]], [
 
     'email.unique' => 'Username ini sudah terdaftar di sistem.',
@@ -107,11 +115,15 @@ class UserManagementController extends Controller
 
     public function edit(SubAdmin $subAdmin)
     {
-        return view('admin.user-management.edit', compact('subAdmin'));
+        $adminOptions = self::adminOptions();
+
+        return view('admin.user-management.edit', compact('subAdmin', 'adminOptions'));
     }
 
     public function update(Request $request, SubAdmin $subAdmin)
     {
+        $validKeys = array_keys(array_merge(...array_values(self::adminOptions())));
+
         $validated = $request->validate([
             'email' => [
                 'required',
@@ -135,7 +147,7 @@ class UserManagementController extends Controller
                 'required',
                 'string',
                 'distinct',
-                Rule::in(self::ADMIN_OPTIONS),
+                Rule::in($validKeys),
     ]], [
 
     'email.unique' => 'Username ini sudah terdaftar di sistem.',

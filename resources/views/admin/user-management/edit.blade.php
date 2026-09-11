@@ -1,27 +1,9 @@
 @extends('admin.layouts.app')
-@section('title', 'Tambah Subadmin')
-@section('header', 'Tambah Subadmin')
+@section('title', 'Edit Subadmin')
+@section('header', 'Edit Subadmin')
 
 @section('content')
     @php
-        $menu = [
-            'admin.budaya.*' => [
-                'label' => 'Budaya',
-            ],
-            'admin.umkm.*' => ['label' => 'UMKM'],
-            'admin.berita.*' => [
-                'label' => 'Berita',
-            ],
-            'admin.acara.*' => [
-                'label' => 'Acara',
-            ],
-            'admin.galeri.*' => [
-                'label' => 'Galeri',
-            ],
-            'admin.pengunjung.*' => [
-                'label' => 'Pengunjung',
-            ],
-        ];
         $selectedOptions = old('adminOption', $subAdmin->contents->pluck('judul')->toArray());
     @endphp
     <div class="max-w-xl">
@@ -42,27 +24,45 @@
 
                 <div class="mb-4" id="passwordField">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Password </label>
-                    <input type="password" name="password" id="password"
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                    <div class="relative">
+                        <input type="password" name="password" id="password"
+                            class="w-full px-4 py-2.5 pr-11 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                        <button type="button" data-toggle-password="#password"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
                     </div>
                     <div class="hidden mb-4"id="passwordConfirmationInputField">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Masukkan Ulang Password <span
                                 class="text-red-500">*</span></label>
-                        <input type="password" name="password_confirmation" id="password_confirmation"
-                            value="{{ old('password_confirmation') }}" 
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                        <div class="relative">
+                            <input type="password" name="password_confirmation" id="password_confirmation"
+                                value="{{ old('password_confirmation') }}" 
+                                class="w-full px-4 py-2.5 pr-11 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                            <button type="button" data-toggle-password="#password_confirmation"
+                                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
                     </div>
                 <div class="mb-6 space-y-2 border border-gray-300 rounded-lg p-3 bg-gray-50/50" id="subAdminField">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Tanggung Jawab<span
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tanggung Jawab<span
                             class="text-red-500">*</span></label>
-                    @foreach ($menu as $route => $item)
-                        <label class="flex items-center space-x-3 cursor-pointer">
-                            <input type="checkbox" name="adminOption[]" value="{{ $route }}"
-                                {{ in_array($route, $selectedOptions) ? 'checked' : '' }}
-                                class="w-4 h-4 text-gold-600 rounded border-gray-300 focus:ring-gold-500">
-                            <span class="text-sm text-gray-700">{{ $item['label'] }}</span>
-                        </label>
+                    @foreach ($adminOptions as $group => $items)
+                        <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 mt-3">{{ $group }}</h4>
+                        @foreach ($items as $value => $label)
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" name="adminOption[]" value="{{ $value }}"
+                                    {{ in_array($value, $selectedOptions) ? 'checked' : '' }}
+                                    class="w-4 h-4 text-gold-600 rounded border-gray-300 focus:ring-gold-500">
+                                <span class="text-sm text-gray-700">{{ $label }}</span>
+                            </label>
+                        @endforeach
                     @endforeach
+                    @if (empty($adminOptions))
+                        <p class="text-xs text-gray-400">Belum ada kategori. Tambahkan Budaya/UMKM terlebih dahulu.</p>
+                    @endif
                 </div>
                 <div class="flex items-center space-x-3">
                     <button type="submit" class="px-5 py-2.5 rounded-lg text-white text-sm font-medium"
@@ -111,7 +111,15 @@
             responsibilityCheckboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', updateState);
             });
-            // const hasResponsibility = [...responsibilityCheckboxes]
+
+            document.querySelectorAll('[data-toggle-password]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const input = document.querySelector(this.dataset.togglePassword);
+                    const isPassword = input.type === 'password';
+                    input.type = isPassword ? 'text' : 'password';
+                    this.querySelector('i').className = 'fas ' + (isPassword ? 'fa-eye-slash' : 'fa-eye');
+                });
+            });
             //     .some(checkbox => checkbox.checked);
             // console.log(hasResponsibility)
             // if ( !hasResponsibility) {

@@ -14,9 +14,11 @@
         </select>
         <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-200"><i class="fas fa-search mr-1"></i>Cari</button>
     </form>
-    <a href="{{ route('admin.budaya.create') }}" class="px-4 py-2 rounded-lg text-white text-sm font-medium" style="background: linear-gradient(135deg, #d4a017, #b8860b);">
-        <i class="fas fa-plus mr-1"></i>Tambah
-    </a>
+    @if ($canCreate)
+        <a href="{{ route('admin.budaya.create') }}" class="px-4 py-2 rounded-lg text-white text-sm font-medium" style="background: linear-gradient(135deg, #d4a017, #b8860b);">
+            <i class="fas fa-plus mr-1"></i>Tambah
+        </a>
+    @endif
 </div>
 
 <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
