@@ -26,7 +26,7 @@
                             <i class="fas fa-map-marker-alt text-main_txt text-xl"></i>
                         </div>
                         <h3 class="font-display text-xl font-bold text-main_txt mb-3">Alamat</h3>
-                        <p class="text-tertiary text-sm leading-relaxed">{{$alamat ? $alamat : "Jl. Prawirotaman 2, Brontokusuman, Kec. Mergangsan,
+                        <p class="text-tertiary text-sm leading-relaxed">{{$alamat ? $alamat : "Jl. Prawirotaman 2, Brontokusuman, Kem. Mergangsan,
                             Kota Yogyakarta, Daerah Istimewa Yogyakarta 55153"}}</p>
                     </div>
 

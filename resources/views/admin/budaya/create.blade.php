@@ -33,6 +33,13 @@
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
                 </div>
                 <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">No. Telepon Kontak</label>
+                    <input type="text" name="no_telepon" value="{{ old('no_telepon') }}" maxlength="20"
+                        placeholder="contoh: 08965546215"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                    <p class="text-xs text-gray-400 mt-1">Nomor yang akan ditampilkan di email konfirmasi booking.</p>
+                </div>
+                <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi Singkat <span
                             class="text-red-500">*</span></label>
                     <textarea name="deskripsi" rows="3" required
@@ -79,7 +86,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">Video</label>
                         <input type="file" name="video" accept="video/*"
                             class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-gold-50 file:text-gold-700 file:px-3 file:py-1 file:text-sm file:font-medium">
-                        <p class="text-xs text-gray-400 mt-1">MP4, WebM, MOV (maks 500MB)</p>
+                        <p class="text-xs text-gray-400 mt-1">MP4, WebM, MOV (tanpa batas ukuran)</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-3">

@@ -319,7 +319,7 @@
                             <li class="flex items-start space-x-3">
                                 <i class="fas fa-map-marker-alt text-main_txt-400 mt-1"></i>
                                 <span
-                                    class="text-black text-sm">{{ $fp['alamat'] ?? 'Kampung Brontokusuman, Kecamatan Mergangsan, Kota Yogyakarta, DI Yogyakarta' }}</span>
+                                    class="text-black text-sm">{{ $fp['alamat'] ?? 'Kampung Brontokusuman, Kemantren Mergangsan, Kota Yogyakarta, DI Yogyakarta' }}</span>
                             </li>
                             <li class="flex items-center space-x-3">
                                 <i class="fas fa-phone text-main_txt-400"></i>

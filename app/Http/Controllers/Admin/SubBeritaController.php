@@ -30,12 +30,9 @@ class SubBeritaController extends Controller
         $validated = $request->validate([
             'judul_sub' => 'required|string|max:255',
             'isi_sub' => 'required|string',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-            'galeri.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'galeri.*' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'urutan' => 'nullable|integer|min:0',
-        ], [
-            'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 5 MB.',
-            'galeri.*.max' => 'Ukuran gambar tidak boleh lebih dari 5 MB.'
         ]);
 
         $validated['berita_id'] = $berita->id;
@@ -65,8 +62,8 @@ class SubBeritaController extends Controller
         $validated = $request->validate([
             'judul_sub' => 'required|string|max:255',
             'isi_sub' => 'required|string',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-            'galeri.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'galeri.*' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'urutan' => 'nullable|integer|min:0',
         ]);
 

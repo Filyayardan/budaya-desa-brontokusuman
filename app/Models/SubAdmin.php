@@ -65,6 +65,10 @@ class SubAdmin extends Authenticatable
             return $this->isSuperAdminFor('budaya') || count($this->budayaItemIds()) > 0;
         }
 
+        if (str_starts_with($routeName, 'admin.booking.')) {
+            return $this->isSuperAdminFor('budaya') || count($this->budayaItemIds()) > 0;
+        }
+
         if (str_starts_with($routeName, 'admin.umkm.')) {
             return $this->isSuperAdminFor('umkm');
         }

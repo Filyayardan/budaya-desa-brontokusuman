@@ -527,7 +527,7 @@
             </blockquote>
             <div class="line-main_txt w-24 mx-auto mb-6"></div>
             <p class="text-main_txt-200 font-semibold">Kampung Brontokusuman</p>
-            <p class="text-second_bg text-sm">Kecamatan Mergangsan, Kota Yogyakarta</p>
+            <p class="text-second_bg text-sm">Kemantren Mergangsan, Kota Yogyakarta</p>
         </div>
     </section>
 

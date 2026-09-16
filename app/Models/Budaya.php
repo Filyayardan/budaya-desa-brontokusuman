@@ -21,6 +21,7 @@ class Budaya extends Model
         'lokasi',
         'latitude',
         'longitude',
+        'no_telepon',
         'unggulan',
     ];
 

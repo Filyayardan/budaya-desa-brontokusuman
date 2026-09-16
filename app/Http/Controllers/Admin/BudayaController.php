@@ -53,11 +53,12 @@ class BudayaController extends Controller
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'deskripsi_lengkap' => 'nullable|string',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-            'video' => 'nullable|file|mimes:mp4,webm,mov,avi|max:512000',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'video' => 'nullable|file|mimes:mp4,webm,mov,avi',
             'lokasi' => 'nullable|string|max:255',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
+            'no_telepon' => 'nullable|string|max:20',
         ]);
 
         $subAdmin = $this->currentSubAdmin();
@@ -97,11 +98,12 @@ class BudayaController extends Controller
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'deskripsi_lengkap' => 'nullable|string',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-            'video' => 'nullable|file|mimes:mp4,webm,mov,avi|max:512000',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'video' => 'nullable|file|mimes:mp4,webm,mov,avi',
             'lokasi' => 'nullable|string|max:255',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
+            'no_telepon' => 'nullable|string|max:20',
         ]);
 
         $subAdmin = $this->currentSubAdmin();

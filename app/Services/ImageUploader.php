@@ -9,22 +9,26 @@ use RuntimeException;
 
 class ImageUploader
 {
-  // Batas maksimum lebar atau tinggi untuk standar web
-  protected int $maxDimension = 1920;
-  protected int $quality = 80;
+// Batas maksimum lebar atau tinggi untuk standar web
+    protected int $maxDimension = 1920;
+    protected int $quality = 80;
 
-  public function store(UploadedFile $file, string $directory, string $disk = 'public'): string
-  {
-    if (!extension_loaded('gd') || !function_exists('imagewebp')) {
-      throw new RuntimeException('PHP extension GD dengan dukungan WebP wajib diaktifkan.');
-    }
+    public function store(UploadedFile $file, string $directory, string $disk = 'public'): string
+    {
+        $realPath = $file->getRealPath();
 
-    // Gambar resolusi tinggi (foto HP) butuh memori besar
-    @ini_set('memory_limit', '1024M');
+        if ($this->isHeic($realPath)) {
+            return $this->storeHeic($file, $directory, $disk);
+        }
 
-    $realPath = $file->getRealPath();
+        if (!extension_loaded('gd') || !function_exists('imagewebp')) {
+            throw new RuntimeException('PHP extension GD dengan dukungan WebP wajib diaktifkan.');
+        }
 
-    // Baca informasi dimensi tanpa meload gambar ke memori
+        // Gambar resolusi tinggi (foto HP) butuh memori besar
+        @ini_set('memory_limit', '1024M');
+
+        // Baca informasi dimensi tanpa meload gambar ke memori
     [$origWidth, $origHeight, $imageType] = @getimagesize($realPath);
 
     if (!$origWidth || !$origHeight) {
@@ -78,6 +82,66 @@ class ImageUploader
     if (is_resource($stream)) {
       fclose($stream);
     }
+
+    return $path;
+  }
+
+  private function isHeic(string $realPath): bool
+  {
+    $fp = @fopen($realPath, 'rb');
+    if ($fp === false) {
+      return false;
+    }
+
+    $head = fread($fp, 12);
+    fclose($fp);
+
+    if (strlen($head) < 12 || substr($head, 4, 4) !== 'ftyp') {
+      return false;
+    }
+
+    $brand = substr($head, 8, 4);
+
+    return in_array($brand, ['heic', 'heix', 'hevc', 'heim', 'heis', 'hevm', 'mif1', 'msf1'], true);
+  }
+
+  private function storeHeic(UploadedFile $file, string $directory, string $disk = 'public'): string
+  {
+    if (!class_exists('Imagick')) {
+      throw new RuntimeException('Upload foto HEIC memerlukan ekstensi PHP Imagick dengan dukungan HEIC (libheif). Aktifkan ekstensi imagick di PHP Anda, atau ubah foto ke format JPG/PNG.');
+    }
+
+    @ini_set('memory_limit', '1024M');
+
+    try {
+      $img = new \Imagick($file->getRealPath());
+    } catch (\Throwable $e) {
+      throw new RuntimeException('Gagal membaca file HEIC: ' . $e->getMessage());
+    }
+
+    if ($img->getNumberImages() > 1) {
+      $img->setIteratorIndex(0);
+    }
+
+    $img->setImageOrientation(\Imagick::ORIENTATION_UNDEFINED);
+
+    $width = $img->getImageWidth();
+    $height = $img->getImageHeight();
+
+    if (max($width, $height) > $this->maxDimension) {
+      $scale = min($this->maxDimension / $width, $this->maxDimension / $height);
+      $img->resizeImage((int) round($width * $scale), (int) round($height * $scale), \Imagick::FILTER_LANCZOS, 1);
+    }
+
+    $img->setImageFormat('webp');
+    $img->setImageCompressionQuality($this->quality);
+    $img->stripImage();
+
+    $blob = $img->getImageBlob();
+    $img->clear();
+
+    $path = trim($directory, '/') . '/' . Str::uuid() . '.webp';
+    Storage::disk($disk)->put($path, $blob);
 
     return $path;
   }

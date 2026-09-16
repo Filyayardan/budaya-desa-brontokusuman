@@ -36,7 +36,7 @@
                                     [
                                         'icon' => 'fa-map-marker-alt',
                                         'label' => 'Lokasi',
-                                        'value' => $profil['lokasi'] ?? 'Kec. Mergangsan, Yogyakarta',
+                                        'value' => $profil['lokasi'] ?? 'Kem. Mergangsan, Yogyakarta',
                                     ],
                                     [
                                         'icon' => 'fa-users',
@@ -45,8 +45,8 @@
                                     ],
                                     [
                                         'icon' => 'fa-landmark',
-                                        'label' => 'Kecamatan',
-                                        'value' => $profil['kecamatan'] ?? 'Mergangsan',
+                                        'label' => 'Kemantren',
+                                        'value' => $profil['kemantren'] ?? 'Mergangsan',
                                     ],
                                     [
                                         'icon' => 'fa-city',

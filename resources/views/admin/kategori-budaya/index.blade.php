@@ -16,7 +16,6 @@
             <tr>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">No</th>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Nama</th>
-                <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Ikon</th>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Jumlah Budaya</th>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Aksi</th>
             </tr>
@@ -26,7 +25,6 @@
             <tr class="hover:bg-gray-50">
                 <td class="px-5 py-4 text-gray-500">{{ $kategori->firstItem() + $i }}</td>
                 <td class="px-5 py-4 font-medium text-gray-900">{{ $k->nama_kategori }}</td>
-                <td class="px-5 py-4 text-gray-600"><i class="fas {{ $k->ikon ?? 'fa-landmark' }}"></i> {{ $k->ikon ?? '-' }}</td>
                 <td class="px-5 py-4 text-gray-600">{{ $k->budaya_count }}</td>
                 <td class="px-5 py-4">
                     <div class="flex items-center space-x-2">
@@ -39,7 +37,7 @@
                 </td>
             </tr>
             @empty
-            <tr><td colspan="5" class="px-5 py-8 text-center text-gray-400">Belum ada data</td></tr>
+            <tr><td colspan="4" class="px-5 py-8 text-center text-gray-400">Belum ada data</td></tr>
             @endforelse
         </tbody>
     </table>

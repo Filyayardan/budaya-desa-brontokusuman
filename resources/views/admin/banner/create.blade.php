@@ -60,7 +60,7 @@
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Gambar <span class="text-gray-400">(opsional)</span></label>
                     <input type="file" name="gambar" accept="image/*" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm file:mr-3 file:rounded-lg file:border-0 file:bg-gold-50 file:text-gold-700 file:px-3 file:py-1 file:text-sm file:font-medium">
-                    <p class="text-xs text-gray-400 mt-1">JPG, PNG, WebP. Maks 5MB.</p>
+                    <p class="text-xs text-gray-400 mt-1">JPG, PNG, WebP.</p>
                 </div>
                 <div>
                     <label class="flex items-center space-x-3">

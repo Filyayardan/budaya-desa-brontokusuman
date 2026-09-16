@@ -24,7 +24,6 @@ class KategoriBudayaController extends Controller
         $validated = $request->validate([
             'nama_kategori' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
-            'ikon' => 'nullable|string|max:255',
         ]);
 
         KategoriBudaya::create($validated);
@@ -42,7 +41,6 @@ class KategoriBudayaController extends Controller
         $validated = $request->validate([
             'nama_kategori' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
-            'ikon' => 'nullable|string|max:255',
         ]);
 
         $kategori_budaya->update($validated);

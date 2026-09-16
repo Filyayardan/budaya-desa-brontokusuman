@@ -47,7 +47,7 @@ class AcaraController extends Controller
             'lokasi' => 'nullable|string|max:255',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
         ]);
@@ -79,7 +79,7 @@ class AcaraController extends Controller
             'lokasi' => 'nullable|string|max:255',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
         ]);

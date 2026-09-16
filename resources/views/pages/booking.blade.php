@@ -35,10 +35,19 @@
                             </div>
                         </div>
                         <div id="calTitle" class="text-main_txt font-semibold text-lg text-center mb-4"></div>
+                        <div class="mb-3">
+                            <select id="calFilter"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-700 bg-white focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                                <option value="">Semua Budaya</option>
+                                @foreach ($budaya as $b)
+                                    <option value="{{ $b->id }}">{{ $b->judul }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div id="calGrid" class="grid grid-cols-7 gap-1"></div>
                         <div class="flex items-center space-x-2 mt-5 pt-5 border-t border-main_txt-500/10">
                             <span class="inline-block w-3 h-3 rounded-full" style="background:#d4a017;"></span>
-                            <span class="text-tertiary text-xs">Tanggal sudah ada jadwal (disetujui)</span>
+                            <span class="text-tertiary text-xs">Klik tanggal berwarna untuk melihat jadwal booking</span>
                         </div>
                     </div>
                 </div>
@@ -123,9 +132,30 @@
     </section>
 @endsection
 
+<div id="bookModal"
+    class="hidden fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 p-4"
+    style="backdrop-filter: blur(2px);">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 relative">
+        <button id="bookModalClose" type="button"
+            class="absolute top-4 right-4 w-8 h-8 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200 flex items-center justify-center">
+            <i class="fas fa-times"></i>
+        </button>
+        <h3 id="bookModalTitle" class="font-display text-lg font-bold text-main_txt mb-4"></h3>
+        <div id="bookModalList" class="space-y-3"></div>
+    </div>
+</div>
+
 @push('scripts')
     <script>
-        const approvedDates = @json($approvedDates);
+        const bookings = @json($approvedBookings);
+
+        let calFilter = '';
+
+        function currentBookings() {
+            if (calFilter === '') return bookings;
+            return bookings.filter(b => b.budaya_id == calFilter);
+        }
+
         const DAY_NAMES = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
         const MONTH_NAMES = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
@@ -153,16 +183,50 @@
 
             for (let day = 1; day <= daysInMonth; day++) {
                 const key = calYear + '-' + String(calMonth + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0');
-                const booked = approvedDates.includes(key);
+                const dayBookings = currentBookings().filter(b => b.tanggal === key);
                 const isPast = key < todayKey;
+                const colors = [...new Set(dayBookings.map(b => b.warna))];
+                const booked = colors.length > 0;
+
+                let bar = '';
+                if (booked) {
+                    bar = colors.map(c =>
+                        '<span class="block flex-1 h-1.5 rounded-full" style="background:' + c + ';"></span>'
+                    ).join('');
+                    bar = '<div class="absolute inset-x-1 bottom-1 flex space-x-0.5">' + bar + '</div>';
+                }
+
                 html += `
-                    <div class="relative aspect-square flex items-center justify-center rounded-lg text-sm ${isPast ? 'text-gray-300' : 'text-gray-700'}">
+                    <div class="relative aspect-square flex items-center justify-center rounded-lg text-sm cursor-pointer transition-colors ${isPast ? 'text-gray-300' : 'text-gray-700'} ${booked ? 'hover:bg-gold-500/10' : 'cursor-default'}"
+                        ${booked ? 'onclick="showBookingInfo(\'' + key + '\')"' : ''}>
                         ${day}
-                        ${booked ? '<span class="absolute inset-x-1 bottom-1 h-1.5 rounded-full" style="background:#d4a017;"></span>' : ''}
+                        ${bar}
                     </div>`;
             }
 
             grid.innerHTML = html;
+        }
+
+        function showBookingInfo(key) {
+            const items = currentBookings().filter(b => b.tanggal === key);
+            if (items.length === 0) return;
+
+            const tanggal = new Date(key + 'T00:00:00');
+            const formatted = tanggal.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            const list = items.map(b =>
+                '<div class="flex items-start space-x-3"><span class="mt-1.5 w-3 h-3 rounded-full flex-shrink-0" style="background:' + b.warna + ';"></span>' +
+                '<span class="text-sm text-gray-700">' + b.budaya + ' sudah dibooking untuk acara <strong>' + b.acara + '</strong></span></div>'
+            ).join('');
+
+            document.getElementById('bookModalTitle').textContent = formatted;
+            document.getElementById('bookModalList').innerHTML = list;
+            document.getElementById('bookModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookModal').classList.add('hidden');
+            document.body.style.overflow = '';
         }
 
         document.getElementById('calPrev').addEventListener('click', () => {
@@ -175,6 +239,19 @@
             calMonth++;
             if (calMonth > 11) { calMonth = 0; calYear++; }
             renderCalendar();
+        });
+
+        document.getElementById('calFilter').addEventListener('change', (e) => {
+            calFilter = e.target.value;
+            renderCalendar();
+        });
+
+        document.getElementById('bookModalClose')?.addEventListener('click', closeBookingModal);
+        document.getElementById('bookModal')?.addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeBookingModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeBookingModal();
         });
 
         renderCalendar();

@@ -35,13 +35,10 @@ class BeritaController extends Controller
             'judul' => 'required|string|max:255',
             'ringkasan' => 'nullable|string',
             'isi' => 'required|string',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-            'galeri.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'galeri.*' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'penulis' => 'nullable|string|max:255',
             'featured' => 'nullable|boolean',
-        ], [
-            'gambar.max' => 'Ukuran gambar tidak boleh lebih dari 5 MB.',
-            'galeri.*.max' => 'Ukuran gambar tidak boleh lebih dari 5 MB.'
         ]);
 
         if ($request->hasFile('gambar')) {
@@ -72,8 +69,8 @@ class BeritaController extends Controller
             'judul' => 'required|string|max:255',
             'ringkasan' => 'nullable|string',
             'isi' => 'required|string',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-            'galeri.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'galeri.*' => 'nullable|image|mimes:jpg,jpeg,png,webp',
             'penulis' => 'nullable|string|max:255',
             'featured' => 'nullable|boolean',
         ]);

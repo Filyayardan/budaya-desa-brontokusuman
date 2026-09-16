@@ -11,14 +11,23 @@ class BookingController extends Controller
     public function create()
     {
         $budaya = Budaya::all();
-        $approvedDates = Booking::where('status', 'approved')
-            ->pluck('tanggal_acara')
-            ->map(fn($d) => $d->format('Y-m-d'))
-            ->unique()
-            ->values()
-            ->toArray();
 
-        return view('pages.booking', compact('budaya', 'approvedDates'));
+        $palette = ['#d4a017', '#e74c3c', '#3498db', '#27ae60', '#9b59b6', '#e67e22', '#16a085', '#2c3e50'];
+        $budayaColors = $budaya->values()
+            ->mapWithKeys(fn($b, $i) => [$b->id => $palette[$i % count($palette)]]);
+
+        $approvedBookings = Booking::with('budaya')
+            ->where('status', 'approved')
+            ->get()
+            ->map(fn($bk) => [
+                'tanggal' => $bk->tanggal_acara->format('Y-m-d'),
+                'budaya_id' => $bk->budaya_id,
+                'budaya' => $bk->budaya->judul ?? '-',
+                'warna' => $budayaColors[$bk->budaya_id] ?? '#d4a017',
+                'acara' => $bk->nama_acara,
+            ]);
+
+        return view('pages.booking', compact('budaya', 'approvedBookings', 'budayaColors'));
     }
 
     public function store(Request $request)

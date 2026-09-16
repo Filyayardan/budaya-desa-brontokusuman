@@ -50,7 +50,7 @@
             <h3 class="font-semibold text-gray-900 mb-4 flex items-center"><i class="fas fa-map-marker-alt text-gold-500 mr-2"></i>Informasi Kampung</h3>
             <div class="grid grid-cols-2 gap-4 mb-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Lokasi / Kecamatan</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Lokasi / Kemantren</label>
                     <input type="text" name="lokasi" value="{{ $profil['lokasi'] ?? '' }}" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
                 </div>
                 <div>
@@ -60,8 +60,8 @@
             </div>
             <div class="grid grid-cols-2 gap-4 mb-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
-                    <input type="text" name="kecamatan" value="{{ $profil['kecamatan'] ?? '' }}" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Kemantren</label>
+                    <input type="text" name="kemantren" value="{{ $profil['kemantren'] ?? '' }}" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Kota</label>
