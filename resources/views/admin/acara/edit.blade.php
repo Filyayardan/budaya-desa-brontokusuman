@@ -32,7 +32,9 @@
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                    @php $statusLabel = ['upcoming' => 'Mendatang', 'ongoing' => 'Berlangsung', 'completed' => 'Selesai'][$acara->status]; ?>
+                    @php
+                        $statusLabel = ['upcoming' => 'Mendatang', 'ongoing' => 'Berlangsung', 'completed' => 'Selesai'][$acara->status];
+                    @endphp
                     <div class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm">
                         <span class="inline-flex items-center gap-1 font-medium {{ $acara->status === 'upcoming' ? 'text-blue-600' : ($acara->status === 'ongoing' ? 'text-green-600' : 'text-gray-500') }}">
                             <i class="fas fa-circle text-[8px]"></i>{{ $statusLabel }}
