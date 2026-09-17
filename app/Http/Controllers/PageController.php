@@ -28,7 +28,8 @@ class PageController extends Controller
         $beritaTerbaru = Berita::orderBy('created_at', 'desc')->limit(1)->get();
         $galeriTerbaru = Galeri::orderBy('created_at', 'desc')->limit(8)->get();
         $kategori = KategoriBudaya::withCount('budaya')->get();
-        $banner = Banner::aktif()->first();
+        $banners = Banner::aktif()->get();
+        $banner = $banners->first();
 
         //section pengunjung start
         $totalVisitors = Visitor::count();
@@ -134,6 +135,7 @@ class PageController extends Controller
             'galeriTerbaru',
             'kategori',
             'banner',
+            'banners',
             'umkm',
             'budaya',
             'acara',

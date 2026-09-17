@@ -5,115 +5,218 @@
 @section('content')
     <section class=" relative min-h-screen flex items-center overflow-hidden">
         <div class="absolute inset-0  from-dark-950 via-dark-900 to-dark-950"></div>
-        {{-- @if ($banner && $banner->gambar)
-            <img src="{{ asset('storage/' . $banner->gambar) }}" alt=""
-                class="absolute inset-0 w-full h-full object-cover opacity-30">
-        @endif --}}
         <div class="absolute inset-0 hero-pattern opacity-30"></div>
         <div class="absolute top-0 right-0 w-96 h-96 bg-main_txt-500/5 rounded-full blur-3xl"></div>
         <div class="absolute bottom-0 left-0 w-96 h-96 bg-main_txt-600/5 rounded-full blur-3xl"></div>
 
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <!-- Left: Artifact Frame -->
-                    <div class="col-span-7 relative z-10 pr-gutter">
-                        <div
-                            class="p-4 bg-surface-container-lowest border border-outline-variant shadow-[0_30px_60px_-15px_rgba(111,36,16,0.05)] relative rounded-sm">
-                            <!-- Inner Gold Frame -->
-                            <div class="absolute inset-4 border border-secondary-fixed-dim/40 pointer-events-none z-20">
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
+            <div id="bannerSlider" class="relative">
+                @forelse ($banners ?? [] as $index => $bannerItem)
+                    <div class="banner-slide {{ $index === 0 ? 'active' : '' }}" data-index="{{ $index }}">
+                        <div class="grid lg:grid-cols-2 gap-12 items-center">
+                            <div>
+                                <!-- Left: Artifact Frame -->
+                                <div class="col-span-7 relative z-10 pr-gutter">
+                                    <div
+                                        class="p-4 bg-surface-container-lowest border border-outline-variant shadow-[0_30px_60px_-15px_rgba(111,36,16,0.05)] relative rounded-sm">
+                                        <!-- Inner Gold Frame -->
+                                        <div class="absolute inset-4 border border-secondary-fixed-dim/40 pointer-events-none z-20">
+                                        </div>
+                                        <div class="relative overflow-hidden w-full aspect-[4/3]">
+                                            <img class="w-full h-full object-cover filter sepia-[.08] contrast-105 relative z-10 transition-transform duration-[2000ms] hover:scale-105"
+                                                src="{{ $bannerItem->gambar ? asset('storage/' . $bannerItem->gambar) : 'https://lh3.googleusercontent.com/aida-public/AB6AXuAkePIH-M8Z3uW0ljksQM42G2IQF06jAq1HiHT1HLbOH7uivJkhrzNQgdiJhHvIzStAvc3fIBP5iMFki-8tN5lvWh28MqnkVnJ3PHh3OyAXmwuWIGLIpmxSBKASXSs-seFFXXHIKo0hEKpECXOq4vCMgBjyn-2w49RMIPpMWcjapVLysByiUdjo9XZMwPfeFe6jDePAvOhkCgdyMffw_rNIuTc44EAZCW1oRpAo4CPzBwjc7W3Ye5VVew' }}"
+                                                alt="{{ $bannerItem->badge ?? $bannerItem->judul_atas ?? 'Banner Brontokusuman' }}" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="relative overflow-hidden w-full aspect-[4/3]">
-                                <img class="w-full h-full object-cover filter sepia-[.08] contrast-105 relative z-10 transition-transform duration-[2000ms] hover:scale-105"
-                                    src="{{ $banner?->gambar ? asset('storage/' . $banner->gambar) : 'https://lh3.googleusercontent.com/aida-public/AB6AXuAkePIH-M8Z3uW0ljksQM42G2IQF06jAq1HiHT1HLbOH7uivJkhrzNQgdiJhHvIzStAvc3fIBP5iMFki-8tN5lvWh28MqnkVnJ3PHh3OyAXmwuWIGLIpmxSBKASXSs-seFFXXHIKo0hEKpECXOq4vCMgBjyn-2w49RMIPpMWcjapVLysByiUdjo9XZMwPfeFe6jDePAvOhkCgdyMffw_rNIuTc44EAZCW1oRpAo4CPzBwjc7W3Ye5VVew' }}" />
+                            <div>
+                                @if ($bannerItem->badge)
+                                    <div
+                                        class="inline-flex items-center space-x-2 bg-main_txt-500/10 border border-main_txt-500/20 rounded-full px-5 py-2 mb-8">
+                                        <span class="w-2 h-2 bg-main_txt-400 rounded-full animate-pulse"></span>
+                                        <span class="text-main_txt-300 text-sm font-medium tracking-wide">{{ $bannerItem->badge }}</span>
+                                    </div>
+                                @endif
+
+                                <h1
+                                    class="font-display text-3xl sm:text-4xl lg:text-6xl font-bold leading-tight mb-8 text-center lg:text-start">
+                                    <span
+                                        class="text-xl font-body text-tertiary">{{ $bannerItem->judul_atas ?? 'Jelajahi Kebudayaan' }}</span><br>
+                                    <span class="text-main_txt">{{ $bannerItem->judul_bawah ?? 'Brontokusuman' }}</span>
+                                </h1>
+
+                                <p class="text-tertiary text-lg leading-relaxed mb-10 max-w-xl text-center lg:text-start">
+                                    {!! nl2br(
+                                        e(
+                                            $bannerItem->deskripsi ??
+                                                'Mengenal lebih dekat keindahan tradisi, seni, dan warisan budaya Kampung Brontokusuman yang telah mengakar sejak berabad-abad lamanya.',
+                                        ),
+                                    ) !!}
+                                </p>
+
+                                <div class="flex gap-4 justify-center lg:justify-start">
+                                    <a href="{{ route('galeri') }}"
+                                        class="bg-main_txt text-white rounded-lg font-label-lg text-label-lg px-8 py-4 hover:text-on-tertiary transition-colors shadow-sm inline-block text-center">
+                                        Lihat Koleksi
+                                    </a>
+                                    <a href="{{ route('sejarah') }}"
+                                        class="border border-tertiary text-tertiary rounded-lg font-label-lg text-label-lg px-8 py-4 hover:bg-tertiary hover:text-on-tertiary transition-colors inline-block text-center">
+                                        Baca Sejarah
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div>
-                    @if ($banner && $banner->badge)
-                        <div
-                            class="inline-flex items-center space-x-2 bg-main_txt-500/10 border border-main_txt-500/20 rounded-full px-5 py-2 mb-8">
-                            <span class="w-2 h-2 bg-main_txt-400 rounded-full animate-pulse"></span>
-                            <span class="text-main_txt-300 text-sm font-medium tracking-wide">{{ $banner->badge }}</span>
-                        </div>
-                    @endif
+                @empty
+                    <div class="banner-slide active">
+                        <div class="grid lg:grid-cols-2 gap-12 items-center">
+                            <div>
+                                <!-- Left: Artifact Frame -->
+                                <div class="col-span-7 relative z-10 pr-gutter">
+                                    <div
+                                        class="p-4 bg-surface-container-lowest border border-outline-variant shadow-[0_30px_60px_-15px_rgba(111,36,16,0.05)] relative rounded-sm">
+                                        <!-- Inner Gold Frame -->
+                                        <div class="absolute inset-4 border border-secondary-fixed-dim/40 pointer-events-none z-20">
+                                        </div>
+                                        <div class="relative overflow-hidden w-full aspect-[4/3]">
+                                            <img class="w-full h-full object-cover filter sepia-[.08] contrast-105 relative z-10 transition-transform duration-[2000ms] hover:scale-105"
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkePIH-M8Z3uW0ljksQM42G2IQF06jAq1HiHT1HLbOH7uivJkhrzNQgdiJhHvIzStAvc3fIBP5iMFki-8tN5lvWh28MqnkVnJ3PHh3OyAXmwuWIGLIpmxSBKASXSs-seFFXXHIKo0hEKpECXOq4vCMgBjyn-2w49RMIPpMWcjapVLysByiUdjo9XZMwPfeFe6jDePAvOhkCgdyMffw_rNIuTc44EAZCW1oRpAo4CPzBwjc7W3Ye5VVew' }}"
+                                                alt="Kebudayaan Brontokusuman" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div
+                                    class="inline-flex items-center space-x-2 bg-main_txt-500/10 border border-main_txt-500/20 rounded-full px-5 py-2 mb-8">
+                                    <span class="w-2 h-2 bg-main_txt-400 rounded-full animate-pulse"></span>
+                                    <span class="text-main_txt-300 text-sm font-medium tracking-wide">Warisan Budaya</span>
+                                </div>
 
-                    <h1
-                        class="font-display text-3xl sm:text-4xl lg:text-6xl font-bold leading-tight mb-8 text-center lg:text-start">
-                        <span
-                            class="text-xl font-body text-tertiary">{{ $banner?->judul_atas ?? 'Jelajahi Kebudayaan' }}</span><br>
-                        <span class="text-main_txt">{{ $banner?->judul_bawah ?? 'Brontokusuman' }}</span>
-                    </h1>
+                                <h1
+                                    class="font-display text-3xl sm:text-4xl lg:text-6xl font-bold leading-tight mb-8 text-center lg:text-start">
+                                    <span
+                                        class="text-xl font-body text-tertiary">Jelajahi Kebudayaan</span><br>
+                                    <span class="text-main_txt">Brontokusuman</span>
+                                </h1>
 
-                    <p class="text-tertiary text-lg leading-relaxed mb-10 max-w-xl text-center lg:text-start">
-                        {!! nl2br(
-                            e(
-                                $banner?->deskripsi ??
-                                    'Mengenal lebih dekat keindahan tradisi, seni, dan warisan budaya Kampung Brontokusuman yang telah mengakar sejak berabad-abad lamanya.',
-                            ),
-                        ) !!}
-                    </p>
+                                <p class="text-tertiary text-lg leading-relaxed mb-10 max-w-xl text-center lg:text-start">
+                                    Mengenal lebih dekat keindahan tradisi, seni, dan warisan budaya Kampung Brontokusuman yang telah mengakar sejak berabad-abad lamanya.
+                                </p>
 
-                    {{-- <div class="flex flex-col sm:flex-row gap-4 ">
-                        @if ($banner && $banner->btn1_teks)
-                            <a href="{{ route($banner->btn1_link ?? 'home') }}"
-                                class="gradient-darkred text-dark-950 font-semibold px-8 py-4 rounded-xl hover:opacity-90 transition-opacity text-center shadow-lg shadow-main_txt-500/20">
-                                <i class="fas fa-compass mr-2"></i>{{ $banner->btn1_teks }}
-                            </a>
-                        @endif
-                        @if ($banner && $banner->btn2_teks)
-                            <a href="{{ route($banner->btn2_link ?? 'home') }}"
-                                class="border border-main_txt-500/30 text-main_txt-300 font-semibold px-8 py-4 rounded-xl hover:bg-main_txt-500/10 transition-colors text-center">
-                                <i class="fas fa-book-open mr-2"></i>{{ $banner->btn2_teks }}
-                            </a>
-                        @endif
-                    </div> --}}
-                    <div class="flex gap-4 justify-center lg:justify-start">
-                        <a href="{{ route('galeri') }}"
-                            class="bg-main_txt text-white rounded-lg font-label-lg text-label-lg px-8 py-4 hover:text-on-tertiary transition-colors shadow-sm inline-block text-center">
-                            Lihat Koleksi
-                        </a>
-                        <a href="{{ route('sejarah') }}"
-                            class="border border-tertiary text-tertiary rounded-lg font-label-lg text-label-lg px-8 py-4 hover:bg-tertiary hover:text-on-tertiary transition-colors inline-block text-center">
-                            Baca Sejarah
-                        </a>
-                    </div>
-                </div>
-
-                {{-- <div class="relative hidden lg:block">
-                <div class="relative w-full h-[500px] rounded-2xl overflow-hidden border border-main_txt-500/20 shadow-2xl shadow-main_txt-500/10">
-                    <div class="absolute inset-0 bg-gradient-to-br from-main_txt-600/20 to-dark-900/80"></div>
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="text-center">
-                            <i class="fas fa-masks-theater text-8xl text-main_txt-400/40 mb-4"></i>
-                            <p class="text-main_txt-300/60 font-display text-xl">Seni & Tradisi</p>
+                                <div class="flex gap-4 justify-center lg:justify-start">
+                                    <a href="{{ route('galeri') }}"
+                                        class="bg-main_txt text-white rounded-lg font-label-lg text-label-lg px-8 py-4 hover:text-on-tertiary transition-colors shadow-sm inline-block text-center">
+                                        Lihat Koleksi
+                                    </a>
+                                    <a href="{{ route('sejarah') }}"
+                                        class="border border-tertiary text-tertiary rounded-lg font-label-lg text-label-lg px-8 py-4 hover:bg-tertiary hover:text-on-tertiary transition-colors inline-block text-center">
+                                        Baca Sejarah
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="absolute -bottom-6 -left-6 w-32 h-32 gradient-darkred rounded-2xl flex items-center justify-center shadow-xl">
-                    <div class="text-center">
-                        <span class="block text-3xl font-bold text-dark-950 font-display">{{ $kategori->count() }}</span>
-                        <span class="text-dark-800 text-xs font-medium">Kategori</span>
+                @endforelse
+
+                @if (count($banners ?? []) > 1)
+                    <div class="flex justify-center gap-3 mt-14">
+                        @foreach ($banners ?? [] as $index => $bannerItem)
+                            <button type="button" class="banner-dot {{ $index === 0 ? 'active' : '' }}"
+                                data-target="{{ $index }}" aria-label="Tampilkan banner {{ $index + 1 }}"></button>
+                        @endforeach
                     </div>
-                </div>
-                <div class="absolute -top-6 -right-6 w-40 bg-dark-800/90 backdrop-blur-xl rounded-2xl p-5 border border-main_txt-500/10">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 rounded-xl bg-main_txt-500/10 flex items-center justify-center">
-                            <i class="fas fa-calendar-alt text-main_txt-400 text-xl"></i>
-                        </div>
-                        <div>
-                            <span class="block text-2xl font-bold text-white font-display">{{ $acaraTerbaru->count() }}</span>
-                            <span class="text-gray-400 text-xs">Acara Aktif</span>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
+                @endif
             </div>
         </div>
 
         <div class="absolute bottom-0 left-0 right-0 h-32 "></div>
     </section>
+
+    @push('styles')
+        <style>
+            .banner-slide {
+                display: none;
+            }
+
+            .banner-slide.active {
+                display: block;
+                animation: bannerIn .6s ease forwards;
+            }
+
+            @keyframes bannerIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(16px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .banner-dot {
+                width: 12px;
+                height: 12px;
+                border-radius: 9999px;
+                background: #e29487;
+                border: none;
+                cursor: pointer;
+                transition: all .3s ease;
+                opacity: .45;
+            }
+
+            .banner-dot:hover {
+                opacity: 1;
+            }
+
+            .banner-dot.active {
+                width: 36px;
+                background: #8f2a1c;
+                opacity: 1;
+            }
+        </style>
+    @endpush
+
+    @push('scripts')
+        <script>
+            (function() {
+                const slider = document.getElementById('bannerSlider');
+                if (!slider) return;
+                const slides = [...slider.querySelectorAll('.banner-slide')];
+                const dots = [...slider.querySelectorAll('.banner-dot')];
+                if (slides.length <= 1) return;
+
+                let current = 0;
+                let timer;
+
+                function goTo(index) {
+                    current = (index + slides.length) % slides.length;
+                    slides.forEach((s, i) => s.classList.toggle('active', i === current));
+                    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+                }
+
+                function next() {
+                    goTo(current + 1);
+                }
+
+                function restart() {
+                    clearInterval(timer);
+                    timer = setInterval(next, 3000);
+                }
+
+                dots.forEach((dot, i) => {
+                    dot.addEventListener('click', () => {
+                        goTo(i);
+                        restart();
+                    });
+                });
+
+                restart();
+            })();
+        </script>
+    @endpush
 
     <section class="py-8 bg-second_bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
