@@ -46,14 +46,23 @@
                                     <span class="text-main_txt">{{ $bannerItem->judul_bawah ?? 'Brontokusuman' }}</span>
                                 </h1>
 
-                                <p class="text-tertiary text-lg leading-relaxed mb-10 max-w-xl text-center lg:text-start">
-                                    {!! nl2br(
-                                        e(
-                                            $bannerItem->deskripsi ??
-                                                'Mengenal lebih dekat keindahan tradisi, seni, dan warisan budaya Kampung Brontokusuman yang telah mengakar sejak berabad-abad lamanya.',
-                                        ),
-                                    ) !!}
-                                </p>
+                                <div class="mb-10">
+                                    <p class="banner-desc text-tertiary text-lg leading-relaxed mb-4 max-w-xl text-center lg:text-start line-clamp-3">
+                                        {!! nl2br(
+                                            e(
+                                                $bannerItem->deskripsi ??
+                                                    'Mengenal lebih dekat keindahan tradisi, seni, dan warisan budaya Kampung Brontokusuman yang telah mengakar sejak berabad-abad lamanya.',
+                                            ),
+                                        ) !!}
+                                    </p>
+                                    <div class="flex justify-center lg:justify-start">
+                                        <button type="button"
+                                            class="banner-read-more hidden text-main_txt font-semibold text-sm inline-flex items-center gap-2 hover:text-main_txt-400 transition-colors">
+                                            <span class="read-more-label">Baca Selengkapnya</span>
+                                            <i class="fas fa-chevron-down read-more-icon text-xs"></i>
+                                        </button>
+                                    </div>
+                                </div>
 
                                 <div class="flex gap-4 justify-center lg:justify-start">
                                     <a href="{{ route('galeri') }}"
@@ -101,7 +110,7 @@
                                     <span class="text-main_txt">Brontokusuman</span>
                                 </h1>
 
-                                <p class="text-tertiary text-lg leading-relaxed mb-10 max-w-xl text-center lg:text-start">
+                                <p class="text-tertiary text-lg leading-relaxed mb-10 max-w-xl text-center lg:text-start line-clamp-3">
                                     Mengenal lebih dekat keindahan tradisi, seni, dan warisan budaya Kampung Brontokusuman yang telah mengakar sejak berabad-abad lamanya.
                                 </p>
 
@@ -186,15 +195,42 @@
                 if (!slider) return;
                 const slides = [...slider.querySelectorAll('.banner-slide')];
                 const dots = [...slider.querySelectorAll('.banner-dot')];
-                if (slides.length <= 1) return;
+                if (!slides.length) return;
 
                 let current = 0;
                 let timer;
+                const refreshers = [];
+
+                slides.forEach((slide, i) => {
+                    const desc = slide.querySelector('.banner-desc');
+                    const btn = slide.querySelector('.banner-read-more');
+                    if (!desc || !btn) return;
+                    const label = btn.querySelector('.read-more-label');
+                    const icon = btn.querySelector('.read-more-icon');
+                    const isExpanded = () => desc.dataset.expanded === '1';
+
+                    refreshers[i] = function() {
+                        const show = isExpanded() || desc.scrollHeight > desc.clientHeight + 1;
+                        btn.classList.toggle('hidden', !show);
+                    };
+
+                    btn.addEventListener('click', () => {
+                        const expanded = !isExpanded();
+                        desc.classList.toggle('line-clamp-3', !expanded);
+                        desc.dataset.expanded = expanded ? '1' : '0';
+                        label.textContent = expanded ? 'Ringkas' : 'Baca Selengkapnya';
+                        icon.classList.toggle('fa-chevron-up', expanded);
+                        icon.classList.toggle('fa-chevron-down', !expanded);
+                    });
+                });
+
+                const refreshAll = () => refreshers.forEach((fn) => fn && fn());
 
                 function goTo(index) {
                     current = (index + slides.length) % slides.length;
                     slides.forEach((s, i) => s.classList.toggle('active', i === current));
                     dots.forEach((d, i) => d.classList.toggle('active', i === current));
+                    refreshAll();
                 }
 
                 function next() {
@@ -203,17 +239,22 @@
 
                 function restart() {
                     clearInterval(timer);
-                    timer = setInterval(next, 3000);
+                    timer = setInterval(next, 5000);
                 }
 
-                dots.forEach((dot, i) => {
-                    dot.addEventListener('click', () => {
-                        goTo(i);
-                        restart();
+                if (dots.length > 0) {
+                    dots.forEach((dot, i) => {
+                        dot.addEventListener('click', () => {
+                            goTo(i);
+                            restart();
+                        });
                     });
-                });
+                    restart();
+                }
 
-                restart();
+                window.addEventListener('resize', refreshAll);
+
+                setTimeout(refreshAll, 100);
             })();
         </script>
     @endpush

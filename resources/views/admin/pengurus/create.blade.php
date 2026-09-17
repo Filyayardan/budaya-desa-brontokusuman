@@ -60,6 +60,27 @@
                     </div>
                 </div>
 
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Atasan (Struktur)</label>
+                    <select name="parent_id" id="parentSelect"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                        <option value="">— Puncak Struktur (Tanpa Atasan) —</option>
+                        @foreach ($atasanList ?? [] as $a)
+                            <option value="{{ $a->id }}" {{ old('parent_id') == $a->id ? 'selected' : '' }}>
+                                {{ $a->jabatan }} – {{ $a->nama }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <p class="text-xs text-gray-400 mt-1">Pengurus akan ditampilkan di bawah atasan ini pada bagan struktur.</p>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Urutan</label>
+                    <input type="number" name="urutan" value="{{ old('urutan', 0) }}" min="0"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                    <p class="text-xs text-gray-400 mt-1">Semakin kecil angkanya, semakin kiri/atas posisinya di bagan.</p>
+                </div>
+
                 <div class="mb-6 space-y-2 border border-gray-300 rounded-lg p-3 bg-gray-50/50" id="subAdminField">
                     <label class="block text-sm font-medium text-gray-700 mb-1">Tanggung Jawab<span
                             class="text-red-500">*</span></label>

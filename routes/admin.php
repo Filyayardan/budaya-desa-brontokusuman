@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\SejarahController;
 use App\Http\Controllers\Admin\PengurusController;
 use App\Http\Controllers\Admin\ProfilKampungController;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\BackgroundController;
 use App\Http\Controllers\Admin\UmkmController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\SubBeritaController;
@@ -45,6 +46,8 @@ Route::prefix('admin')
             Route::resource('sejarah', SejarahController::class)->except(['show']);
             Route::resource('pengurus', PengurusController::class)->except(['show'])->parameters(['pengurus' => 'pengurus']);
             Route::resource('banner', BannerController::class)->except(['show']);
+            Route::resource('background', BackgroundController::class)->except(['show']);
+            Route::put('background/{background}/aktif', [BackgroundController::class, 'activate'])->name('background.activate');
             Route::resource('pengunjung', VisitorController::class)->except(['show']);
             Route::resource('userManagement', UserManagementController::class)
                 ->except(['show'])

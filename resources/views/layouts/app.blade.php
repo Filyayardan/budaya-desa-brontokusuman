@@ -1,3 +1,10 @@
+@php
+    $bgSetting = \App\Models\Background::where('aktif', true)->latest()->first();
+    $bgPola = $bgSetting?->pola ? asset('storage/' . $bgSetting->pola) : asset('images/bg-batik(9.16).png');
+    $bgGambar = $bgSetting?->gambar
+        ? asset('storage/' . $bgSetting->gambar)
+        : 'https://lh3.googleusercontent.com/aida/AP1WRLukoWOD9eaBiLjj-bL6hySJALPWixyOQNfny1Ne6muVqBQrm5MrUroIuJTOyREcutVMdvc5G4FoGsb4B_T8KVaUJl9AGNtgnz53mBHUyUNwiGFcQ1enc6ExKP1Mb5wWn_QNFVEX0_EnBCcOecj0wE9Adlv9undvEzxsFXH5bv3kOPX0IReb7fcrRu3gqHsE3bw2ViXMjrA8N2RRZqtt6vvr2iAXmRarxW2p9FeF-1NJnrC-8Q9lSZDSmAo';
+@endphp
 <!DOCTYPE html>
 <html lang="id">
 
@@ -179,6 +186,20 @@
                 pointer-events: none;
             }
 
+            .bg-pola-layer {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -10;
+                background-size: 100% auto;
+                background-repeat: repeat;
+                background-position: top;
+                opacity: 0.5;
+                pointer-events: none;
+            }
+
             .header-section{
                 margin-top: 55px;
                 padding-top:56px;
@@ -205,8 +226,9 @@
     </head>
     
 <body
-  class="relative min-h-screen bg-surface text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container before:absolute before:inset-0 before:-z-10 before:bg-[url('/images/bg-batik(9.16).png')] before:bg-[length:100%_auto] before:bg-top before:bg-repeat before:opacity-50">
-    <div class="bg-texture-layer"></div>
+  class="relative min-h-screen bg-surface text-on-surface font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+    <div class="bg-texture-layer" style="background-image:url('{{ $bgGambar }}')"></div>
+        <div class="bg-pola-layer" style="background-image:url('{{ $bgPola }}')"></div>
         <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 bg-main_txt-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-20">

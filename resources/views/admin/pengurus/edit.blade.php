@@ -17,6 +17,25 @@
             </div>
             <div class="grid grid-cols-2 gap-4 mb-4">
                 <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Atasan (Struktur)</label>
+                    <select name="parent_id"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                        <option value="">— Puncak Struktur (Tanpa Atasan) —</option>
+                        @foreach ($atasanList ?? [] as $a)
+                            <option value="{{ $a->id }}" {{ old('parent_id', $pengurus->parent_id) == $a->id ? 'selected' : '' }}>
+                                {{ $a->jabatan }} – {{ $a->nama }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Urutan</label>
+                    <input type="number" name="urutan" value="{{ old('urutan', $pengurus->urutan ?? 0) }}" min="0"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Telepon</label>
                     <input type="text" name="telepon" value="{{ old('telepon', $pengurus->telepon) }}" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-gold-500 outline-none">
                 </div>

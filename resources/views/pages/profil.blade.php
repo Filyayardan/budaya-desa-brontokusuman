@@ -100,34 +100,44 @@
                     <div class="line-gold w-24 mx-auto mt-4"></div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    @foreach ($pengurus as $p)
-                        <div class="card-hover group">
-                            <div
-                                class="bg-white backdrop-blur rounded-2xl overflow-hidden border border-black-500/10 hover:border-gold-500/30 text-center">
+                @if (count($pengurusTree))
+                    <div class="org-tree relative py-8">
+                        <ul>
+                            @foreach ($pengurusTree as $tree)
+                                @include('pages.partials.pengurus-node', ['node' => $tree['node'], 'children' => $tree['children']])
+                            @endforeach
+                        </ul>
+                    </div>
+                @else
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        @foreach ($pengurus as $p)
+                            <div class="card-hover group">
                                 <div
-                                    class="h-48 bg-gradient-to-br from-gold-600/20 to-dark-700 flex items-center justify-center">
-                                    @if ($p->foto)
-                                        <img src="{{ asset('storage/' . $p->foto) }}" alt="{{ $p->nama }}"
-                                            class="w-full h-full object-cover">
-                                    @else
-                                        <i class="fas fa-user-tie text-5xl text-gold-500/30"></i>
-                                    @endif
-                                </div>
-                                <div class="p-6">
-                                    <h3
-                                        class="font-display text-lg font-bold text-main_txt group-hover:text-gold-300 transition-colors">
-                                        {{ $p->nama }}</h3>
-                                    <p class="text-tertiary text-sm font-medium mt-1">{{ $p->jabatan }}</p>
-                                    @if ($p->email)
-                                        <p class="text-gray-500 text-xs mt-3"><i
-                                                class="fas fa-envelope mr-1"></i>{{ $p->email }}</p>
-                                    @endif
+                                    class="bg-white backdrop-blur rounded-2xl overflow-hidden border border-black-500/10 hover:border-gold-500/30 text-center">
+                                    <div
+                                        class="h-48 bg-gradient-to-br from-gold-600/20 to-dark-700 flex items-center justify-center">
+                                        @if ($p->foto)
+                                            <img src="{{ asset('storage/' . $p->foto) }}" alt="{{ $p->nama }}"
+                                                class="w-full h-full object-cover">
+                                        @else
+                                            <i class="fas fa-user-tie text-5xl text-gold-500/30"></i>
+                                        @endif
+                                    </div>
+                                    <div class="p-6">
+                                        <h3
+                                            class="font-display text-lg font-bold text-main_txt group-hover:text-gold-300 transition-colors">
+                                            {{ $p->nama }}</h3>
+                                        <p class="text-tertiary text-sm font-medium mt-1">{{ $p->jabatan }}</p>
+                                        @if ($p->email)
+                                            <p class="text-gray-500 text-xs mt-3"><i
+                                                    class="fas fa-envelope mr-1"></i>{{ $p->email }}</p>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
+                @endif
             @endif
 
             <div class="pt-16">
@@ -189,3 +199,87 @@
         </div>
     </section>
 @endsection
+
+@push('styles')
+    <style>
+        .org-tree,
+        .org-tree ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .org-tree {
+            overflow-x: auto;
+            overflow-y: visible;
+        }
+
+        .org-tree > ul {
+            width: max-content;
+            min-width: 100%;
+            margin: 0 auto;
+            padding-top: 0;
+        }
+
+        .org-tree ul {
+            padding-top: 32px;
+            position: relative;
+        }
+
+        .org-tree li {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 32px 10px 0;
+        }
+
+        /* batang vertikal: dari node/produk ke lengan */
+        .org-tree ul ul::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            height: 32px;
+            border-left: 2px solid #d4a017;
+        }
+
+        /* garis vertikal: dari lengan ke setiap node anak */
+        .org-tree li::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            height: 32px;
+            border-left: 2px solid #d4a017;
+        }
+
+        /* lengan horizontal antar saudara */
+        .org-tree li::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            border-top: 2px solid #d4a017;
+        }
+
+        .org-tree li:first-child::after {
+            left: 50%;
+            width: 50%;
+        }
+
+        .org-tree li:last-child::after {
+            width: 50%;
+        }
+
+        /* hilangkan garis di akar & jika saudara tunggal */
+        .org-tree li:only-child::after,
+        .org-tree > ul > li::before,
+        .org-tree > ul > li::after {
+            display: none;
+        }
+    </style>
+@endpush

@@ -125,6 +125,11 @@
                                 'icon' => 'fa-images',
                                 'route' => 'admin.banner.index',
                             ],
+                            'admin.background.*' => [
+                                'label' => 'Background Website',
+                                'icon' => 'fa-palette',
+                                'route' => 'admin.background.index',
+                            ],
                             'admin.profil.*' => [
                                 'label' => 'Profil Kampung',
                                 'icon' => 'fa-id-card',

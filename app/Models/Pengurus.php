@@ -11,5 +11,15 @@ class Pengurus extends Model
 
     protected $table = 'pengurus';
 
-    protected $fillable = ['nama', 'jabatan', 'foto', 'telepon', 'email'];
+    protected $fillable = ['nama', 'jabatan', 'foto', 'telepon', 'email', 'parent_id', 'urutan'];
+
+    public function parent()
+    {
+        return $this->belongsTo(Pengurus::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Pengurus::class, 'parent_id');
+    }
 }

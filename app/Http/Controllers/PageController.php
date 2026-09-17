@@ -270,11 +270,24 @@ class PageController extends Controller
 
     public function profil()
     {
-        $pengurus = Pengurus::all();
+        $pengurus = Pengurus::orderBy('urutan', 'asc')->orderBy('nama', 'asc')->get();
         $profil = \App\Models\ProfilKampung::all()->pluck('value', 'key');
         $alamat = ProfilKampung::get('alamat');
 
-        return view('pages.profil', compact('pengurus', 'profil', 'alamat'));
+        $buildTree = function ($parentId = null) use (&$buildTree, $pengurus) {
+            return $pengurus
+                ->filter(fn($p) => $p->parent_id === $parentId)
+                ->values()
+                ->map(fn($p) => [
+                    'node' => $p,
+                    'children' => $buildTree($p->id),
+                ])
+                ->all();
+        };
+
+        $pengurusTree = $buildTree();
+
+        return view('pages.profil', compact('pengurus', 'profil', 'alamat', 'pengurusTree'));
     }
 
     public function kirimPesan(Request $request)

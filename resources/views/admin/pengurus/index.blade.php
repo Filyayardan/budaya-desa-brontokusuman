@@ -18,6 +18,7 @@
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Foto</th>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Nama</th>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Jabatan</th>
+                <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Atasan</th>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Telepon</th>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Email</th>
                 <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Aksi</th>
@@ -36,6 +37,7 @@
                 </td>
                 <td class="px-5 py-4 font-medium text-gray-900">{{ $p->nama }}</td>
                 <td class="px-5 py-4 text-gray-600">{{ $p->jabatan }}</td>
+                <td class="px-5 py-4 text-gray-600">{{ $p->parent?->jabatan ?? '-' }}</td>
                 <td class="px-5 py-4 text-gray-600">{{ $p->telepon ?? '-' }}</td>
                 <td class="px-5 py-4 text-gray-600">{{ $p->email ?? '-' }}</td>
                 <td class="px-5 py-4">
@@ -49,7 +51,7 @@
                 </td>
             </tr>
             @empty
-            <tr><td colspan="7" class="px-5 py-8 text-center text-gray-400">Belum ada data</td></tr>
+            <tr><td colspan="8" class="px-5 py-8 text-center text-gray-400">Belum ada data</td></tr>
             @endforelse
         </tbody>
     </table>
