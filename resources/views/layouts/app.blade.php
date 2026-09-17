@@ -242,7 +242,7 @@
                     </a>
 
                     <div class="hidden lg:flex items-center space-x-1">
-                        @php $links = ['Beranda'=>'home','Kebudayaan'=>'budaya','Acara'=>'acara','Peta'=>'peta','Galeri'=>'galeri','Berita'=>'berita','Sejarah'=>'sejarah','Profil'=>'profil','Booking'=>'booking.create']; @endphp
+                        @php $links = ['Beranda'=>'home','Kebudayaan'=>'budaya','UMKM'=>'umkm','Acara'=>'acara','Peta'=>'peta','Galeri'=>'galeri','Berita'=>'berita','Sejarah'=>'sejarah','Profil'=>'profil','Booking'=>'booking.create']; @endphp
                         @foreach ($links as $label => $route)
                             <a href="{{ route($route) }}"
                                 class="px-4 py-2 text-sm font-medium {{ request()->routeIs($route) ? 'text-main_txt' : 'text-gray-700 hover:text-main_txt-300' }} transition-colors duration-300 relative group">
@@ -313,7 +313,7 @@
                     <div>
                         <h4 class="font-display text-lg font-semibold text-main_txt mb-6">Navigasi</h4>
                         <ul class="space-y-3">
-                            @foreach (['Beranda' => 'home', 'Kebudayaan' => 'budaya', 'Acara' => 'acara', 'Galeri' => 'galeri', 'Berita' => 'berita'] as $label => $route)
+                            @foreach (['Beranda' => 'home', 'Kebudayaan' => 'budaya', 'UMKM' => 'umkm', 'Acara' => 'acara', 'Galeri' => 'galeri', 'Berita' => 'berita'] as $label => $route)
                                 <li><a href="{{ route($route) }}"
                                         class="text-main_txt-300 hover:text-main_txt transition-colors text-sm"><i
                                             class="fas fa-chevron-right text-main_txt-500/50 text-xs mr-2"></i>{{ $label }}</a>

@@ -176,6 +176,16 @@ class PageController extends Controller
         return view('pages.budaya', compact('budaya', 'kategori', 'kategoriAktif'));
     }
 
+    public function umkm()
+    {
+        $kategori = Umkm::distinct()->pluck('kategori')->filter()->values();
+        $umkm = Umkm::when(request('kategori'), function ($query, $kategori) {
+            $query->where('kategori', $kategori);
+        })->latest()->paginate(12);
+
+        return view('pages.umkm', compact('umkm', 'kategori'));
+    }
+
     public function acara()
     {
         $acara = Acara::orderBy('tanggal_mulai', 'desc')->paginate(12);

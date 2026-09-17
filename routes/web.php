@@ -12,6 +12,7 @@ Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/budaya', [PageController::class, 'budaya'])->name('budaya');
 Route::get('/budaya/{id}', [PageController::class, 'budayaDetail'])->name('budaya.detail');
 Route::get('/budaya/kategori/{id}', [PageController::class, 'budayaByKategori'])->name('budaya.kategori');
+Route::get('/umkm', [PageController::class, 'umkm'])->name('umkm');
 Route::get('/acara', [PageController::class, 'acara'])->name('acara');
 Route::get('/acara/{id}', [PageController::class, 'acaraDetail'])->name('acara.detail');
 Route::get('/peta', [PageController::class, 'peta'])->name('peta');
