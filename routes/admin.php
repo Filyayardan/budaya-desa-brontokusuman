@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\BeritaController;
 use App\Http\Controllers\Admin\AcaraController;
 use App\Http\Controllers\Admin\GaleriController;
 use App\Http\Controllers\Admin\SejarahController;
+use App\Http\Controllers\Admin\SejarahLainnyaController;
 use App\Http\Controllers\Admin\PengurusController;
 use App\Http\Controllers\Admin\ProfilKampungController;
 use App\Http\Controllers\Admin\BannerController;
@@ -44,6 +45,7 @@ Route::prefix('admin')
             Route::resource('acara', AcaraController::class)->except(['show']);
             Route::resource('galeri', GaleriController::class)->except(['show']);
             Route::resource('sejarah', SejarahController::class)->except(['show']);
+            Route::resource('sejarah-lainnya', SejarahLainnyaController::class)->except(['show'])->parameters(['sejarah-lainnya' => 'sejarahLainnya']);
             Route::resource('pengurus', PengurusController::class)->except(['show'])->parameters(['pengurus' => 'pengurus']);
             Route::resource('banner', BannerController::class)->except(['show']);
             Route::resource('background', BackgroundController::class)->except(['show']);

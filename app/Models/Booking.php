@@ -21,6 +21,7 @@ class Booking extends Model
         'lokasi_acara',
         'deskripsi',
         'status',
+        'rejection_reason',
     ];
 
     protected $casts = [

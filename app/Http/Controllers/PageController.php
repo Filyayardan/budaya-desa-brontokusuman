@@ -10,6 +10,7 @@ use App\Models\Berita;
 use App\Models\SubBerita;
 use App\Models\ProfilKampung;
 use App\Models\Sejarah;
+use App\Models\SejarahLainnya;
 use App\Models\Pengurus;
 use App\Models\Banner;
 use App\Models\Umkm;
@@ -274,8 +275,9 @@ class PageController extends Controller
     public function sejarah()
     {
         $sejarah = Sejarah::orderBy('urutan', 'asc')->get();
+        $sejarahLainnya = SejarahLainnya::orderBy('urutan', 'asc')->latest('id')->get();
 
-        return view('pages.sejarah', compact('sejarah'));
+        return view('pages.sejarah', compact('sejarah', 'sejarahLainnya'));
     }
 
     public function profil()
@@ -283,6 +285,7 @@ class PageController extends Controller
         $pengurus = Pengurus::orderBy('urutan', 'asc')->orderBy('nama', 'asc')->get();
         $profil = \App\Models\ProfilKampung::all()->pluck('value', 'key');
         $alamat = ProfilKampung::get('alamat');
+        $faqs = Faq::all();
 
         $buildTree = function ($parentId = null) use (&$buildTree, $pengurus) {
             return $pengurus
@@ -297,7 +300,7 @@ class PageController extends Controller
 
         $pengurusTree = $buildTree();
 
-        return view('pages.profil', compact('pengurus', 'profil', 'alamat', 'pengurusTree'));
+        return view('pages.profil', compact('pengurus', 'profil', 'alamat', 'pengurusTree', 'faqs'));
     }
 
     public function kirimPesan(Request $request)

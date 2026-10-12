@@ -196,9 +196,54 @@
                     </div>
                 </div>
             </div>
+
+            <div class="pt-24">
+                <div class="text-center mb-12">
+                    <span class="text-tertiary text-sm font-semibold tracking-widest uppercase">Tanya Jawab</span>
+                    <h2 class="font-display text-4xl font-bold text-main_txt mt-3">FAQ</h2>
+                    <div class="line-gold w-24 mx-auto mt-4"></div>
+                </div>
+
+                <div class="max-w-4xl mx-auto">
+                    @if ($faqs->count())
+                        <div class="space-y-6">
+                            @foreach ($faqs as $faq)
+                                <div x-data="{ open: false }"
+                                    class="bg-white shadow-md rounded-lg overflow-hidden border border-gold-500/10">
+                                    <button @click="open = !open"
+                                        class="flex justify-between items-center w-full px-6 py-4 text-left focus:outline-none">
+                                        <span class="font-semibold text-main_txt text-lg">{{ $faq->question }}</span>
+                                        <span :class="{ 'rotate-180': open, 'rotate-0': !open }"
+                                            class="transform transition-transform duration-300 text-main_txt-400">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </span>
+                                    </button>
+                                    <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-300"
+                                        x-transition:enter-start="opacity-0 transform -translate-y-4"
+                                        x-transition:enter-end="opacity-100 transform translate-y-0"
+                                        x-transition:leave="transition ease-in duration-200"
+                                        x-transition:leave-start="opacity-100 transform translate-y-0"
+                                        x-transition:leave-end="opacity-0 transform -translate-y-4"
+                                        class="px-6 pb-4 text-tertiary border-t border-gold-500/10">
+                                        <p>{!! nl2br(e($faq->answer)) !!}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="text-center py-12">
+                            <p class="text-gray-500 text-lg">Belum ada FAQ yang tersedia saat ini.</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+@endpush
 
 @push('styles')
     <style>

@@ -45,11 +45,16 @@ class BookingController extends Controller
         abort_unless($this->canManageBooking($booking), 403, 'Anda tidak memiliki akses ke booking ini.');
         $validated = $request->validate([
             'status' => 'required|in:approved,rejected',
+            'rejection_reason' => 'required_if:status,rejected|nullable|string|max:1000',
         ]);
+
+        if ($validated['status'] !== 'rejected') {
+            $validated['rejection_reason'] = null;
+        }
 
         $booking->update($validated);
 
-        if ($booking->status === 'approved' && $booking->email) {
+        if ($booking->email) {
             try {
                 Mail::to($booking->email)->send(new BookingStatusMail($booking->fresh('budaya')));
             } catch (\Throwable $e) {

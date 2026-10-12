@@ -40,6 +40,17 @@
                                 </tr>
                             </table>
 
+                            @if ($booking->status === 'rejected' && $booking->rejection_reason)
+                                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#fef2f2;border-radius:12px;border:1px solid #fecaca;margin-bottom:20px;">
+                                    <tr>
+                                        <td style="padding:16px 20px;font-size:13px;color:#b91c1c;line-height:1.7;">
+                                            <strong>Alasan Penolakan:</strong><br>
+                                            {{ $booking->rejection_reason }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            @endif
+
                             <p style="margin:0 0 20px;color:#555555;font-size:14px;line-height:1.7;">
                                 Untuk informasi lebih lanjut mengenai booking, perubahan jadwal, atau hal lainnya, silakan menghubungi Admin {{ $booking->budaya->judul ?? 'Kampung Budaya Brontokusuman' }} melalui nomor berikut:<br>
                                 <span style="font-size:16px;">&#128222; <strong style="color:#333333;">{{ $booking->budaya->no_telepon ?? '08965546215' }}</strong></span><br><br>

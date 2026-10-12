@@ -80,8 +80,92 @@
         </div>
     </section>
 
+    <div id="lightbox" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/95 backdrop-blur-sm">
+        <button id="lightbox-close"
+            class="absolute top-5 right-5 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all">
+            <i class="fas fa-times"></i>
+        </button>
+        <button id="lightbox-prev"
+            class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button id="lightbox-next"
+            class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="max-w-5xl w-full max-h-[85vh] flex items-center justify-center px-4">
+            <img id="lightbox-img" src="" alt=""
+                class="max-w-full max-h-[80vh] object-contain rounded-lg hidden">
+            <video id="lightbox-video" src="" controls
+                class="max-w-full max-h-[80vh] object-contain rounded-lg hidden"></video>
+        </div>
+        <div id="lightbox-caption"
+            class="absolute bottom-6 left-0 right-0 text-center text-white text-lg font-semibold px-4"></div>
+    </div>
+
     @push('scripts')
         <script>
+            const items = Array.from(document.querySelectorAll('.gallery-item'));
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxVideo = document.getElementById('lightbox-video');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            let currentIndex = -1;
+
+            function openLightbox(index) {
+                const item = items[index];
+                if (!item) return;
+                currentIndex = index;
+
+                const img = item.querySelector('img');
+                const videoSrc = item.dataset.video;
+
+                lightboxVideo.pause();
+                if (img) {
+                    lightboxImg.src = img.src;
+                    lightboxImg.classList.remove('hidden');
+                    lightboxVideo.classList.add('hidden');
+                } else if (videoSrc) {
+                    lightboxVideo.src = videoSrc;
+                    lightboxVideo.classList.remove('hidden');
+                    lightboxImg.classList.add('hidden');
+                }
+
+                lightboxCaption.textContent = item.dataset.judul || '';
+                lightbox.classList.remove('hidden');
+                lightbox.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightbox.classList.add('hidden');
+                lightbox.classList.remove('flex');
+                lightboxVideo.pause();
+                lightboxVideo.removeAttribute('src');
+                document.body.style.overflow = '';
+            }
+
+            items.forEach((item, i) => {
+                item.addEventListener('click', () => openLightbox(i));
+            });
+
+            document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+            document.getElementById('lightbox-prev').addEventListener('click', () => {
+                if (currentIndex !== -1) openLightbox((currentIndex - 1 + items.length) % items.length);
+            });
+            document.getElementById('lightbox-next').addEventListener('click', () => {
+                if (currentIndex !== -1) openLightbox((currentIndex + 1) % items.length);
+            });
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (currentIndex === -1) return;
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') openLightbox((currentIndex - 1 + items.length) % items.length);
+                if (e.key === 'ArrowRight') openLightbox((currentIndex + 1) % items.length);
+            });
+
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('.filter-btn').forEach(b => {

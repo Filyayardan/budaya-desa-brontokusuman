@@ -115,6 +115,11 @@
                                 'icon' => 'fa-book',
                                 'route' => 'admin.sejarah.index',
                             ],
+                            'admin.sejarah-lainnya.*' => [
+                                'label' => 'Sejarah Lainnya',
+                                'icon' => 'fa-history',
+                                'route' => 'admin.sejarah-lainnya.index',
+                            ],
                             'admin.pengurus.*' => [
                                 'label' => 'Pengurus',
                                 'icon' => 'fa-users',
